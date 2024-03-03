@@ -1,0 +1,39 @@
+/* Estilos generales */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif; /*el tipo de fuente y elimina el margen predeterminado del cuerpo del documento */
+}
+
+/* Estilo para agregar margen superior al contenido para evitar que quede detrás de la barra de navegación */
+#containerCarousel{
+  margin-top: 60px; /* Ajusta la altura según la altura de tu barra de navegación */
+margin-bottom: 40px;
+
+}
+.carousel-item {
+      height: 40vh;
+    }
+    .carousel-item img {
+      object-fit: cover;
+      height: 100%;
+      width: 100%;
+    }
+#texto{
+
+  text-align: justify;
+}
+
+.same-size {
+  max-height: 300px; /* altura máxima de las imágenes */
+  object-fit: cover; /* ajustar la imagen dentro del contenedor sin distorsionar */
+}
+.image-container {
+  height: 100%; /* Ajusta la altura al 100% */
+  display: flex; /* Activa el sistema de flexbox para alinear verticalmente */
+  align-items: center; /* Alinea verticalmente el contenido */
+}
+
+  #containerCarousel {
+    margin-top: 70px; 
+  }
+

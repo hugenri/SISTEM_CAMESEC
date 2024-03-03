@@ -1,0 +1,15 @@
+[27-Dec-2023 13:41:53 America/Mexico_City] PHP Warning:  require(path/to/PHPMailer/src/Exception.php): Failed to open stream: No such file or directory in /home3/golemsis/public_html/email/email.php on line 5
+[27-Dec-2023 13:41:53 America/Mexico_City] PHP Fatal error:  Uncaught Error: Failed opening required 'path/to/PHPMailer/src/Exception.php' (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home3/golemsis/public_html/email/email.php:5
+Stack trace:
+#0 {main}
+  thrown in /home3/golemsis/public_html/email/email.php on line 5
+[27-Dec-2023 13:44:53 America/Mexico_City] PHP Warning:  require(email/PHPMailer/src/Exception.php): Failed to open stream: No such file or directory in /home3/golemsis/public_html/email/email.php on line 5
+[27-Dec-2023 13:44:53 America/Mexico_City] PHP Fatal error:  Uncaught Error: Failed opening required 'email/PHPMailer/src/Exception.php' (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home3/golemsis/public_html/email/email.php:5
+Stack trace:
+#0 {main}
+  thrown in /home3/golemsis/public_html/email/email.php on line 5
+[27-Dec-2023 13:49:18 America/Mexico_City] PHP Warning:  require(email/PHPMailer/src/Exception.php): Failed to open stream: No such file or directory in /home3/golemsis/public_html/email/email.php on line 5
+[27-Dec-2023 13:49:18 America/Mexico_City] PHP Fatal error:  Uncaught Error: Failed opening required 'email/PHPMailer/src/Exception.php' (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home3/golemsis/public_html/email/email.php:5
+Stack trace:
+#0 {main}
+  thrown in /home3/golemsis/public_html/email/email.php on line 5
