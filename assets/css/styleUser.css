@@ -1,0 +1,18 @@
+body {
+    margin: 0em;
+    padding: 0em;
+    font-family: Arial, Helvetica, sans-serif;
+    }
+  
+  
+
+/* Estilo para agregar margen superior al contenido para evitar que quede detrás de la barra de navegación */
+    #div-contenido {
+      margin-top: 50px; /* Ajusta la altura según la altura de tu barra de navegación */
+	  margin-bottom: 40px;
+
+    }
+
+#carritoContainer{
+        margin-top: 20px; /* Puedes ajustar este valor según sea necesario */
+    }

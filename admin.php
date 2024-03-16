@@ -133,7 +133,7 @@ require_once 'layout/menu_admin1.php';
 			</div>
 
 </div> <!-- fin del contenido-->
-<script languaje= "javascript" src="assets/JS/getCounts.js"></script>
+<script  src="assets/JS/getCounts.js"></script>
 
 <script>
 
