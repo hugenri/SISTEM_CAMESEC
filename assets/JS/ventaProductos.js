@@ -1,10 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const cartItemsContainer = document.getElementById('cart-items');
+    getProductos();
+});
 
-    // Construir un objeto FormData para enviar los datos
+function getProductos(){
+    const cartItemsContainer = document.getElementById('cart-items');
+    cartItemsContainer.innerHTML = '';
+    // Obtener el valor del input de búsqueda
+    const searchTerm = document.getElementById('searchInput').value.trim();
+
+    // Construir un objeto FormData para enviar los datossearchInput
    var formData = new FormData();
    formData.append('action', 'mostarProductos');
-
+   formData.append('searchTerm', searchTerm);
+   console.log(formData);
    // Utiliza Fetch para enviar la acción al servidor
    fetch('actions/venta.php', {
        method: 'POST',
@@ -12,6 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
    })
         .then(response => response.json())
         .then(products => {
+            console.log(products);
             // Itera sobre los productos y crea tarjetas usando Bootstrap
             products.forEach(product => {
 				
@@ -20,19 +29,20 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         })
         .catch(error => console.error('Error al obtener productos:', error));
-
+    }
     // Función para crear una tarjeta de producto usando Bootstrap
     function createProductCard(product) {
         const card = document.createElement('div');
-        card.className = 'col-md-3 mb-4';
+        card.className = 'col-md-4 mb-4';
 
         card.innerHTML = `
             <div class="card  custom-card mb-2">
                 <img src="assets/images/productos/${product.imagen}" class="card-img-top align-self-center" alt="${product.imagen}" style="margin: 10px; width: 100px; height: 100px; object-fit: cover;">                
                 <div class="card-body">
                     <h5 class="card-title">${product.nombre}</h5>
-                    <p class="card-text">$${product.precio}</p>
-                    <a href="#" class="btn btn-success d-block mx-auto addToCartBtn" data-product-id="${product.id}">Agregar al Carrito</a>
+                    <p class="card-text">Precio: $${product.precio}</p>
+                    <p class="card-text">IVA: 16%</p>
+                    <a href="#" class="btn btn-success rounded-pill  d-block mx-auto addToCartBtn" data-product-id="${product.id}">Agregar al Carrito</a>
                 </div>
             </div>
         `;
@@ -55,24 +65,24 @@ document.addEventListener('DOMContentLoaded', function () {
 		<div class="container">
     <div class="row">
         <div class="col-lg-8">
-            <img id="imagen" src="assets/images/productos/${product.imagen}" class="card-img-top align-self-center mb-2" alt="${product.imagen}" style="margin: 10px; width: 170px; height: 170px; object-fit: cover;">                
+            <img id="imagen" src="assets/images/productos/${product.imagen}" class="mb-2" alt="${product.imagen}" style="margin: 10px; width: 170px; height: 170px; object-fit: cover;">                
             <h5 class="mb-2 mt-1">Descripción: </h5>
             <p id="descripcion">${product.descripcion}</p>
         </div>
-       <div class="col-lg-4">
+       <div class="col-lg-4 mb-3">
   <h5 id="nombre">${product.nombre}</h5>
   <p id="precio">Precio: $${product.precio}</p>
-  <div class="form-group row mb-2">
+  <div class="form-group row mb-3">
    <div class=" col-lg-4 col-sm-4"> 
     <label for="productQuantity" class="col-form-label">Cantidad:</label>
 	 </div>
-	 <div class="col-lg-8 col-sm-8"> 
+	 <div class="col-lg-8 col-sm-8 mb-2"> 
     <input type="number" class="form-control mb-2 rounded-pill" id="productQuantity" min="1" value="1">
     </div>
   </div>
   <div class="d-flex flex-column">
-<button type="button" class="btn btn-primary rounded-pill w-100 mb-2" onclick="handleClick(${product.id})">Agregar al carrito</button>
-<button type="button" class="btn btn-primary rounded-pill w-100" data-action="comprar" data-id="${product.id}" onclick="showProductDetailsModal(${product.id})">Comprar</button>
+<button type="button" class="btn btn-primary btn-sm rounded-pill w-100 mb-2" onclick="handleClick(${product.id})">Agregar al carrito</button>
+<button type="button" class="btn btn-primary btn-sm rounded-pill w-100" data-action="comprar" data-id="${product.id}" onclick="showProductDetails(${product.id})">Comprar</button>
 
   </div>
 </div>
@@ -83,10 +93,10 @@ document.addEventListener('DOMContentLoaded', function () {
         const productModal = new bootstrap.Modal(document.getElementById('productModal'));
         productModal.show();
     }
-});
 
 
-function showProductDetailsModal(id) {
+
+function showProductDetails(id) {
 
     // Obtener la cantidad del producto del input
     const quantityInput = document.getElementById('productQuantity');

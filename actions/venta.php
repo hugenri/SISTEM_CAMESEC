@@ -53,8 +53,9 @@ if(isset($action) && !empty($action)){
 	
    }elseif ($action == 'mostarProductos') {
     $ventaModel = new  VentaModel();
+    $searchTerm = isset($_POST['searchTerm']) ? $_POST['searchTerm'] : '';
      // Obtener productos utilizando el método correspondiente de VentaModel
-     $products = $ventaModel->getProductos();
+     $products = $ventaModel->getProductos($searchTerm);
     
      // Enviar la respuesta como JSON
      header('Content-Type: application/json');
@@ -195,44 +196,3 @@ if(isset($action) && !empty($action)){
   }
 
 }
-/*
-  // Crear una instancia del modelo de venta
-      $ventaModel = new VentaModel();
-
-      // Obtener los datos del carrito de la sesión
-      $cart = new Cart();
-
-    // Verificar si el carrito tiene datos
-    if ($cart->getRowCount() > 0) {
-    $cartItems = $cart->contents();
-
-    $total = $cart->calculateTotal();
-    $fecha = date('Y-m-d'); // Fecha actual
-
-    // Registrar la venta del producto en la base de datos
-    $idVenta = $ventaModel->insertOrderItems(2, $fecha, $total['total'], $cartItems);
-
-    if ($idVenta) {
-        // Si se registraron todas las ventas correctamente, vacía el carrito
-        $cart->clear_cart();
-
-        // Envía una respuesta de éxito
-        $response['status'] = 'success';
-        $response['message'] = 'Las ventas se registraron correctamente.';
-     }else {
-        // Si ocurrió un error al registrar la venta de un producto, envía una respuesta de error
-        $response['status'] = 'error';
-        $response['message'] = 'Error al registrar la venta del producto.';
-      }
-   } else {
-    // Si el carrito está vacío, envía una respuesta de error
-    $response['status'] = 'error';
-    $response['message'] = 'El carrito está vacío.';
-   }
-
-   // Enviar la respuesta como JSON
-   header('Content-Type: application/json');
-   echo json_encode($response);
-   exit();
-  
-*/

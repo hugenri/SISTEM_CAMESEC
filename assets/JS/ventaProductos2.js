@@ -6,6 +6,8 @@
     // Función para mostrar los productos del carrito
 
 function displayCartItems() {
+     // Obtener el valor del input de búsqueda
+     const searchTerm = document.getElementById('searchInput').value.trim();
     let cartModalContent = document.getElementById('cartModalContent');
      // Limpia el contenido del contenedor del modal
      cartModalContent.innerHTML = '';
@@ -13,6 +15,7 @@ function displayCartItems() {
      // Construir un objeto FormData para enviar los datos
    var formData = new FormData();
    formData.append('action', 'carrito');
+   formData.append('searchTerm', searchTerm);
 
    // Utiliza Fetch para enviar la acción al servidor
    fetch('actions/venta.php', {
@@ -38,7 +41,7 @@ function displayCartItems() {
                                 <p>Precio unitario: $${item.price}</p>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-sm btn-danger removeItemBtn" data-id="${item.rowid}">Eliminar</button>
+                                <button class="btn btn-sm btn-danger removeItemBtn rounded-pill" data-id="${item.rowid}">Eliminar</button>
                             </div>
                         </div>
                         <hr>

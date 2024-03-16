@@ -13,17 +13,17 @@ $this->conexion = null;
 
     }
 //Función para obtener los registros de orden compra
-public function getProductos(){
+public function getProductos($searchTerm){
         
     try{
     
         //se crea la conexion a la base de datos
         $this->conexion = ConexionBD::getconexion();
           ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
-        $query = $this->conexion->prepare("SELECT * FROM producto;");
+        $query = $this->conexion->prepare("SELECT * FROM producto where nombre LIKE :searchTerm;");
         
         //se ejecuta la consulta sql
-        $query->execute();
+        $query->execute(array(':searchTerm' => '%' . $searchTerm . '%'));
        //se obtiene un array con todos los registros de los resultados
         $data=$query->fetchAll(PDO::FETCH_ASSOC);
         

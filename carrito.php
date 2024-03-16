@@ -14,21 +14,27 @@ require_once 'layout/menu_user.php';
 
 <div id= "div-contenido" class="container-fluid flex-grow-1"> <!-- el contenido  en este div -->
 
-<div id="carritoContainer" class="container">
+<!-- mostrar los productos al usuario-->
+<div id="CartContainer" class="container mt-3">
     <div class="row">
-        <div class="col-lg-12 col-md-12 text-end">
+    <div class="col-lg-6 col-md-6 mt-2">
+        <div class="d-flex">
+            <input id="searchInput" class="form-control me-10" type="search" name="searchInput" placeholder="Buscar producto" aria-label="Search" style="margin-left: 100px;">
+            <button class="btn btn-outline-success" onclick="getProductos()">
+                <i class="fas fa-search"></i>
+            </button>
+</div>
+    </div>
+        <div class="col-lg-6 col-md-6 text-end mt-2">
             <a href="#" data-bs-toggle="modal" onclick="displayCartItems()" class="text-decoration-none">
                 <i class="fas fa-shopping-cart fs-3"></i>
                 <span id="cartItemCount" class="badge bg-danger"></span>
             </a>
         </div>
     </div>
-</div>
 
-<!-- mostrar los productos al usuario-->
-<div id="CartContainer" class="container mt-5">
 <div class="row mt-5">
-        <h1>Carrito de Compras</h1>
+        <h3 class="mb-4">Productos</h3>
         <div id="cart-items" class="row">
             <!-- Aquí se mostrarán los productos del carrito -->
         </div>
@@ -52,7 +58,7 @@ require_once 'layout/menu_user.php';
   <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="productModalLabel">Detalles del Producto</h5>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger rounded-pill btn-sm" data-bs-dismiss="modal">Cerrar</button>
 				</div>
             <div class="modal-body" id="productModalContent">
                 <!-- Contenido del modal se agregará dinámicamente aquí -->
@@ -67,7 +73,7 @@ require_once 'layout/menu_user.php';
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="cartModalLabel">Carrito de Compras</h5>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger btn-sm rounded-pill" data-bs-dismiss="modal">Cerrar</button>
             </div>
             <div class="modal-body">
                 <div class="container">
@@ -90,9 +96,9 @@ require_once 'layout/menu_user.php';
             </div>
             
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-danger" id="clearCartBtn">Vaciar Carrito</button>
-                <button type="button" class="btn btn-primary" id="checkoutBtn">Realizar Compra</button>
+                <button type="button" class="btn btn-danger btn-sm rounded-pill" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger btn-sm rounded-pill" id="clearCartBtn">Vaciar Carrito</button>
+                <button type="button" class="btn btn-primary btn-sm rounded-pill" id="checkoutBtn">Realizar Compra</button>
             </div>
         </div>
     </div>
