@@ -12,7 +12,7 @@ function getProductos(){
    var formData = new FormData();
    formData.append('action', 'mostarProductos');
    formData.append('searchTerm', searchTerm);
-   console.log(formData);
+   
    // Utiliza Fetch para enviar la acción al servidor
    fetch('actions/venta.php', {
        method: 'POST',
@@ -20,7 +20,6 @@ function getProductos(){
    })
         .then(response => response.json())
         .then(products => {
-            console.log(products);
             // Itera sobre los productos y crea tarjetas usando Bootstrap
             products.forEach(product => {
 				

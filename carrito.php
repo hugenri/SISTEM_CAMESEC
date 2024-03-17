@@ -16,25 +16,20 @@ require_once 'layout/menu_user.php';
 
 <!-- mostrar los productos al usuario-->
 <div id="CartContainer" class="container mt-3">
-    <div class="row">
-    <div class="col-lg-6 col-md-6 mt-2">
-        <div class="d-flex">
-            <input id="searchInput" class="form-control me-10" type="search" name="searchInput" placeholder="Buscar producto" aria-label="Search" style="margin-left: 100px;">
-            <button class="btn btn-outline-success" onclick="getProductos()">
-                <i class="fas fa-search"></i>
-            </button>
-</div>
-    </div>
-        <div class="col-lg-6 col-md-6 text-end mt-2">
-            <a href="#" data-bs-toggle="modal" onclick="displayCartItems()" class="text-decoration-none">
-                <i class="fas fa-shopping-cart fs-3"></i>
-                <span id="cartItemCount" class="badge bg-danger"></span>
+<div class="row mt-3">
+    <div class="col-lg-12 col-md-12 mt-3">
+        <div class="d-flex w-100">
+            <input id="searchInput" class="form-control offset-md-2 me-6 w-50" type="search" name="searchInput" placeholder="Buscar producto" aria-label="Search">
+            <button class="btn btn-outline-success" onclick="getProductos()"><i class="fas fa-search"></i></button>
+            <a href="#" data-bs-toggle="modal" onclick="displayCartItems()" class="text-decoration-none ms-auto me-4">
+                <i class="fas fa-shopping-cart fs-3"></i><span id="cartItemCount" class="badge bg-danger"></span>
             </a>
         </div>
     </div>
-
+</div>
+    
 <div class="row mt-5">
-        <h3 class="mb-4">Productos</h3>
+        <h3 class=" mb-4">Productos</h3>
         <div id="cart-items" class="row">
             <!-- Aquí se mostrarán los productos del carrito -->
         </div>
