@@ -2,7 +2,8 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif; /*el tipo de fuente y elimina el margen predeterminado del cuerpo del documento */
-}
+    background-color: rgba(176, 193, 214, 0.664);
+  }
 
 /* Estilo para agregar margen superior al contenido para evitar que quede detrás de la barra de navegación */
 #containerCarousel{
@@ -33,7 +34,8 @@ margin-bottom: 40px;
   align-items: center; /* Alinea verticalmente el contenido */
 }
 
-  #containerCarousel {
-    margin-top: 70px; 
-  }
 
+#carrusel{
+  margin-top: 9px; 
+
+  }

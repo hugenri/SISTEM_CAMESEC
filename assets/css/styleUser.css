@@ -22,3 +22,7 @@ body {
         height: 300px; /* se establece la misma altura para todas las imágenes */
         object-fit: cover; /* se escala la imagen para cubrir el contenedor manteniendo su relación de aspecto */
     }
+
+    .ServiciobackColor{
+        background-color: #f7f8aaa6;
+    }

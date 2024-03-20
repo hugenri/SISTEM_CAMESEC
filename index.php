@@ -33,8 +33,8 @@
       </div>
     </nav>
   <div id="containerCarousel" class="container mt-5">
-    <div class="row">
-      <div class="col-12">
+    <div class="row justify-content-center">
+      <div id="carrusel" class="col-8">
         <div id="slider" class="carousel slide" data-bs-ride="carousel" data-bs-interval="1000">
           <!-- Indicadores -->
           <ol class="carousel-indicators">
@@ -94,28 +94,13 @@
   </div>
   
 <div class="container">
-	
-	
-	<!-- Primera sección -->
+
 	<!-- Primera sección -->
 <div class="row mt-4">
   <h3>Nuestros productos y servicios </h3>
-  <div class="col-lg-4 col-md-6 col-sm-12">
-    <div class="image-container">
-      <img src="assets/images/circuitocerrado.jpg" class="d-block w-100 h-100" alt="Imagen 1">
-    </div>
+  
   </div>
-  <div class="col-lg-4 col-md-6 col-sm-12">
-    <div class="image-container">
-      <img src="assets/images/integracion.jpg" class="d-block w-100 h-100" alt="Imagen 2">
-    </div>
-  </div>
-  <div class="col-lg-4 col-md-6 col-sm-12">
-    <div class="image-container">
-      <img src="assets/images/monitoreo.jpg" class="d-block w-100 h-100" alt="Imagen 3">
-    </div>
-  </div>
-</div>
+
 
   <div class="row mt-1">
 
@@ -129,19 +114,6 @@
 		<div class="col-lg-4 col-md-6 col-sm-12  mt-3">
 		<p id="texto">Centro de monitoreo: Realizamos proyectos completos para centros de monitoreo y arreglos de pantallas VideoWall: Centro de control y comandos & Centro de monitoreo local.</p>
 		</div>
-	</div>
-</div>
-<div class="container mt-4 mb-3">
-
-	<!-- Segunda sección -->
-	<div class="row">
-	<h3>Comentarios destacados de clientes satisfechos</h3>
-		<div class="col-lg-4 col-md-6 col-sm-12">
-		<p id="texto">El sistema de circuito cerrado de televisión de Golem ha transformado nuestra seguridad. La calidad de imagen, la supervisión remota y la respuesta rápida han superado nuestras expectativas. Nos sentimos más seguros que nunca.</p></div>
-		<div class="col-lg-4 col-md-6 col-sm-12">
-		<p id="texto">La plataforma de integración de Golem ha sido una solución revolucionaria para nuestra empresa. La capacidad de unificar múltiples sistemas de seguridad en una sola interfaz ha mejorado la eficiencia y la protección de nuestras instalaciones de manera significativa.</p></div>
-		<div class="col-lg-4 col-md-6 col-sm-12">
-		<p id="texto">El centro de monitoreo de Golem es la columna vertebral de nuestra seguridad. La respuesta proactiva a las alertas, la vigilancia constante y la profesionalidad del personal han elevado nuestro nivel de protección a un nivel superior.</p></div>
 	</div>
 </div>
 	
