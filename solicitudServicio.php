@@ -41,6 +41,7 @@ require_once 'layout/menu_user.php';
         <!-- Tarjeta para Sistemas de Circuito Cerrado de Televisión -->
         <div class="col-lg-6 col-md-6 mt-3">
             <div class="card text-center ServiciobackColor" onclick="showDetails('CCtv', 'CCtv.jpg');" style="cursor: pointer;">
+            <img src="assets/images/servicios/cc-tv.png" class="card-img-top mt-1" alt="SCC" style="height: 150px; object-fit: contain;">
                 <div class="card-body">
                     <h5 class="card-title">Sistemas de circuito cerrado de televisión</h5>
                     <p class="card-text">solicita tu cotizacion</p>
@@ -50,7 +51,9 @@ require_once 'layout/menu_user.php';
         <!-- Tarjeta para plataformas -->
         <div class="col-lg-6 col-md-6 mt-3">
             <div class="card text-center ServiciobackColor" onclick="showDetails('Plataformas', 'plataforma.jpg');" style="cursor: pointer;">
-                <div class="card-body">
+            <img src="assets/images/servicios/plataformas.png" class="card-img-top mt-1" alt="SCC" style="height: 150px; object-fit: contain;">
+
+            <div class="card-body">
                     <h5 class="card-title">Plataformas</h5>
                     <p class="card-text">solicita tu cotizacion</p>
                 </div>
@@ -60,7 +63,8 @@ require_once 'layout/menu_user.php';
         <!-- Tarjeta para Centro de Monitoreo -->
         <div class="col-lg-6 col-md-6 mt-3">
             <div class="card text-center ServiciobackColor" onclick="showDetails('Centro de Monitoreo', 'monitoreo2.png');" style="cursor: pointer;">
-                <div class="card-body">
+            <img src="assets/images/servicios/monitoreo3.png" class="card-img-top mt-1" alt="SCC" style="height: 150px; object-fit: contain;">
+            <div class="card-body">
                     <h5 class="card-title">Centro de Monitoreo</h5>
                     <p class="card-text">solicita tu cotizacion</p>
                 </div>
@@ -69,8 +73,9 @@ require_once 'layout/menu_user.php';
         <!-- Tarjeta para Sistemas de control de accesos -->
         <div class="col-lg-6 col-md-6 mt-3">
             <div class="card text-center ServiciobackColor" onclick="showDetails('Sistemas de control de accesos', 'personal.jpg');" style="cursor: pointer;">
-                <div class="card-body">
-                    <h5 class="card-title">Sistemas de control de accesos</h5>
+            <img src="assets/images/servicios/acceso.png" class="card-img-top mt-1" alt="SCC" style="height: 150px; object-fit: contain;">
+            <div class="card-body">
+                <h5 class="card-title">Sistemas de control de accesos</h5>
                     <p class="card-text">solicita tu cotizacion</p>
                 </div>
             </div>
@@ -79,8 +84,9 @@ require_once 'layout/menu_user.php';
         <!-- Tarjeta para Centro de Monitoreo -->
         <div class="col-lg-6 col-md-6 mt-3 ">
             <div class="card text-center ServiciobackColor" onclick="showDetails('Control perimetral', 'perimetro.jpg');" style="cursor: pointer;">
-                <div class="card-body">
-                    <h5 class="card-title">Control perimetral</h5>
+            <img src="assets/images/servicios/perimetral.png" class="card-img-top mt-1" alt="SCC" style="height: 150px; object-fit: contain;">
+            <div class="card-body">
+                <h5 class="card-title">Control perimetral</h5>
                     <p class="card-text">solicita tu cotizacion</p>
                 </div>
             </div>
@@ -102,7 +108,7 @@ require_once 'layout/menu_user.php';
       <h4 class="mb-3">Servicio a cotizar: <span id="servicio-seleccionado"></span></h4>
       <p class="lead">Un especialista de la empresa se pondrá en contacto contigo para hacer una visita a tu empresa o realizar una video llamada y así tomar los requerimientos para realizar tu cotización del servicio.</p>
       <div class="d-grid gap-2 mt-2">
-        <button id="solicitar-cotizacion" class="btn btn-primary btn-lg rounded-pill">Solicitar Cotización</button>
+        <button id="solicitar-cotizacion" class="btn btn-primary btn-lg rounded-pill" onclick="cotizar()">Solicitar Cotización</button>
         <button id="cancelar" class="btn btn-danger  btn-lg rounded-pill">Cancelar</button>
       </div>
     </div>
@@ -133,7 +139,37 @@ require_once 'layout/menu_user.php';
     });
 
     // Puedes agregar la lógica para el botón de "Solicitar Cotización" aquí
+function cotizar(){
+// Obtener el nombre del servicio seleccionado
+let servicio = document.getElementById('servicio-seleccionado').innerText.trim();
+         // Obtener la fecha actual
+   let fechaActual = new Date();
 
+// Convertir la fecha a formato ISO8601 y eliminar la información de la zona horaria
+let fechaFormateada = fechaActual.toISOString().split('T')[0]; 
+// Construir un objeto FormData
+let formData = new FormData();
+
+formData.append('servicio', servicio);
+formData.append('fecha', fechaFormateada); // Convertir la fecha a formato ISO8601
+
+    // Utiliza Fetch para enviar la acción al servidor
+    fetch('actions/cotizar_servicio.php', {
+        method: 'POST',
+        body: formData,  // Usar el objeto FormData como cuerpo de la solicitud
+    })
+         .then(response => response.json())
+         .then(data => {
+            if (data.status === 'success') {
+                       console.log(data.message);
+            }else{
+                console.log(data.message);
+            }
+         })
+         .catch(error => {
+           console.error(error);
+         });
+}
 </script>
 
 

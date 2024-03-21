@@ -41,7 +41,7 @@ require_once 'layout/menu_user.php';
         </div>
         <!-- Card para servicios -->
         <div class="col-lg-6 col-md-6 mt-3">
-            <div class="card text-center" onclick="window.location.href='#';" style="cursor: pointer;">
+            <div class="card text-center" onclick="window.location.href='solicitudServicio.php';" style="cursor: pointer;">
                 <img src="assets/images/imagen_servicios.png" class="card-img-top mx-auto" alt="Imagen de servicios">
                 <div class="card-body">
                     <h5 class="card-title">Servicios</h5>
