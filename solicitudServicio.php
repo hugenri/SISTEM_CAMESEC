@@ -117,6 +117,8 @@ require_once 'layout/menu_user.php';
 
 
 </div> <!-- fin del contenido-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     // Función para mostrar los detalles del servicio
     function showDetails(servicio, imagenServicio) {
@@ -138,7 +140,7 @@ require_once 'layout/menu_user.php';
         document.getElementById('detalle-servicio').style.display = 'none';
     });
 
-    // Puedes agregar la lógica para el botón de "Solicitar Cotización" aquí
+ // Puedes agregar la lógica para el botón de "Solicitar Cotización" aquí
 function cotizar(){
 // Obtener el nombre del servicio seleccionado
 let servicio = document.getElementById('servicio-seleccionado').innerText.trim();
@@ -153,6 +155,16 @@ let formData = new FormData();
 formData.append('servicio', servicio);
 formData.append('fecha', fechaFormateada); // Convertir la fecha a formato ISO8601
 
+Swal.fire({
+    title: '¿Desea solicitar la cotizacion del servicio?',
+    text: 'Esta acción no se puede deshacer',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, cotizar'
+  }).then((result) => {
+    if (result.isConfirmed) {
     // Utiliza Fetch para enviar la acción al servidor
     fetch('actions/cotizar_servicio.php', {
         method: 'POST',
@@ -160,15 +172,25 @@ formData.append('fecha', fechaFormateada); // Convertir la fecha a formato ISO86
     })
          .then(response => response.json())
          .then(data => {
-            if (data.status === 'success') {
-                       console.log(data.message);
-            }else{
-                console.log(data.message);
-            }
-         })
-         .catch(error => {
-           console.error(error);
-         });
+            if (data.success === true) {
+                Swal.fire({
+                        title: 'Éxito',
+                        text: data.message,
+                        icon: 'success'
+                    }).then(() => {
+                        // Redirigir después de cerrar el cuadro de diálogo de éxito
+                        window.location.href = "cotizaciones_servicios.php";
+                    });
+            }else {
+        Swal.fire('Error', data.message, 'error');
+      }
+  })
+  .catch(error => {
+      console.error('Error:', error);
+  });
+}
+});
+return ;
 }
 </script>
 

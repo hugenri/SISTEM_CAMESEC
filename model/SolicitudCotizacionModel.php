@@ -49,5 +49,59 @@ public function createSolicitudCotizacion($servicio, $idCliente, $fechaSolicitud
     }
 }
 
+//Función para obtener los registros
+public function getSolicitudCotizaciones($idCliente){
+        
+    try{
+    
+        //se crea la conexion a la base de datos
+        $this->conexion = ConexionBD::getconexion();
+          ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
+          $query = $this->conexion->prepare("SELECT * FROM  solicitudes_cotizacion WHERE id_cliente = :id;");
+          $query->bindParam(':id', $idCliente);
+          
+
+        //se ejecuta la consulta sql
+        $query->execute();
+       //se obtiene un array con todos los registros de los resultados
+        $data=$query->fetchAll(PDO::FETCH_ASSOC);
+        
+        if($data){//si se regresan datos de la consulta se ejecuta este bloque 
+            
+          return $data;
+        }else{//si no hay datos se ejecuta este bloque
+             return 0;
+        }
+} catch (Exception $ex) {//se captura algún error tipo de error
+ echo "Error". $ex;// se imprime el tipo de error 
+
+} finally {
+    $this->conexion = null;//se cierra la conexión 
+}
+}
+
+//Función para obtener un regidtro
+public function getSolicitud_cotizacion_Servicio($servicio){
+    try {
+        $this->conexion = ConexionBD::getconexion();
+        $query = $this->conexion->prepare("SELECT COUNT(*) as count FROM solicitudes_cotizacion WHERE servicio = :servicio");
+        $query->bindParam(':servicio', $servicio);
+        $query->execute();
+        $row = $query->fetch(PDO::FETCH_ASSOC);
+        
+        if ($row['count'] > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (Exception $ex) {
+        // Manejar  el error 
+        throw new Exception("Error al obtener la solicitud de cotización del servicio: " . $ex->getMessage());
+    } finally {
+        $this->conexion = null;
+    }
+}
+
+
 
 }

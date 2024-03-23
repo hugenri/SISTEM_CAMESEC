@@ -23,7 +23,11 @@ if(DataValidator::validateVariables($data) === false){
       $response = array('success' => false, 'message' => 'Faltan datos');
 }else{
 
-     
+    $result = $consulta->getSolicitud_cotizacion_Servicio($servicio);
+    if($result){
+        $response = array('success' => false, 'message' => 'Ya tiene una solicitud de cotización en proceso del servicio.');
+        $validacion = false;
+    }
      if($validacion == true){//Si devuelve true, significa que el reCAPTCHA es válido y se puede continuar con el procesamiento del formulario
         $result = $consulta->createSolicitudCotizacion($servicio, $idCliente, $fecha, $estado);
 
