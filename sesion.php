@@ -15,7 +15,7 @@ if($session->getSessionVariable('rol_usuario') == 'admin' || $session->getSessio
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicio</title>
+  <title>Sesion</title>
   <script src="https://www.google.com/recaptcha/api.js?render=6Lcb4OgnAAAAANdIPDiiDfiWcEhW01H4vGXhDIvs"></script>
   <!-- Incluir los estilos de Bootstrap 5 -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">

@@ -44,13 +44,13 @@ public function getUsers(){
 
 }
 
-public function userExists($email){
+public function userExists($sql, $email){
         try{
             //se crea la conexion a la base de datos
             $this->conexion = ConexionBD::getconexion();
               ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
 
-            $query = $this->conexion->prepare("SELECT * FROM usuarios WHERE email = :email;");
+            $query = $this->conexion->prepare($sql);
 
             // se vinculan los parámetro de la consulta con las variables
 
@@ -264,13 +264,13 @@ public function verifyUserExists($nombre, $apellidoP, $apellidoM, $email){
 
 }
 
-public function login($email){
+public function login($sql, $email){
 
     try{
         //se crea la conexion a la base de datos
         $this->conexion = ConexionBD::getconexion();
           ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
-        $query = $this->conexion->prepare("SELECT * FROM usuarios WHERE email = :email;");
+        $query = $this->conexion->prepare($sql);
         // se vinculan los parámetro de la consulta con las variables
         $query->bindParam(":email", $email);
 

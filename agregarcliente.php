@@ -34,7 +34,7 @@ require_once 'layout/menu_admin.php';
     <div class="row mb-3">
         <div class="col-md-4">
             <label for="nombre" class="form-label">Nombre</label>
-            <input type="text" class="form-control rounded-5" id="nombre" name="nombre" placeholder="Nombre" required pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{3,20}">
+            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{3,20}">
             <div class="invalid-feedback">Por favor, ingresa un nombre válido (solo letras, mínimo 3, máximo 20 caracteres)</div>
         </div>
         <div class="col-md-4">
@@ -73,7 +73,7 @@ require_once 'layout/menu_admin.php';
     <div class="row mb-3">
         <div class="col-md-4">
             <label for="estado" class="form-label">Estado</label>
-            <select id="estado" name="estado" class="form-control form-select rounded-5" required>
+            <select id="estado" name="estado" class="form-control form-select" required>
                 <option value="">Seleccionar estado</option>
                 <!-- Opciones del estado -->
             </select>

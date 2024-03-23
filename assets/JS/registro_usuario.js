@@ -18,7 +18,7 @@ function registrar(evento) {
     if (result.isConfirmed) {
       //  se envía el formulario con el token de reCAPTCHA
       const datos = new FormData(document.getElementById("formRegistro"));
-      fetch('actions/registroUsuario.php', {
+      fetch('actions/registro_cliente.php', {
         method: 'POST',
         body: datos
       })
@@ -40,7 +40,7 @@ function registrar(evento) {
 }
 
 function mostrarMensajeExito() {
-  const formulario = document.getElementById("formRegistro");
+  const formulario = document.getElementById("containerFormRegistro");
   const mensajeExito = document.getElementById("registroExito");
   const redireccionarLogin = document.getElementById("redireccionarLogin");
 

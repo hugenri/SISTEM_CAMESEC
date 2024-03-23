@@ -17,6 +17,8 @@ include_once '../clases/DataValidator.php';
 $consulta = new UsuarioModel();
 $validacion = true;
 $response = array();
+$dataUser = '';
+$dataCliente = '';
 
 $reCaptchaToken = $_POST['RCtoken']; //se obtiene el  token recaptcha
 $reCaptchaAction = $_POST['RCaction']; //se obtiene el  action del token recaptcha
@@ -31,15 +33,14 @@ $reCaptchaAction = $_POST['RCaction']; //se obtiene el  action del token recaptc
     if(DataValidator::validateVariables($data) === false){
 
       $response = array('success' => false, 'message' => 'Faltan datos en el formulario');
+      $validacion = false;
+      echo json_encode($response);
+      exit();
+    }
 
-    
-
-    }else{
-
-      if (ReCaptchaVerifier::verify($reCaptchaToken, $reCaptchaAction)) {
+     if (ReCaptchaVerifier::verify($reCaptchaToken, $reCaptchaAction)) {
 
         $messageEmail = "La dirección de correo electrónico no es válida";
-
         $response = DataValidator::validateEmail($email, $messageEmail);
 
         if ($response !== true) {
@@ -47,53 +48,82 @@ $reCaptchaAction = $_POST['RCaction']; //se obtiene el  action del token recaptc
             echo json_encode($response);
             exit();
         }
+          // Consulta para usuarios
+         $sqlUser = "SELECT * FROM usuarios WHERE email = :email;";
+         $dataUser = $consulta->login($sqlUser, $email);
 
-        $result = $consulta->userExists($email);
-        if($result != true){
-            // Si el usuario no existe o la contraseña es incorrecta
-           $response = array('success' => false, 'message' => 'Usuario no registrado');
-           $validacion = false;
-           echo json_encode($response);
+        // Consulta para clientes
+        $sqlCliente = "SELECT * FROM cliente WHERE email = :email;";
+        $dataCliente = $consulta->login($sqlCliente, $email);
+
+        // Verificar si alguno de los conjuntos de datos contiene al usuario
+        if (!empty($dataCliente) || !empty($dataUser)) {
+         if($validacion == true){ //se puede continuar 
+		   
+          if (!empty($dataUser)) {
+          if(!password_verify($password, $dataUser['password'])){
+            $response = array('success' => false, 'message' => 'Contraseña incorrecta');
+            echo json_encode($response);
            exit();
           }
+       // Si el usuario existe y la contraseña proporcionada coincide con el hash almacenado en la base de datos
+      $sessionData = array(
+      'nombre' => $dataUser['nombre'],
+      'apellidoPaterno' => $dataUser['apellidoPaterno'],
+      'apellidoMaterno' => $dataUser['apellidoMaterno'],
+      'rol_usuario' => $dataUser['rol_usuario']
+      );
+      
+      $session->startSessionData($sessionData);
+      $site = $session->checkAndRedirect();
+        $response = array('success' => true, 'url' => $site);
+        echo json_encode($response);
+       exit();
 
-     if($validacion == true){//Si devuelve true, significa que el reCAPTCHA es válido y se puede continuar con el procesamiento del formulario
-		$datos = $consulta->login($email); // Realiza la consulta SQL a MySQL para obtener los datos del usuario por su correo electrónico
+   }
+    
+    if (!empty($dataCliente)) {
+    if(!password_verify($password, $dataCliente['password'])){
+            $response = array('success' => false, 'message' => 'Contraseña incorrecta');
+            echo json_encode($response);
+           exit();
+          }
+      // Si el usuario existe y la contraseña proporcionada coincide con el hash almacenado en la base de datos
+     $sessionData = array(
+      'id' => $dataCliente['idCliente'],
+     'nombre' => $dataCliente['nombre'],
+     'apellidoPaterno' => $dataCliente['apellidoPaterno'],
+     'apellidoMaterno' => $dataCliente['apellidoMaterno'],
+     'rol_usuario' => 'cliente'
+     );
+     
+     $session->startSessionData($sessionData);
+     $site = $session->checkAndRedirect();
+       $response = array('success' => true, 'url' => $site);
+       echo json_encode($response);
+      exit();
 
-if (!empty($datos) && password_verify($password, $datos['password'])) {
+      }else{
+          $response = array('success' => false, 'message' => 'Contraseña incorrecta');
+          echo json_encode($response);
+        exit();
+       } 
+   
+      } 
+    }else {
+    // Si el usuario no está registrado en ninguna de las tablas
+    $response = array('success' => false, 'message' => 'Usuario no registrado');
+    $validacion = false;
+    echo json_encode($response);
+    exit();
+     }
 
-   // Si el usuario existe y la contraseña proporcionada coincide con el hash almacenado en la base de datos
-	$sessionData = array(
-        'nombre' => $datos['nombre'],
-        'apellidoPaterno' => $datos['apellidoPaterno'],
-        'apellidoMaterno' => $datos['apellidoMaterno'],
-        'rol_usuario' => $datos['rol_usuario']
-        );
-        
-        $session->startSessionData($sessionData);
-        $site = $session->checkAndRedirect();
-          $response = array('success' => true, 'url' => $site);
-
-}else{
-    $response = array('success' => false, 'message' => 'Contraseña incorrecta');
-
-} 
-	 } 
-
-}else {
-
+  }else {
     // Código a ejecutar si el reCAPTCHA no es válido
     $response = array('success' => false, 'message' => 'El  reCAPTCHA no es válido');
-
-}
-
-    }
-
-//header('Content-Type: application/json; charset=utf-8');
-
-// Return response as JSON
-echo json_encode($response);
-
+    echo json_encode($response);
+   exit();
+  }
 
 
 

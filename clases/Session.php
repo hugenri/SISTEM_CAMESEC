@@ -35,7 +35,7 @@ public function startSession()
             case 'admin':
                 return 'admin';
                 break;
-            case 'usuario':
+            case 'cliente':
                 return 'home';
                 break;
             case 'empleado':

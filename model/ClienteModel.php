@@ -74,13 +74,14 @@ public function clientExists($email){
 }
 
 public function createClient($razonSocial, $nombre, $apellidoPaterno, $apellidoMaterno, $informacionContacto, $calle, $numero, $colonia, 
-    $municipio, $estado, $cp, $email, $telefono, $otrosDetalles) {
+    $municipio, $estado, $cp, $email, $telefono, $otrosDetalles, $password) {
     try {
         $this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
 
         // Se establece la sentencia de la consulta SQL
         $sql = "INSERT INTO cliente (razonSocial, nombre, apellidoPaterno, apellidoMaterno, informacionContacto, calle, numero, colonia, municipio, estado, cp, email, telefono, 
-               otrosDetalles) VALUES (:razonSocial, :nombre, :apellidoPaterno, :apellidoMaterno, :informacionContacto, :calle, :numero, :colonia, :municipio, :estado, :cp, :email, :telefono, :otrosDetalles);";
+               otrosDetalles, password) VALUES (:razonSocial, :nombre, :apellidoPaterno, :apellidoMaterno, :informacionContacto, :calle, :numero, :colonia, :municipio,
+                :estado, :cp, :email, :telefono, :otrosDetalles, :password);";
 
         // Se prepara la sentencia de la consulta SQL
         $query = $this->conexion->prepare($sql);
@@ -100,6 +101,8 @@ public function createClient($razonSocial, $nombre, $apellidoPaterno, $apellidoM
         $query->bindParam(':email', $email);
         $query->bindParam(':telefono', $telefono);
         $query->bindParam(':otrosDetalles', $otrosDetalles);
+        $query->bindParam(':password', $password);
+
 
         // Se ejecuta la consulta en la base de datos
         $result = $query->execute();
