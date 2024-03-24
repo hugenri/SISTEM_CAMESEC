@@ -5,6 +5,12 @@ document.addEventListener("DOMContentLoaded", function() {
 function registrar(evento) {
   evento.preventDefault();
   const formulario = document.getElementById("formRegistro");
+// se obtiene el token de reCAPTCHA
+grecaptcha.execute('6Lcb4OgnAAAAANdIPDiiDfiWcEhW01H4vGXhDIvs', { action: 'login' }).then(function(token) {
+
+  // se agrega el token al campo oculto en el formulario
+  document.getElementById("recaptchaToken").value = token;
+  document.getElementById("recaptchaAction").value = 'login';
 
   Swal.fire({
     title: '¿Desea registrarse como usuario?',
@@ -18,7 +24,7 @@ function registrar(evento) {
     if (result.isConfirmed) {
       //  se envía el formulario con el token de reCAPTCHA
       const datos = new FormData(document.getElementById("formRegistro"));
-      fetch('actions/registro_cliente.php', {
+      fetch('actions/registro_usuario_cliente.php', {
         method: 'POST',
         body: datos
       })
@@ -37,6 +43,7 @@ function registrar(evento) {
       });
     }
   });
+});
 }
 
 function mostrarMensajeExito() {

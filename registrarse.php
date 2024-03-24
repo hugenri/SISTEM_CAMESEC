@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Registro</title>
+  <script src="https://www.google.com/recaptcha/api.js?render=6Lcb4OgnAAAAANdIPDiiDfiWcEhW01H4vGXhDIvs"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -64,7 +65,9 @@
   <form id="formRegistro">
   <div class="mb-3">
   <h6>Datos Personales</h6>
-  </div>            
+  </div>
+  <input type="hidden" id="recaptchaToken" name="RCtoken"> <!-- campos ocultos del token -->
+  <input type="hidden" id="recaptchaAction" name="RCaction">            
     <div class="row mb-3">
         <div class="col-md-4">
             <label for="nombre" class="form-label">Nombre</label>
