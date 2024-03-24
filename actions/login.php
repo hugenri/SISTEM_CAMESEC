@@ -28,6 +28,100 @@ $reCaptchaAction = $_POST['RCaction']; //se obtiene el  action del token recaptc
 
     $data = [$email, $password];
 
+    // Validar los datos del formulario
+if (!DataValidator::validateVariables($data)) {
+  handleError('Faltan datos en el formulario');
+}
+     // Verificar si el ReCAPTCHA es válido
+if (!ReCaptchaVerifier::verify($reCaptchaToken, $reCaptchaAction)) {
+     handleError('El ReCAPTCHA no es válido');
+   }
+      
+      // Validar el formato del correo electrónico
+      if (!DataValidator::validateEmail($email, 'error')) {
+          handleError('La dirección de correo electrónico no es válida');
+      }
+      
+      // Consultar la base de datos para usuarios y clientes
+      $dataUser = $consulta->login("SELECT * FROM usuarios WHERE email = :email", $email);
+      $dataCliente = $consulta->login("SELECT * FROM cliente WHERE email = :email", $email);
+      
+   // Verificar si alguno de los conjuntos de datos contiene al usuario
+   if (!empty($dataCliente) || !empty($dataUser)) {
+  // Autenticar al usuario
+  authenticateUser($dataUser, $dataCliente, $password);
+} else {
+  // Si el usuario no está registrado en ninguna de las tablas
+  handleError('Usuario no registrado');
+}
+
+/*
+La función authenticateUser se encarga de verificar las credenciales del usuario y autenticarlo si las credenciales son válidas. Toma dos conjuntos de datos, 
+$dataUser y $dataCliente, que representan los datos del usuario y del cliente 
+*/
+function authenticateUser($dataUser, $dataCliente, $password) {
+  global $validacion, $session;
+  
+  if (!empty($dataUser)) {
+      if (password_verify($password, $dataUser['password'])) {
+          // Autenticación exitosa para usuario
+          $userData = [
+              'nombre' => $dataUser['nombre'],
+              'apellidoPaterno' => $dataUser['apellidoPaterno'],
+              'apellidoMaterno' => $dataUser['apellidoMaterno'],
+              'rol_usuario' => $dataUser['rol_usuario']
+          ];
+          handleSuccessfulAuthentication($userData);
+      }
+  } elseif (!empty($dataCliente)) {
+      if (password_verify($password, $dataCliente['password'])) {
+          // Autenticación exitosa para cliente
+          $clientData = [
+              'id' => $dataCliente['idCliente'],
+              'nombre' => $dataCliente['nombre'],
+              'apellidoPaterno' => $dataCliente['apellidoPaterno'],
+              'apellidoMaterno' => $dataCliente['apellidoMaterno'],
+              'rol_usuario' => 'cliente'
+          ];
+          handleSuccessfulAuthentication($clientData);
+      }
+  }
+  
+  // Si las credenciales son incorrectas
+  handleError('Contraseña incorrecta');
+}
+/*
+handleSuccessfulAuthentication se encarga de iniciar la sesión con los datos del usuario 
+ proporcionados y redirigir al usuario a la página correspondiente
+ */
+function handleSuccessfulAuthentication($userData) {
+  global $session, $site;
+  $session->startSessionData($userData);
+  $site = $session->checkAndRedirect();
+  $response = ['success' => true, 'url' => $site];
+  echo json_encode($response);
+  exit();
+}
+/*
+La función handleError se encarga de manejar los errores durante el proceso de autenticación. Toma un mensaje de error como argumento 
+($message) y genera una respuesta JSON con un indicador de éxito false
+*/
+function handleError($message) {
+  $response = ['success' => false, 'message' => $message];
+  echo json_encode($response);
+  exit();
+}
+
+
+/*
+$reCaptchaToken = $_POST['RCtoken']; //se obtiene el  token recaptcha
+$reCaptchaAction = $_POST['RCaction']; //se obtiene el  action del token recaptcha
+
+    $email = DataSanitizer::sanitize_input($_POST['email']);
+    $password = DataSanitizer::sanitize_input($_POST['password']);
+
+    $data = [$email, $password];
+
     //si se envia formulario sin datos se marca un error
 
     if(DataValidator::validateVariables($data) === false){
@@ -125,6 +219,6 @@ $reCaptchaAction = $_POST['RCaction']; //se obtiene el  action del token recaptc
    exit();
   }
 
-
+*/
 
 
