@@ -1,5 +1,13 @@
 <?php
 
+include_once '../clases/Session.php';
+$session = new Session();
+$session->startSession(); // Llamada a la función para iniciar la sesión
+if ($session->getSessionVariable('rol_usuario') != 'cliente') {
+  $site = $session->checkAndRedirect();
+  header('location:' . $site);
+}
+
 require_once("conexion.php");//se lo importa el archivo de la conexion 
 
 

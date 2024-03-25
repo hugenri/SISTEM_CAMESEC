@@ -133,7 +133,7 @@ if(isset($action) && !empty($action)){
 
     // Llamar a la función registrarVenta con los datos necesarios
      $idProducto = $_POST['id'];
-     $idCliente = 2;//$_POST[''];
+     $idCliente = $session->getSessionVariable('id_cliente');
      $cantidad = $_POST['cantidad'];
      $total = $_POST['total'];
      $fecha = $_POST['fecha'];
@@ -167,9 +167,9 @@ if(isset($action) && !empty($action)){
 
     $total = $cart->calculateTotal();
     $fecha = date('Y-m-d'); // Fecha actual
-
+    $id_cliente = $session->getSessionVariable('id_cliente');
     // Registrar la venta del producto en la base de datos
-    $idVenta = $ventaModel->insertOrderItems(2, $fecha, $total['total'], $cartItems);
+    $idVenta = $ventaModel->insertOrderItems($id_cliente, $fecha, $total['total'], $cartItems);
 
     if ($idVenta) {
         // Si se registraron todas las ventas correctamente, vacía el carrito
