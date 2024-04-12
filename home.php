@@ -1,13 +1,12 @@
 <?php
-/*
+
 include_once 'clases/Session.php';
 $session = new Session();
 $session->startSession(); // Llamada a la función para iniciar la sesión
-if ($session->getSessionVariable('rol_usuario') != 'usuario' && $session->getSessionVariable('rol_usuario') != 'empleado') {
+if ($session->getSessionVariable('rol_usuario') != 'cliente') {
   $site = $session->checkAndRedirect();
   header('location:' . $site);
 }
-*/
 ?>
 
 <?php
@@ -19,7 +18,7 @@ require_once 'layout/header_user.php';
 <body class="d-flex flex-column min-vh-100">
 <?php
 $titulo_pagina = "Home";
-require_once 'layout/menu_user.php';
+require_once 'layout/menu_user1.php';
 ?>
 
 

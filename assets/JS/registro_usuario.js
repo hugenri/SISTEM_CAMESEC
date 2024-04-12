@@ -47,11 +47,11 @@ grecaptcha.execute('6Lcb4OgnAAAAANdIPDiiDfiWcEhW01H4vGXhDIvs', { action: 'login'
 }
 
 function mostrarMensajeExito() {
-  const formulario = document.getElementById("containerFormRegistro");
+  const form_container = document.getElementById("form-container");
   const mensajeExito = document.getElementById("registroExito");
   const redireccionarLogin = document.getElementById("redireccionarLogin");
 
-  formulario.classList.add('d-none');
+  form_container.classList.add('d-none');
   mensajeExito.classList.remove('d-none');
 
   redireccionarLogin.addEventListener('click', function() {

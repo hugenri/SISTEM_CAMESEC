@@ -54,7 +54,7 @@
 
 <div id="div-contenido" class="container-fluid flex-grow-1">
 
-<div  class="container">
+<div id="form-container" class="container">
 <div class="row justify-content-center mt-4">
   <div class="col-lg-10 col-md-10">
   <div id="containerFormRegistro" class="card">
@@ -175,11 +175,9 @@
                 </div>
             </div>
         </div>
-    </div>
 
 
 
-</div>
 
 <div id="registroExito" class="container mt-5 d-none">
     <div class="row justify-content-center align-items-center">
