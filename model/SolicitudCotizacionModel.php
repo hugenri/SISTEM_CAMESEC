@@ -15,7 +15,6 @@ $this->conexion = null;
 
    
 
-
 //Función para crear registro de solicitud de cotizacion
 public function createSolicitudCotizacion($servicio, $idCliente, $fechaSolicitud, $estado) {
     try {
@@ -102,6 +101,35 @@ public function getSolicitud_cotizacion_Servicio($servicio){
     }
 }
 
+//Función para obtener los registros
+public function getSolicitudesCotizacion($sql){
+        
+    try{
+    
+        //se crea la conexion a la base de datos
+        $this->conexion = ConexionBD::getconexion();
+        
+          ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
+          $query = $this->conexion->prepare($sql);
+        
+        //se ejecuta la consulta sql
+        $query->execute();
+       //se obtiene un array con todos los registros de los resultados
+        $data=$query->fetchAll(PDO::FETCH_ASSOC);
+        
+        if($data){//si se regresan datos de la consulta se ejecuta este bloque 
+            
+          return $data;
+        }else{//si no hay datos se ejecuta este bloque
+             return 0;
+        }
+} catch (Exception $ex) {//se captura algún error tipo de error
+ echo "Error". $ex;// se imprime el tipo de error 
+
+} finally {
+    $this->conexion = null;//se cierra la conexión 
+}
+}
 
 
 }

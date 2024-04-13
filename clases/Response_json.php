@@ -8,6 +8,7 @@ function handle_response_json($success, $message) {
   exit();
 }
 function response_json($response) {
+	
   echo json_encode($response);
   exit();
 }

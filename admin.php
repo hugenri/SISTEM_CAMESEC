@@ -24,20 +24,27 @@ require_once 'layout/menu_admin1.php';
 
 <div id= "div-contenido" class="container-fluid flex-grow-1"> <!-- el contenido  en este div -->
 
-  <div class="row mb-3">
-
-    <div class="col-12 d-flex align-items-center justify-content-center">
-
+<div class="row mb-3 mt-3">
+    <div class="col-12 d-flex justify-content-between align-items-center">
         <div class="text-center">
-
-            <h3>!Bienvenido Administrador! <?=$session->getSessionVariable('nombre') . ' '. $session->getSessionVariable('apellidoPaterno')?></h3>           
-
-          </div>
-
-    </div>
-
+            <h3>Dashboard</h3>           
+        </div>
+        <div>
+        <p>Solicitudes de cotizacion pendientes</p>
+</div>
+<div class="dropdown">
+  <button class="btn" type="button" id="notification-dropdown" aria-expanded="false">
+    <img src="assets/images/notificacion.png" />
+    <span id="notification-count"></span>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="notification-dropdown" id="notification-menu" style="display: none;">
+    <!-- Aquí se insertarán las notificaciones -->
+  </ul>
 </div>
 
+
+    </div>
+</div>
 
 
 <div class="row">
@@ -130,16 +137,20 @@ require_once 'layout/menu_admin1.php';
                     </div>
                 </div>
             </div>
+            
 			</div>
 
 </div> <!-- fin del contenido-->
 <script  src="assets/JS/getCounts.js"></script>
+<script  src="assets/JS/notificacionesCotizacion.js"></script>
 
 <script>
 
  document.addEventListener("DOMContentLoaded", function () {
  getCounts(); // Llama a la función cuando la página esté cargada
- setInterval(getCounts, 30000);
+ notificaciorSolicitidesCotizacion();
+ setInterval(getCounts, 60000);
+ setInterval(notificaciorSolicitidesCotizacion, 50000);
         });
 
 </script>
