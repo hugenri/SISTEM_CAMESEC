@@ -1,5 +1,4 @@
 <?php
-session_start();
 
 class Cart {
     protected $cart_contents = array();
@@ -166,7 +165,7 @@ class Cart {
      * Calcula el subtotal, el IVA del 16% y el total del carrito
      * @return array
      */
-    public function calculateTotal() {
+    public function calculateTotal() {// da error esta funcion
         $subtotal = 0;
         foreach ($this->cart_contents as $cart_item) {
             $subtotal += $cart_item['price'] * $cart_item['qty'];

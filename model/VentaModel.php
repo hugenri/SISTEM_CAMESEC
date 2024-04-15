@@ -113,7 +113,7 @@ public function registrarVenta($idProducto, $idCliente, $fechaVenta, $cantidad, 
   }
 }
 
-function insertOrderItems($userId, $fecha, $total, $cartItems) {
+function insertOrderItems($userId, $fecha, $cartItems) {
  // $sql = "INSERT INTO orden_articulos (order_id, product_id, quantity) VALUES ";
 $sql = "INSERT INTO ventas_productos(id_producto, id_cliente, fecha_venta, cantidad, total) VALUES ";
 
@@ -122,13 +122,14 @@ $sql = "INSERT INTO ventas_productos(id_producto, id_cliente, fecha_venta, canti
   $this->conexion = ConexionBD::getconexion();
 
   foreach ($cartItems as $item) {
-      $sql .= "(?, ?, ?, ?, ?),";
-      $values[] = $item['id'];
-      $values[] = $userId;
-      $values[] = $fecha;
-      $values[] = $item['qty'];
-      $values[] = $total;
-  }
+    $sql .= "(?, ?, ?, ?, ?),";
+    $values[] = $item['id']; // Accede al ID del producto
+    $values[] = $userId;
+    $values[] = $fecha;
+    $values[] = $item['qty']; // Accede a la cantidad del producto
+    $values[] = $item['subtotal']; // Suponiendo que subtotal es el total para este producto
+}
+
 
   // Elimina la coma extra al final de la cadena SQL
   $sql = rtrim($sql, ',');

@@ -107,7 +107,10 @@ function showProductDetails(id) {
     const imagen = document.getElementById('imagen').src; // Obtener el valor del atributo src
     const descripcion = document.getElementById('descripcion').textContent; 
     // Extraer el precio del texto usando una expresión regular
-    const precio = parseFloat(precioText.match(/\d+\.\d+/)[0]);
+    // Extraer el precio del texto usando una expresión regular
+const matchResult = precioText.match(/\d+\.\d+/);
+const precio = matchResult ? parseFloat(matchResult[0]) : 0;
+
     
     // Si hay más datos que necesitas obtener, hazlo de manera similar
 

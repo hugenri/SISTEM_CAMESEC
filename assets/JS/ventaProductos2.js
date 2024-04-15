@@ -153,7 +153,15 @@ function removeItemFromCart(event) {
    fetch('actions/venta.php', {
        method: 'POST',
        body: formData,  // Usar el objeto FormData como cuerpo de la solicitud
-   }).then(response => response.json())
+   }).//then(response => response.json())
+   then(response => {
+    if (!response.ok) {
+        return response.json().then(errorData => {
+            throw new Error('Error en la solicitud. Código de estado: ' + response.status + ', Tipo de error: ' + errorData.error + ', Mensaje: ' + errorData.message);
+        });
+    }
+    return response.json(); // Suponiendo que la respuesta es JSON
+})
     .then(data => {
         if (data.status === 'success') {
 

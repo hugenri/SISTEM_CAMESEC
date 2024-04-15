@@ -5,11 +5,18 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 //+++++
 
+include_once '../clases/Session.php';
+$session = new Session();
+$session->startSession(); // Llamada a la función para iniciar la sesión
+if ($session->getSessionVariable('rol_usuario') != 'cliente') {
+  $site = $session->checkAndRedirect();
+  header('location:' . $site);
+}
+
 include '../clases/Cart.php';
 include '../model/VentaModel.php';
 
 $response = array();
-
 $action = $_POST['action'];
 
 if(isset($action) && !empty($action)){
@@ -164,12 +171,12 @@ if(isset($action) && !empty($action)){
     // Verificar si el carrito tiene datos
     if ($cart->getRowCount() > 0) {
     $cartItems = $cart->contents();
-
-    $total = $cart->calculateTotal();
+    
+    //$total = $cart->calculateTotal();
     $fecha = date('Y-m-d'); // Fecha actual
     $id_cliente = $session->getSessionVariable('id_cliente');
     // Registrar la venta del producto en la base de datos
-    $idVenta = $ventaModel->insertOrderItems($id_cliente, $fecha, $total['total'], $cartItems);
+    $idVenta =  $ventaModel->insertOrderItems($id_cliente, $fecha, $cartItems);
 
     if ($idVenta) {
         // Si se registraron todas las ventas correctamente, vacía el carrito
