@@ -74,8 +74,9 @@ require_once 'layout/menu_admin.php';
         </div>
         <div class="card-body">
         <form id="form">
-    <input type="hidden" id="id" name="id">
-
+    <input type="hidden" id="id" name="id_solicitud_cotizacion">
+    <input type="hidden" id="idCliente" name="id_cliente">
+    <input type="hidden" id="nombreServicio" name="nombreServicio">
     <div class="row mb-3">
         <div class="col-lg-9 col-md-9">
     <div class="row mb-3">
@@ -85,18 +86,19 @@ require_once 'layout/menu_admin.php';
         
         <div class="col-lg-6 col-md-6">
             <label for="fecha" class="form-label">Fecha:</label>
-            <input type="date" id="fecha" name="fecha" class="form-control">
+            <input type="date" id="fecha" name="fecha" class="form-control" required>
         </div>   
     </div>
     <div class="row mb-3">
         <div class=" col-lg-6 col-md-6 mb-2">
             <label for="costoInstalacion" class="form-label">Costo de Instalación:</label>
-            <input type="number" id="costoInstalacion" name="costoInstalacion" class="form-control">
+            <input type="number" id="costoInstalacion" name="costoInstalacion" placeholder="$"class="form-control" required>
         </div>
 
         <div class="col-lg-6  col-md-6">
             <label for="descuento" class="form-label">Descuento:</label>
-            <input type="number" id="descuento" name="descuento" class="form-control">
+            <input type="number" id="descuento" name="descuento" placeholder="%porcentaje" class="form-control" required>
+        </div>
         </div>
         <div class="row mb-3">
         <div class="col-md-6">
@@ -110,18 +112,18 @@ require_once 'layout/menu_admin.php';
             <div class="invalid-feedback">Las observaciones deben tener entre 8 y 100 letras y solo pueden contener letras y espacios.</div>
         </div>
     </div>
-</div>
+
 
 
     <div class="mb-3">
         <h6>Agregar productos</h6>
     </div>
    
-                    <div class="row" id="cart-items">
-                    <div class="modal-body" id="ItemsContent">
-                <!-- Contenido del modal se agregará dinámicamente aquí -->
-                   </div>
-                    </div>
+      <div class="row" id="cart-items">
+      <div class="modal-body" id="ItemsContent">
+     <!-- Contenido del modal se agregará dinámicamente aquí -->
+     </div>
+     </div>
             <!-- Agregar Nueva Fila de Producto -->
 <!-- Botón para abrir el modal -->
 <button type="button" class="btn btn-primary" id="btnAbrirModal">Agregar producto</button>
@@ -130,24 +132,30 @@ require_once 'layout/menu_admin.php';
         
 
         <!-- Columna para los totales -->
-        <div class="col-lg-3 col-md-3 col-sm-12 ml-5">
-            <!-- Totales -->
-            <div class="mt-4">
-                <h4>Totales</h4>
-                <p id="subTotal">Subtotal: $<span id="subTotal" class="invoice-sub-total">0.00</span></p>
-                <p id="descuento">Descuento: $<span class="invoice-discount">0.00</span></p>
-                <p id="iva">IVA: $<span class="invoice-vat">0.00</span></p>
-                <p id="total-iva">Total: $<span class="invoice-total">0.00</span></p>
-            </div>
-            <!-- Botón Crear Factura -->
-            <button type="button" class="btn btn-primary mt-3" id="create-invoice">Crear cotización</button>
-        </div>
+<div class="col-lg-3 col-md-3 col-sm-12 ml-5" style="border: 1px solid black; padding: 10px;">
+    <!-- Totales -->
+    <div class="mt-4">
+    <h4>Cantidades de la cotización</h4>
+       <p id="subTotal">Instalación: $<span id="subTotal" class="invoice-instalacion">0.00</span></p>
+        <p id="descuento">Descuento: %<span class="invoice-porcentajeDescuento">0</span></p>
+        <p id="Productos">Productos $<span class="invoice-prroductos">0.00</span></p>
+        <h4>Totales</h4>
+        <p id="subTotal">Subtotal: $<span class="invoice-sub-total">0.00</span></p>
+        <p id="descuento">Descuento: $<span class="invoice-discount">0.00</span></p>
+        <p id="iva">IVA: $<span class="invoice-vat">0.00</span></p>
+        <p id="total-iva">Total: $<span class="invoice-total">0.00</span></p>
     </div>
+    <!-- Línea divisoria -->
+    <hr style="margin-top: 10px; margin-bottom: 10px;">
+    <!-- Botón Crear Factura -->
+    <button type="button" class="btn btn-primary mt-3" id="create-invoice" onclick="crearCotizacion(event)">Crear cotización</button>
+</div>
+ </div>
 </form>
 
     </div>
     </div>
-        </div>
+   </div>
     </div>
     </div>
     </div>
@@ -184,6 +192,7 @@ require_once 'layout/menu_admin.php';
 <!--  -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script  src="assets/JS/cargar_solicitud_cotizaciones.js"></script>
+<script  src="assets/JS/agregarcotizacion.js"></script>
 <script  src="assets/JS/filtrar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

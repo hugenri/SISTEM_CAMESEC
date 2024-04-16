@@ -209,6 +209,35 @@ public function getDetalles($id){
 }
 }
 
+//Función para obtener los detalles
+public function getId($nombreServicio){
+        
+    try{
+    
+        //se crea la conexion a la base de datos
+        $this->conexion = ConexionBD::getconexion();
+          ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
+          $query = $this->conexion->prepare("SELECT idServicio FROM servicio WHERE nombre = :nombreServicio;");
+          $query->bindParam(':nombreServicio', $nombreServicio);
+          
 
+        //se ejecuta la consulta sql
+        $query->execute();
+       //se obtiene un array con todos los registros de los resultados
+        $data=$query->fetch(PDO::FETCH_ASSOC);
+        
+        if($data){//si se regresan datos de la consulta se ejecuta este bloque 
+            
+          return $data;
+        }else{//si no hay datos se ejecuta este bloque
+             return 0;
+        }
+} catch (Exception $ex) {//se captura algún error tipo de error
+ echo "Error". $ex;// se imprime el tipo de error 
+
+} finally {
+    $this->conexion = null;//se cierra la conexión 
+}
+}
 
 }

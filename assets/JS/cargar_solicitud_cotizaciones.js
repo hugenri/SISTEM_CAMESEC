@@ -47,7 +47,7 @@ formData.append('action', 'mostarSolicitudes');
                      // Si el estado es "En proceso", se deja el espacio vacío
                     cotizarButton = `<td></td>`;
                    }
-                  tabla += `<tr data-id="${dato.id}">   
+                  tabla += `<tr data-id="${dato.id}" data-idCliente="${dato.id_cliente}">   
                  <td class="text-nowrap">${dato.id}</td>
                  <td class="text-nowrap">${dato.cliente_razon_social}</td>
                       <td class="text-nowrap">${dato.servicio}</td>
@@ -78,13 +78,17 @@ function cargarForm() {
     botones.forEach(boton => {
         boton.addEventListener("click", function () {
             let id = this.dataset.id;
+            let id_cliente = this.dataset.idCliente;
+
             // Obtener la fila de la tabla
             let fila = document.querySelector(`#tabla tr[data-id='${id}']`);
             let celdas = fila.getElementsByTagName("td");
   
             // Obtener el nombre del cliente (razón social)
             let razonSocial = celdas[1].textContent;
+            document.getElementById("nombreServicio").textContent =  celdas[2].textContent;
             document.getElementById("id").textContent = id;
+            document.getElementById("idCliente").textContent = id_cliente;
 
             // Asignar el valor al elemento <p>
             document.getElementById("nombreCliente").textContent = "Cliente: " + razonSocial;
@@ -203,31 +207,26 @@ function calcularTotal() {
     // Obtener los valores actuales de costo de instalación y descuento
     let costoInstalacion = parseFloat(document.getElementById("costoInstalacion").value) || 0;
     let porcentajeDescuento = parseFloat(document.getElementById("descuento").value) || 0;
-    let sub_total = parseFloat(document.querySelector('.invoice-sub-total').textContent) || 0;
-    
-    console.log('costoInstalacion:', costoInstalacion);
-    console.log('porcentajeDescuento:', porcentajeDescuento);
-    console.log('sub_total:', sub_total);
-
+    let sub_totalProductos = parseFloat(document.querySelector('.invoice-prroductos').textContent) || 0;
+    document.querySelector('.invoice-porcentajeDescuento').textContent = porcentajeDescuento.toFixed(2);
+    document.querySelector('.invoice-instalacion').textContent = costoInstalacion.toFixed(2);
+   
     if (isNaN(porcentajeDescuento)) {
         porcentajeDescuento = 0;
     }
     
-    // Calcular el descuento en cantidad
-    const descuento = (porcentajeDescuento / 100) * sub_total;
-    console.log('descuento:', descuento);
-
     // Calcular el subtotal sumando el costo de instalación al subtotal actual solo si no se ha sumado antes
-    let subtotal = sub_total + costoInstalacion;
-    console.log('subtotal:', subtotal);
+    let subtotal = sub_totalProductos + costoInstalacion;
     
+    // Calcular el descuento en cantidad
+    const descuento = (porcentajeDescuento / 100) * subtotal;
+
     // Calcular el IVA
     const iva = subtotal * 0.16;
-    console.log('iva:', iva);
     
     // Calcular el total incluyendo el descuento
     const totalIva = (subtotal - descuento)+ iva;
-    console.log('totalIva:', totalIva);
+    
     // Actualizar los elementos en el HTML con los nuevos valores
     document.querySelector('.invoice-sub-total').textContent = subtotal.toFixed(2);
     document.querySelector('.invoice-discount').textContent = descuento.toFixed(2);
@@ -243,7 +242,7 @@ function calculosCotizacion(items){
     
      // Calcula el total de la compra y muestra el total y el IVA
      const totalPrice = calculateTotalPrice(items);
-     document.querySelector('.invoice-sub-total').textContent = `${totalPrice.total}`;
+     document.querySelector('.invoice-prroductos').textContent = `${totalPrice.total}`;
      document.querySelector('.invoice-vat').textContent = `${totalPrice.tax}`;
      document.querySelector('.invoice-total').textContent = `${totalPrice.totalIva}`;
      calcularTotal();
@@ -288,8 +287,11 @@ function calculateTotalPrice(items) {
 
 function limpiarDatos(){
 
-    document.querySelector('.invoice-sub-total').textContent = '0.0';
+            document.querySelector('.invoice-sub-total').textContent = '0.0';
             document.querySelector('.invoice-vat').textContent = '0.0';
             document.querySelector('.invoice-total').textContent = '0.0';
             //document.querySelector('.invoice-discount').textContent = '0.0';
 }
+
+/****************************** */
+
