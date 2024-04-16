@@ -42,33 +42,10 @@ $respuesta_json = new ResponseJson();
 
 $response = array();
 
-$action = $_POST['action'];
+$action = 'addListProduct';// $_POST['action'];
 
-if(isset($action) && !empty($action)){
-	if($action == 'mostarSolicitudes'){
-    $sql = "SELECT 
-     sc.*,
-     c.razonSocial AS cliente_razon_social
-     FROM
-     solicitudes_cotizacion sc
-    LEFT JOIN
-    cliente c ON sc.id_cliente = c.idCliente;";
-    $datos = $consulta->getSolicitudesCotizacion($sql);
-    if(!empty($datos)){
-        $response = array('success' => true, 'dataSolicitud'  => $datos);
-
-        $respuesta_json->response_json($response);
-
-    }else{
-        $respuesta_json->handle_response_json(false, 'No hay registros');
-
-    }
-} else {
-    $respuesta_json->handle_response_json(false, 'Método de solicitud no admitido');
-}   
-if($action == 'addToListProduct'){
-$id = 3;//DataSanitizer::sanitize_input($_POST['id']);
-    $cantidad = 3;// DataSanitizer::sanitize_input($_POST['quantity']);
+   $id = DataSanitizer::sanitize_input($_POST['id']);
+    $cantidad = DataSanitizer::sanitize_input($_POST['quantity']);
 
     $datos = [$id, $cantidad];
     $messageLetters = "Ingrese solo numeros en el dato";
@@ -97,37 +74,24 @@ $id = 3;//DataSanitizer::sanitize_input($_POST['id']);
      $response = array(); // Inicializar $response
  
      if($insertItem){
-         $Items = $cart->getRowCount();
-         $response['success'] = true;
-         $response['message'] = 'El producto se agregó correctamente al carrito.';
-         $response['cartItems'] = $Items;
-         
-        $respuesta_json->response_json($response);
+    // Intentar obtener los elementos del carrito
+    $items = $cart->contents();
+    
+      if($items){
+        $response['success'] = true;
+        $response['items'] = array_values($items); // Convertir el array asociativo a un array indexado
+		    $respuesta_json->response_json($response);
+
+      } else {
+        $response['success'] = false;
+        $response['message'] = 'Error al obtener los elementos.';
+		    $respuesta_json->response_json($response);
+
+       }
+    
+     }   
     } else {
         $respuesta_json->handle_response_json(false, 'No hay registros');
     }
 
-       }
-}elseif($action == 'elimonarProducto'){
-    $cart = new Cart;
-
-    $rowid = $_POST['rowid'];
-    // Intentar obtener los elementos del carrito
-    $removeCartItem = $cart->remove($rowid);
-    
-    if($removeCartItem){
-        $response['succes'] = true;
-            $response['message'] = 'El el elemento  fue eliminado.';
-    
-        
-    } else {
-        $response['succes'] = false;
-        $response['message'] = 'Error al eliminar el elemento.';
-    }
-    // Enviar la respuesta como JSON
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    exit();
-   }
-
-}
+      

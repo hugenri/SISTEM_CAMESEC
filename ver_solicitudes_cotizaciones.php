@@ -77,17 +77,51 @@ require_once 'layout/menu_admin.php';
     <input type="hidden" id="id" name="id">
 
     <div class="row mb-3">
-        <div class="col-lg-9 col-md-9 table-responsive">
+        <div class="col-lg-9 col-md-9">
+    <div class="row mb-3">
+        <div class="col-lg-6 col-md-6 mb-2">
+        <p id="nombreCliente"></p>
+        </div>
+        
+        <div class="col-lg-6 col-md-6">
+            <label for="fecha" class="form-label">Fecha:</label>
+            <input type="date" id="fecha" name="fecha" class="form-control">
+        </div>   
+    </div>
+    <div class="row mb-3">
+        <div class=" col-lg-6 col-md-6 mb-2">
+            <label for="costoInstalacion" class="form-label">Costo de Instalación:</label>
+            <input type="number" id="costoInstalacion" name="costoInstalacion" class="form-control">
+        </div>
+
+        <div class="col-lg-6  col-md-6">
+            <label for="descuento" class="form-label">Descuento:</label>
+            <input type="number" id="descuento" name="descuento" class="form-control">
+        </div>
         <div class="row mb-3">
-        <div class="col-md-4">
-            <p id="nombreCliente"></p>
+        <div class="col-md-6">
+            <label for="descripcion" class="form-label">Descripción</label>
+            <textarea type="text" class="form-control" rows="3" id="descripcion" name="descripcion" placeholder="Descripción de la cotización" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" minlength="8" maxlength="100" required></textarea>
+            <div class="invalid-feedback">La descripción debe tener entre 8 y 150 letras y solo puede contener letras y espacios.</div>
+        </div>
+        <div class="col-md-6">
+            <label for="observaciones" class="form-label">Observaciones</label>
+            <textarea type="text" class="form-control" rows="3" id="observaciones" name="observaciones" placeholder="Observaciones de la cotización" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" minlength="8" maxlength="100" required></textarea>
+            <div class="invalid-feedback">Las observaciones deben tener entre 8 y 100 letras y solo pueden contener letras y espacios.</div>
         </div>
     </div>
+</div>
+
 
     <div class="mb-3">
         <h6>Agregar productos</h6>
     </div>
-        
+   
+                    <div class="row" id="cart-items">
+                    <div class="modal-body" id="ItemsContent">
+                <!-- Contenido del modal se agregará dinámicamente aquí -->
+                   </div>
+                    </div>
             <!-- Agregar Nueva Fila de Producto -->
 <!-- Botón para abrir el modal -->
 <button type="button" class="btn btn-primary" id="btnAbrirModal">Agregar producto</button>
@@ -100,10 +134,10 @@ require_once 'layout/menu_admin.php';
             <!-- Totales -->
             <div class="mt-4">
                 <h4>Totales</h4>
-                <p>Subtotal: $<span class="invoice-sub-total">0.00</span></p>
-                <p>Descuento: $<span class="invoice-discount">0.00</span></p>
-                <p>IVA: $<span class="invoice-vat">0.00</span></p>
-                <p>Total: $<span class="invoice-total">0.00</span></p>
+                <p id="subTotal">Subtotal: $<span id="subTotal" class="invoice-sub-total">0.00</span></p>
+                <p id="descuento">Descuento: $<span class="invoice-discount">0.00</span></p>
+                <p id="iva">IVA: $<span class="invoice-vat">0.00</span></p>
+                <p id="total-iva">Total: $<span class="invoice-total">0.00</span></p>
             </div>
             <!-- Botón Crear Factura -->
             <button type="button" class="btn btn-primary mt-3" id="create-invoice">Crear cotización</button>
