@@ -74,8 +74,8 @@ require_once 'layout/menu_admin.php';
         </div>
         <div class="card-body">
         <form id="form">
-    <input type="hidden" id="id" name="id_solicitud_cotizacion">
-    <input type="hidden" id="idCliente" name="id_cliente">
+    <input type="hidden" id="id" name="idSolicitudCotizacion">
+    <input type="hidden" id="idCliente" name="idCliente">
     <input type="hidden" id="nombreServicio" name="nombreServicio">
     <div class="row mb-3">
         <div class="col-lg-9 col-md-9">
@@ -126,7 +126,7 @@ require_once 'layout/menu_admin.php';
      </div>
             <!-- Agregar Nueva Fila de Producto -->
 <!-- Botón para abrir el modal -->
-<button type="button" class="btn btn-primary" id="btnAbrirModal">Agregar producto</button>
+<button type="button" class="btn btn-primary mt-2 mb-2" id="btnAbrirModal">Agregar producto</button>
 
         </div>
         

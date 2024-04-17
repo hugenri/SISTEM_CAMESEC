@@ -7,6 +7,7 @@ function crearCotizacion(evento) {
 
   const formulario = document.getElementById("form");
   const datos = new FormData(formulario);
+  console.log(datos);
   Swal.fire({
     title: '¿Desea registar los datos de la cotizacion?',
     text: 'Esta acción no se puede deshacer',

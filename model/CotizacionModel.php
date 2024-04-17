@@ -13,50 +13,51 @@ $this->conexion = null;
 
     }
 
-   
-//Función para crear registro de cotizacion
+ // Función para crear registro de cotizacion
 public function createCotizacion($fecha, $observaciones, $idCliente, $descripcion,
-                                  $cantidad, $precioUnitario, $importeTotal,
-                                  $idProducto, $idServicio, $idCatalogoCotizaciones) {
-    try {
-        $this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
+$subtotal, $total, $iva, $descuento, $costo_instalacion, $servicio) {
+try {
+$this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
 
-        // Se establece la sentencia de la consulta SQL
-        $sql = "INSERT INTO cotizaciones (fecha, observaciones, idCliente, 
-                descripcion, cantidad, precioUnitario, importeTotal, idProducto,
-                idServicio, idCatalogoCotizaciones)
-                VALUES (:fecha, :observaciones, :idCliente, :descripcion,
-                :cantidad, :precioUnitario, :importeTotal, :idProducto, 
-                :idServicio, :idCatalogoCotizaciones);";
+// Se establece la sentencia de la consulta SQL
+$sql = "INSERT INTO cotizaciones (fecha, observaciones, idCliente, descripcion, 
+subtotal, total, iva, descuento, costo_instalacion, servicio) 
+VALUES (:fecha, :observaciones, :idCliente, :descripcion, 
+:subtotal, :total, :iva, :descuento, :costo_instalacion, :servicio)";
 
-        // Se prepara la sentencia de la consulta SQL
-        $query = $this->conexion->prepare($sql);
-          // Se vincula cada parámetro al nombre de variable especificado
-        $query->bindParam(':fecha', $fecha);
-        $query->bindParam(':observaciones', $observaciones);
-        $query->bindParam(':idCliente', $idCliente);
-        $query->bindParam(':descripcion', $descripcion);
-        $query->bindParam(':cantidad', $cantidad);
-        $query->bindParam(':precioUnitario', $precioUnitario);
-        $query->bindParam(':importeTotal', $importeTotal);
-        $query->bindParam(':idProducto', $idProducto);
-        $query->bindParam(':idServicio', $idServicio);
-        $query->bindParam(':idCatalogoCotizaciones', $idCatalogoCotizaciones);
-        
-        // Se ejecuta la consulta en la base de datos
-        $result = $query->execute();
+// Se prepara la sentencia de la consulta SQL
+$query = $this->conexion->prepare($sql);
 
-        if ($result === true) { // Si se retorna true se entra en este bloque if
-            return true; // Se retorna true
-        } else { // Si no
-            return false; // Se retorna false
-        }
-    } catch (Exception $ex) { // Se captura el error que ocurra en el bloque try
-        echo "Error: " . $ex->getMessage();
-    } finally {
-        $this->conexion = null; // Se cierra la conexión
-    }
+// Se vincula cada parámetro al nombre de variable especificado
+$query->bindParam(':fecha', $fecha);
+$query->bindParam(':observaciones', $observaciones);
+$query->bindParam(':idCliente', $idCliente);
+$query->bindParam(':descripcion', $descripcion);
+$query->bindParam(':subtotal', $subtotal);
+$query->bindParam(':total', $total);
+$query->bindParam(':iva', $iva);
+$query->bindParam(':descuento', $descuento);
+$query->bindParam(':costo_instalacion', $costo_instalacion);
+$query->bindParam(':servicio', $servicio);
+
+// Se ejecuta la consulta en la base de datos
+$result = $query->execute();
+
+// Obtener el ID de la cotización recién creada
+$id_cotizacion = $this->conexion->lastInsertId();
+
+if ($result === true) { // Si se retorna true se entra en este bloque if
+return $id_cotizacion; // Se retorna el ID de la cotización
+} else { // Si no
+return false; // Se retorna false
 }
+} catch (Exception $ex) { // Se captura el error que ocurra en el bloque try
+echo "Error: " . $ex->getMessage();
+} finally {
+$this->conexion = null; // Se cierra la conexión
+}
+}
+
 
 //Función para obtener los registros de citizaciones
 public function getCotizaciones(){
@@ -252,5 +253,37 @@ public function createSolicitudCotizacion($servicio, $idCliente, $fechaSolicitud
     }
 }
 
-
+function insertOrderItems($idSolicitud, $items) {
+    $sql = "INSERT INTO productos_solicitud_cotizacion (id_solicitud, id_producto, cantidad) VALUES ";
+   
+    $values = array();
+    try {
+        $this->conexion = ConexionBD::getconexion();
+   
+        foreach ($items as $item) {
+            $sql .= "(?, ?, ?),";
+            $values[] = $idSolicitud;
+            $values[] = $item['id']; // Accede al id del producto
+            $values[] = $item['qty']; // Accede a la cantidad del producto
+        }
+   
+        // Elimina la coma extra al final de la cadena SQL
+        $sql = rtrim($sql, ',');
+   
+        // Preparar la declaración
+        $query = $this->conexion->prepare($sql);
+   
+        // Ejecutar la declaración para cada conjunto de valores
+        $query->execute($values);
+        
+        // No necesitas obtener el ID de la venta insertada, ya que estás insertando en una tabla de relación muchos a muchos
+   
+        return true; // Retorna verdadero si la inserción fue exitosa
+    } catch (PDOException $ex) {
+        echo "Error: " . $ex->getMessage();
+        return false;
+    } finally {
+        $this->conexion = null;
+    }
+}
 }

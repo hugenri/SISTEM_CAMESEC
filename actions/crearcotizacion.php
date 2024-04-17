@@ -40,20 +40,20 @@ $validacion = true;
 $response = null;
 
 
-  $id_solicitud_cotizacion = DataSanitizer::sanitize_input($_POST['id']);
+
+  $id_solicitud_cotizacion = DataSanitizer::sanitize_input($_POST['idSolicitudCotizacion']);
   $fecha = DataSanitizer::sanitize_input($_POST['fecha']);
   $observaciones = DataSanitizer::sanitize_input($_POST['observaciones']);
   $idCliente = DataSanitizer::sanitize_input($_POST['idCliente']);
   $descripcion = DataSanitizer::sanitize_input($_POST['descripcion']);
-  $idProducto = DataSanitizer::sanitize_input($_POST['idProducto']);
   $servicio = DataSanitizer::sanitize_input($_POST['nombreServicio']);
   $costoInstalacion = DataSanitizer::sanitize_input($_POST['costoInstalacion']);
   $descuento = DataSanitizer::sanitize_input($_POST['descuento']);
 
-  
 
+ 
   $data = [$fecha, $observaciones, $idCliente, $descripcion,
-            $idProducto, $id_solicitud_cotizacion, $costoInstalacion, $descuento];
+          $id_solicitud_cotizacion, $costoInstalacion, $descuento];
 
     //si se envia formulario sin datos se marca un error
     if(DataValidator::validateVariables($data) === false){
@@ -106,27 +106,28 @@ $response = null;
       $respuesta_json->response_json($response);
 
     }    
-      if($validacion == true){//Si es true,  se puede continuar 
-        
-        $datos = new Cart();
-         // Uso de la función:
-       $items = $datos->contents(); // Obtener los elementos del carrito
-       $costoInstalacion = 50; // Ejemplo de costo de instalación
-       $descuento = 10; // Ejemplo de porcentaje de descuento
-       $totales = calcularTotales($items, $costoInstalacion, $descuento);
-
-        $result = $consulta->createCotizacion($fecha, $observaciones, $idCliente, $descripcion,
-        $cantidad, $precioUnitario, $importeTotal, $idServicio, $idCatalogoCotizaciones);
-        $result = true;
-         if($result === true){
-             $response = array("success" => true, 'message' => 'Cotización  registrado con exito!');
-             $respuesta_json->response_json($response);
-            }else{
-                $response = array('success' => false, 'message' => 'Error en el registro');
-                $respuesta_json->response_json($response);
-
-         }
-     }
+    if ($validacion == true) {
+      $datos = new Cart();
+      $items = $datos->contents(); // Obtener los elementos del carrito
+      $totales = calcularTotales($items, $costoInstalacion, $descuento);
+      $subtotal = $totales['subtotal'];
+      $iva = $totales['iva'];
+      $total = $totales['total'];
+      // Llamar a createCotizacion y obtener el ID de la cotización
+      $id_cotizacion = $consulta->createCotizacion($fecha, $observaciones, $idCliente, $descripcion,
+                                                   $subtotal, $total, $iva, $descuento, $costoInstalacion, $servicio);
+      // Verificar si la cotización se creó correctamente
+      if ($id_cotizacion !== false) {
+          // Llamar a insertOrderItems con el ID de la cotización
+          $orderitems = $consulta->insertOrderItems($id_cotizacion, $items);
+          $response = array("success" => true, 'message' => 'Cotización registrada con éxito!');
+          $respuesta_json->response_json($response);
+      } else {
+          $response = array('success' => false, 'message' => 'Error en el registro');
+          $respuesta_json->response_json($response);
+      }
+  }
+  
   }
 
 function calcularTotales($items, $costoInstalacion, $descuento) {

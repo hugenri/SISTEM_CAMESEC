@@ -40,16 +40,17 @@ formData.append('action', 'mostarSolicitudes');
             for (let dato of data.dataSolicitud) {
                 // Verifica si el estado es diferente de "En proceso"
                 if (dato.estado == 'en proceso') {
+                    let id = dato.id_cliente;
                   // Si el estado es diferente, se habilita el botón de cotizar
-                  cotizarButton = `<td><button class="bCotizar btn custom-button btn-primary btn-sm" data-id="${dato.id}" onclick="cargarForm()">Cotizar</button></td>`;
-                 //cotizarButton = `<td><button class="bCotizar btn custom-button btn-primary btn-sm" data-id="${dato.id}" onclick="cotizar()">Cotizar</button></td>`;
+                  cotizarButton = `<td><button class="bCotizar btn custom-button btn-primary btn-sm" data-id="${dato.id}"  onclick="cargarForm('${id}')">Cotizar</button></td>`;
+                  //cotizarButton = `<td><button class="bCotizar btn custom-button btn-primary btn-sm" data-id="${dato.id}" onclick="cotizar()">Cotizar</button></td>`;
                 } else {
                      // Si el estado es "En proceso", se deja el espacio vacío
                     cotizarButton = `<td></td>`;
                    }
-                  tabla += `<tr data-id="${dato.id}" data-idCliente="${dato.id_cliente}">   
-                 <td class="text-nowrap">${dato.id}</td>
-                 <td class="text-nowrap">${dato.cliente_razon_social}</td>
+                   tabla += `<tr data-id="${dato.id}">
+                        <td class="text-nowrap">${dato.id}</td>
+                        <td class="text-nowrap">${dato.cliente_razon_social}</td>
                       <td class="text-nowrap">${dato.servicio}</td>
                       <td class="text-nowrap">${dato.fecha_solicitud}</td>
                       <td class="text-nowrap">${dato.estado}</td>
@@ -71,33 +72,32 @@ formData.append('action', 'mostarSolicitudes');
 }
 
 /************************ */
-
-// Función para cargar formulario
-function cargarForm() {
+ // Función para cargar formulario
+ function cargarForm(idCliente) {
+    
     const botones = document.querySelectorAll(".bCotizar");
     botones.forEach(boton => {
         boton.addEventListener("click", function () {
             let id = this.dataset.id;
-            let id_cliente = this.dataset.idCliente;
-
+            
+            document.getElementById("popup").style.display = "block";
             // Obtener la fila de la tabla
             let fila = document.querySelector(`#tabla tr[data-id='${id}']`);
             let celdas = fila.getElementsByTagName("td");
-  
             // Obtener el nombre del cliente (razón social)
             let razonSocial = celdas[1].textContent;
-            document.getElementById("nombreServicio").textContent =  celdas[2].textContent;
-            document.getElementById("id").textContent = id;
-            document.getElementById("idCliente").textContent = id_cliente;
 
+            // Asignar valores a los campos del formulario
+            document.getElementById("nombreServicio").value = celdas[2].textContent;
+            document.getElementById("id").value = id;
+           document.getElementById("idCliente").value = idCliente;
+            
             // Asignar el valor al elemento <p>
             document.getElementById("nombreCliente").textContent = "Cliente: " + razonSocial;
             // Mostrar el formulario
-            document.getElementById("popup").style.display = "block";
-            
         });
     });
-  }
+}
  /**************************************** */
  /********************* */
 //cargar los productos al select
