@@ -68,7 +68,7 @@ require_once 'layout/menu_admin.php';
         <div class="card-header d-flex justify-content-between align-items-center">
         <h4 class="text-center mb-0">Cotizar Servico</h4>
         <button id="closeButton" class="close-button"
-        onclick='document.getElementById("popup").style.display = "none";'>
+        onclick="cerrarPopup()">
         <img src="assets/images/cerrar.png" alt="Cerrar">
         </button>
         </div>
@@ -92,12 +92,12 @@ require_once 'layout/menu_admin.php';
     <div class="row mb-3">
         <div class=" col-lg-6 col-md-6 mb-2">
             <label for="costoInstalacion" class="form-label">Costo de Instalación:</label>
-            <input type="number" id="costoInstalacion" name="costoInstalacion" placeholder="$"class="form-control" required>
+            <input type="number" id="costoInstalacion" name="costoInstalacion" placeholder="$" class="form-control" step="1" min="1" required>            <div class="invalid-feedback">Por favor ingresa un costo de instalación válido.</div>
         </div>
 
         <div class="col-lg-6  col-md-6">
             <label for="descuento" class="form-label">Descuento:</label>
-            <input type="number" id="descuento" name="descuento" placeholder="%porcentaje" class="form-control" required>
+            <input type="number" id="descuento" name="descuento" placeholder="% porcentaje" class="form-control" step="1" min="1" max="100">            <div class="invalid-feedback">Por favor ingresa un valor de descuento válido.</div>
         </div>
         </div>
         <div class="row mb-3">
@@ -120,10 +120,12 @@ require_once 'layout/menu_admin.php';
     </div>
    
       <div class="row" id="cart-items">
+      <div class="col-lg-12 col-md-12">
       <div class="modal-body" id="ItemsContent">
      <!-- Contenido del modal se agregará dinámicamente aquí -->
      </div>
      </div>
+</div>
             <!-- Agregar Nueva Fila de Producto -->
 <!-- Botón para abrir el modal -->
 <button type="button" class="btn btn-primary mt-2 mb-2" id="btnAbrirModal">Agregar producto</button>
@@ -136,12 +138,12 @@ require_once 'layout/menu_admin.php';
     <!-- Totales -->
     <div class="mt-4">
     <h4>Cantidades de la cotización</h4>
-       <p id="subTotal">Instalación: $<span id="subTotal" class="invoice-instalacion">0.00</span></p>
-        <p id="descuento">Descuento: %<span class="invoice-porcentajeDescuento">0</span></p>
+       <p id="costo-instalacion">Instalación: $<span id="costoInstalacion" class="invoice-instalacion">0.00</span></p>
+        <p id="porcentaje-descuento">Descuento: %<span class="invoice-porcentajeDescuento">0</span></p>
         <p id="Productos">Productos $<span class="invoice-prroductos">0.00</span></p>
         <h4>Totales</h4>
         <p id="subTotal">Subtotal: $<span class="invoice-sub-total">0.00</span></p>
-        <p id="descuento">Descuento: $<span class="invoice-discount">0.00</span></p>
+        <p id="totaldescuento">Descuento: $<span class="invoice-discount">0.00</span></p>
         <p id="iva">IVA: $<span class="invoice-vat">0.00</span></p>
         <p id="total-iva">Total: $<span class="invoice-total">0.00</span></p>
     </div>
@@ -166,13 +168,11 @@ require_once 'layout/menu_admin.php';
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Agregar Producto</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+                
             </div>
             <div class="modal-body">
                 <div class="form-row">
-                <select id="selectProductos" name="invoice_product[]" class="form-control invoice_product" required>
+                <select id="selectProductos" name="invoice_product" class="form-control invoice_product" required>
                             <!-- Opciones-->
                            </select>
                     <div class="form-group col-md-12">
@@ -182,13 +182,18 @@ require_once 'layout/menu_admin.php';
                 </div>
             </div>
             <div class="modal-footer">
-            <button type="button" class="btn btn-primary mt-3" id="btCargarProducto">Aceptar</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <!-- Agrega aquí el botón de guardar o cualquier otro -->
-            </div>
+            <button type="button" class="btn btn-primary" id="btCargarProducto">Aceptar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModal('ModalProducto')">Cerrar</button>
+            <!-- Agrega aquí el botón de guardar o cualquier otro -->
+        </div>
         </div>
     </div>
 </div>
+<script>
+//Script personalizado para validación en tiempo real
+    let formulario = document.getElementById('form');
+    </script>
+    <script  src="assets/JS/form_validation.js"></script>
 <!--  -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script  src="assets/JS/cargar_solicitud_cotizaciones.js"></script>
@@ -202,6 +207,7 @@ require_once 'layout/menu_admin.php';
 
 
 <script>
+
     // Selecciona el botón para abrir el modal
     let btnAbrirModal = document.getElementById('btnAbrirModal');
     let btCargarProducto = document.getElementById('btCargarProducto');
@@ -211,16 +217,29 @@ require_once 'layout/menu_admin.php';
     // Agrega un listener al botón para abrir el modal
 btnAbrirModal.addEventListener('click', function() {
  
-abrirModal('ModalProducto');
+  abrirModal('ModalProducto');
 
 
     });
     
 btCargarProducto.addEventListener('click', function() {  
-// Ejemplo de uso para cerrar el modal
-agregar_Alista_producto();
-cerrarModal('ModalProducto');
+  // Obtener el valor seleccionado del select
+  let productId = document.getElementById('selectProductos').value;
+   // Obtener la cantidad ingresada en el input
+   let  quantity = document.getElementById('cantidad').value;
 
+    // Validar que ambos campos tengan datos
+    if (productId.trim() === '' || quantity.trim() === '') {
+        // Si uno o ambos campos están vacíos, muestra un mensaje de error con SweetAlert2
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Por favor completa todos los campos.',
+        });
+    } else {
+        agregar_Alista_producto();
+    cerrarModal('ModalProducto');
+    }
 
 });
     // Cierra el modal si se hace clic fuera de él
@@ -249,20 +268,11 @@ function cerrarModal(modalId) {
     modal.style.display = 'none';
     modal.setAttribute('aria-modal', 'false');
     modal.setAttribute('aria-hidden', 'true');
-    // Puedes realizar otras acciones necesarias al cerrar el modal aquí
 }
+function cerrarPopup(){
 
-// Función para cerrar el modal si se hace clic fuera de él
-function cerrarModalClickExterno(modalId) {
-    var modal = document.getElementById(modalId);
-    modal.addEventListener('click', function(event) {
-        if (event.target === modal) {
-            cerrarModal(modalId);
-        }
-    });
+    document.getElementById("popup").style.display = "none";
 }
-
-
 </script>
 
 

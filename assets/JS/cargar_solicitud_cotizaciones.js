@@ -38,16 +38,18 @@ formData.append('action', 'mostarSolicitudes');
                   </thead>`;
             tabla += `<tbody>`;
             for (let dato of data.dataSolicitud) {
+                /*
                 // Verifica si el estado es diferente de "En proceso"
                 if (dato.estado == 'en proceso') {
-                    let id = dato.id_cliente;
+    
                   // Si el estado es diferente, se habilita el botón de cotizar
-                  cotizarButton = `<td><button class="bCotizar btn custom-button btn-primary btn-sm" data-id="${dato.id}"  onclick="cargarForm('${id}')">Cotizar</button></td>`;
+                  cotizarButton = `<td><button class="bCotizar btn custom-button btn-primary btn-sm" data-id="${dato.id}"  onclick="cargarForm('${dato.id_cliente}')">Cotizar</button></td>`;
                   //cotizarButton = `<td><button class="bCotizar btn custom-button btn-primary btn-sm" data-id="${dato.id}" onclick="cotizar()">Cotizar</button></td>`;
                 } else {
                      // Si el estado es "En proceso", se deja el espacio vacío
                     cotizarButton = `<td></td>`;
                    }
+                   */
                    tabla += `<tr data-id="${dato.id}">
                         <td class="text-nowrap">${dato.id}</td>
                         <td class="text-nowrap">${dato.cliente_razon_social}</td>
@@ -55,7 +57,7 @@ formData.append('action', 'mostarSolicitudes');
                       <td class="text-nowrap">${dato.fecha_solicitud}</td>
                       <td class="text-nowrap">${dato.estado}</td>
                       <td><button class="bEliminar custom-button btn btn-danger btn-sm" data-id="${dato.id}" onclick="eliminar('${dato.id}')">Eliminar</button></td>
-                      ${cotizarButton} <!-- Agrega el botón de cotizar -->
+                      <td><button class="bCotizar btn custom-button btn-primary btn-sm" data-id="${dato.id}"  onclick="cargarForm('${dato.id_cliente}')">Cotizar</button></td>
                   </tr>`;
               }
               tabla += `</tbody>`;
@@ -74,7 +76,7 @@ formData.append('action', 'mostarSolicitudes');
 /************************ */
  // Función para cargar formulario
  function cargarForm(idCliente) {
-    
+    limpiarDatos();
     const botones = document.querySelectorAll(".bCotizar");
     botones.forEach(boton => {
         boton.addEventListener("click", function () {
@@ -128,12 +130,12 @@ function cargarProductos() {
 
  /************************* */
 function agregar_Alista_producto(){
-    let ItemsContent = document.getElementById('ItemsContent');
+    
    // Obtener el valor seleccionado del select
     let productId = document.getElementById('selectProductos').value;
-    
    // Obtener la cantidad ingresada en el input
    let  quantity = document.getElementById('cantidad').value;
+
     // Construir un objeto FormData para enviar los datos
     var formData = new FormData();
     formData.append('action', 'addListProduct');
@@ -206,9 +208,9 @@ document.getElementById("descuento").addEventListener("change", function(event) 
 function calcularTotal() {
     // Obtener los valores actuales de costo de instalación y descuento
     let costoInstalacion = parseFloat(document.getElementById("costoInstalacion").value) || 0;
-    let porcentajeDescuento = parseFloat(document.getElementById("descuento").value) || 0;
+    let porcentajeDescuento = parseInt(document.getElementById("descuento").value) || 0; // Cambiado a parseInt
     let sub_totalProductos = parseFloat(document.querySelector('.invoice-prroductos').textContent) || 0;
-    document.querySelector('.invoice-porcentajeDescuento').textContent = porcentajeDescuento.toFixed(2);
+    document.querySelector('.invoice-porcentajeDescuento').textContent = porcentajeDescuento.toFixed(0); // Cambiado a toFixed(0)
     document.querySelector('.invoice-instalacion').textContent = costoInstalacion.toFixed(2);
    
     if (isNaN(porcentajeDescuento)) {
@@ -295,3 +297,20 @@ function limpiarDatos(){
 
 /****************************** */
 
+function limpiarDatos() {
+    const formulario = document.getElementById("form");
+    // Elimina las clases de validación de Bootstrap
+    var forms = document.getElementsByClassName('needs-validation');
+    Array.prototype.filter.call(forms, function(form) {
+        form.classList.remove('was-validated');
+    });
+    formulario.reset(); // Se limpia el formulario     
+    // Limpiar elementos de totales
+    document.getElementById("costo-instalacion").innerHTML = "Instalación: $<span class='invoice-instalacion'>0.00</span>";
+    document.getElementById("porcentaje-descuento").innerHTML = "Descuento: %<span class='invoice-porcentajeDescuento'>0</span>";
+    document.getElementById("Productos").innerHTML = "Productos $<span class='invoice-prroductos'>0.00</span>";
+    document.getElementById("subTotal").innerHTML = "Subtotal: $<span class='invoice-sub-total'>0.00</span>";
+    document.getElementById("totaldescuento").innerHTML = "Descuento: $<span class='invoice-discount'>0.00</span>";
+    document.getElementById("iva").innerHTML = "IVA: $<span class='invoice-vat'>0.00</span>";
+    document.getElementById("total-iva").innerHTML = "Total: $<span class='invoice-total'>0.00</span>";
+}

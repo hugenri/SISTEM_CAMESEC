@@ -132,4 +132,35 @@ public function getSolicitudesCotizacion($sql){
 }
 
 
+//método para actualizar los datos 
+public function updateEstado($id, $estado) {
+    try {
+        $this->conexion = ConexionBD::getconexion(); // se crea la conexión a la BD
+        // se establece la sentencia de la consulta sql para actualizar datos de un registro
+        $sql = "UPDATE solicitudes_cotizacion
+        SET estado = :estado
+        WHERE id = :id;";
+
+        // se prepara la sentencia de la consulta sql
+        $query = $this->conexion->prepare($sql);
+        // se vinculan los parámetros al nombre de variable especificado
+        $query->bindParam(':id', $id);
+        $query->bindParam(':estado', $estado);
+    
+        // ejecutar la consulta
+        $result = $query->execute();
+        // verificar si la actualización se realizó correctamente
+        if ($result == true) {
+            return true;
+        } else {
+            return false;
+        }
+    } catch (Exception $ex) {
+        // capturar el error que ocurra en el bloque try
+        echo "Error" . $ex;
+    } finally {
+        $this->conexion = null; // cerrar la conexión a la BD
+    }
+}
+
 }

@@ -67,7 +67,13 @@ public function getCotizaciones(){
         //se crea la conexion a la base de datos
         $this->conexion = ConexionBD::getconexion();
           ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
-        $query = $this->conexion->prepare("SELECT * FROM cotizaciones;");
+         $sql = "SELECT c.*, cl.razonSocial AS razonSocialCliente
+         FROM cotizaciones c
+         INNER JOIN cliente cl ON c.idCliente = cl.idCliente;";
+         
+         
+      
+          $query = $this->conexion->prepare($sql);
         
         //se ejecuta la consulta sql
         $query->execute();

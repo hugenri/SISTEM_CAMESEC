@@ -7,13 +7,6 @@ $site = $session->checkAndRedirect();
   header('location:' . $site);
 }
 
-include_once '../model/CotizacionModel.php';
-include_once '../clases/dataSanitizer.php';
-include_once '../clases/DataValidator.php';
-require_once '../clases/Response_json.php';
-require_once '../clases/Cart.php';
-
-
 // Función para manejar errores fatales y convertirlos en una respuesta JSON
 function handleFatalError() {
   $error = error_get_last();
@@ -33,9 +26,17 @@ function handleFatalError() {
 
 // Registra la función para manejar errores fatales
 register_shutdown_function('handleFatalError');
+include_once '../model/CotizacionModel.php';
+include_once '../clases/dataSanitizer.php';
+include_once '../clases/DataValidator.php';
+require_once '../clases/Response_json.php';
+require_once '../clases/Cart.php';
+require_once '../model/SolicitudCotizacionModel.php';
 
 $respuesta_json = new ResponseJson();
 $consulta = new CotizacionModel();
+$solicitudCotizacion = new SolicitudCotizacionModel();
+
 $validacion = true;
 $response = null;
 
@@ -50,10 +51,12 @@ $response = null;
   $costoInstalacion = DataSanitizer::sanitize_input($_POST['costoInstalacion']);
   $descuento = DataSanitizer::sanitize_input($_POST['descuento']);
 
+   // Sanitizar la entrada del descuento
+   $descuento = isset($descuento) ? intval($descuento) : 0;
 
  
   $data = [$fecha, $observaciones, $idCliente, $descripcion,
-          $id_solicitud_cotizacion, $costoInstalacion, $descuento];
+          $id_solicitud_cotizacion, $costoInstalacion];
 
     //si se envia formulario sin datos se marca un error
     if(DataValidator::validateVariables($data) === false){
@@ -71,7 +74,7 @@ $response = null;
       $respuesta_json->response_json($response);
     }
 
-    $datos = [$costoInstalacion, $descuento];
+    $datos = [$costoInstalacion];
     $messageLetters = "Ingrese solo numeros en el dato";
    $response = DataValidator::validateNumbersFloat($datos, $messageLetters);
    if ($response !== true) {
@@ -107,8 +110,8 @@ $response = null;
 
     }    
     if ($validacion == true) {
-      $datos = new Cart();
-      $items = $datos->contents(); // Obtener los elementos del carrito
+      $datosItems = new Cart();
+      $items = $datosItems->contents(); // Obtener los elementos del carrito
       $totales = calcularTotales($items, $costoInstalacion, $descuento);
       $subtotal = $totales['subtotal'];
       $iva = $totales['iva'];
@@ -118,8 +121,13 @@ $response = null;
                                                    $subtotal, $total, $iva, $descuento, $costoInstalacion, $servicio);
       // Verificar si la cotización se creó correctamente
       if ($id_cotizacion !== false) {
+        if(!empty($items)){
           // Llamar a insertOrderItems con el ID de la cotización
-          $orderitems = $consulta->insertOrderItems($id_cotizacion, $items);
+         $orderitems = $consulta->insertOrderItems($id_cotizacion, $items);
+           // Si se registraron todas las ventas correctamente, vacía el carrito
+        $datosItems->clear_cart();
+        $solicitudCotizacion->updateEstado($id_solicitud_cotizacion, 'cotizada');
+        }
           $response = array("success" => true, 'message' => 'Cotización registrada con éxito!');
           $respuesta_json->response_json($response);
       } else {
@@ -129,7 +137,7 @@ $response = null;
   }
   
   }
-
+/*
 function calcularTotales($items, $costoInstalacion, $descuento) {
   $subtotal = 0;
   $iva = 0;
@@ -149,6 +157,47 @@ function calcularTotales($items, $costoInstalacion, $descuento) {
 
   // Calcular el IVA (asumiendo un 16%)
   $iva = $subtotal * 0.16;
+
+  // Sumar el IVA al total
+  $total += $iva;
+
+  return [
+      'subtotal' => $subtotal,
+      'iva' => $iva,
+      'total' => $total
+  ];
+}
+
+*/
+function calcularTotales($items, $costoInstalacion, $descuento) {
+  $subtotal = 0;
+  $iva = 0;
+  $total = 0;
+
+  // Verificar si hay elementos en el carrito
+  if (!empty($items)) {
+      // Calcular el subtotal
+      foreach ($items as $item) {
+          $subtotal += $item['price'] * $item['qty'];
+      }
+  }
+
+  // Agregar el costo de instalación al subtotal
+  $subtotal += $costoInstalacion;
+
+  // Calcular el total con descuento si se aplica
+  $descuento = ($descuento > 0 && $descuento <= 100) ? $descuento : 0;
+  if ($subtotal > 0) {
+      $total = $subtotal - ($subtotal * ($descuento / 100));
+  } else {
+      // Si no hay elementos en el carrito, el total será igual al costo de instalación
+      $total = $costoInstalacion;
+  }
+
+  // Calcular el IVA si hay un subtotal mayor que cero
+  if ($subtotal > 0) {
+      $iva = $subtotal * 0.16;
+  }
 
   // Sumar el IVA al total
   $total += $iva;

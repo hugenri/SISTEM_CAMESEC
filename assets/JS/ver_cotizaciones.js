@@ -4,39 +4,46 @@ function getCotizaciones() {
   fetch("actions/vercotizaciones.php")
       .then(response => response.json())
       .then(data => { 
-          if (data.success == true) {
-              document.getElementById("tablaCotizaciones").innerHTML = ""; // Limpiamos la tabla
-              let tabla = `<thead><tr><th class="text-nowrap">ID Cotización</th><th class="text-nowrap">Fecha</th>
-                  <th class="text-nowrap">Observaciones</th><th class="text-nowrap">ID Cliente</th>
+        if (data.success == true) {
+          document.getElementById("tablaCotizaciones").innerHTML = ""; // Limpiamos la tabla
+          let tabla = `<thead>
+              <tr>
+                  <th class="text-nowrap">ID Cotización</th>
+                  <th class="text-nowrap">Fecha</th>
+                  <th class="text-nowrap">Observaciones</th>
+                  <th class="text-nowrap">Cliente</th>
                   <th class="text-nowrap">Descripción</th>
-                  <th class="text-nowrap">Cantidad</th>
-                  <th class="text-nowrap">Precio Unitario</th>
-                  <th class="text-nowrap">Importe Total</th>
-                  <th class="text-nowrap">ID Producto</th>
-                  <th class="text-nowrap">ID Servicio</th>
-                  <th class="text-nowrap">ID Catálogo Cotizaciones</th>
-                  <th class="text-nowrap" colspan="2">Acciones</th></thead>`;
-              tabla += `<tbody>`;
-              for (let x of data.dataCotizaciones) {
-                  tabla += `<tr data-id="${x.idCotizacion}">
-                      <td class="text-nowrap">${x.idCotizacion}</td>
-                      <td class="text-nowrap">${x.fecha}</td>
-                      <td class="text-nowrap">${x.observaciones}</td>
-                      <td class="text-nowrap">${x.idCliente}</td>
-                      <td>${x.descripcion}</td>
-                      <td class="text-nowrap">${x.cantidad}</td>
-                      <td class="text-nowrap">${x.precioUnitario}</td>
-                      <td class="text-nowrap">${x.importeTotal}</td>
-                      <td class="text-nowrap">${x.idProducto}</td>
-                      <td class="text-nowrap">${x.idServicio}</td>
-                      <td class="text-nowrap">${x.idCatalogoCotizaciones}</td>
-                      <td><button class="bEliminar custom-button btn btn-danger btn-sm" data-id="${x.idCotizacion}" onclick="eliminar('${x.idCotizacion}')">Eliminar</button></td>
-                      <td><button class="bActualizar btn custom-button btn-primary btn-sm" data-id="${x.idCotizacion}" onclick="cargarForm()">Editar</button></td>
-                  </tr>`;
-              }
-              tabla += `</tbody>`;
-              document.getElementById("tablaCotizaciones").innerHTML = tabla;
-          } 
+                  <th class="text-nowrap">Subtotal</th>
+                  <th class="text-nowrap">Total</th>
+                  <th class="text-nowrap">IVA</th>
+                  <th class="text-nowrap">Descuento</th>
+                  <th class="text-nowrap">Costo de Instalación</th>
+                  <th class="text-nowrap">Servicio</th>
+                  <th class="text-nowrap" colspan="2">Acciones</th>
+              </tr>
+          </thead>`;
+          tabla += `<tbody>`;
+          for (let x of data.dataCotizaciones) {
+              tabla += `<tr data-id="${x.idCotizacion}">
+                  <td class="text-nowrap">${x.idCotizacion}</td>
+                  <td class="text-nowrap">${x.fecha}</td>
+                  <td class="text-nowrap">${x.observaciones}</td>
+                  <td class="text-nowrap">${x.razonSocialCliente}</td>
+                  <td>${x.descripcion}</td>
+                  <td class="text-nowrap">${x.subtotal}</td>
+                  <td class="text-nowrap">${x.total}</td>
+                  <td class="text-nowrap">${x.iva}</td>
+                  <td class="text-nowrap">${x.descuento}</td>
+                  <td class="text-nowrap">${x.costo_instalacion}</td>
+                  <td class="text-nowrap">${x.servicio}</td>
+                  <td><button class="bEliminar custom-button btn btn-danger btn-sm" data-id="${x.idCotizacion}" onclick="eliminar('${x.idCotizacion}')">Eliminar</button></td>
+                  <td><button class="bActualizar btn custom-button btn-primary btn-sm" data-id="${x.idCotizacion}" onclick="cargarForm()">Editar</button></td>
+              </tr>`;
+          }
+          tabla += `</tbody>`;
+          document.getElementById("tablaCotizaciones").innerHTML = tabla;
+      }
+      
           else {
               document.getElementById("tablaCotizaciones").innerHTML = ""; // Limpiamos la tabla
               document.getElementById("NoData").innerHTML = data.message;
@@ -122,8 +129,16 @@ function actualizar(evento) {//metodo para actualizar el registro
 
 function eliminar(id){
 
-  const confirmar = window.confirm("¿Deseas eliminar el registro?");
-      if(confirmar){
+  Swal.fire({
+    title: '¿Desea eliminar los datos de la cotización?',
+    text: 'Esta acción no se puede deshacer',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, eliminar'
+  }).then((result) => {
+    if (result.isConfirmed) {
       const formData = new FormData();
         formData.append('id', id);
 
@@ -138,15 +153,19 @@ function eliminar(id){
              if (row) {
                    row.remove();
                 }
-                alert(data.message);
-                //verUsuarios();
+                Swal.fire({
+                  title: 'Éxito',
+                  text: data.message,
+                  icon: 'success'
+              });
           }else {
-              alert(data.message);
-            }
-  }).catch(error => {
-    console.error('Error:', error);
-  });
-}
-  
-}
-
+            Swal.fire('Error', data.message, 'error');
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+    }
+    });
+    return ;
+    }

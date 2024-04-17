@@ -35,7 +35,6 @@ include_once '../clases/dataSanitizer.php';
 include_once '../clases/DataValidator.php';
 include_once '../clases/Cart.php';
 
-
 $consulta = new SolicitudCotizacionModel();
 $cosulta_Producto = new ProductoModel();
 $respuesta_json = new ResponseJson();
@@ -46,13 +45,15 @@ $action = $_POST['action'];
 
 if(isset($action) && !empty($action)){
 	if($action == 'mostarSolicitudes'){
-    $sql = "SELECT 
-     sc.*,
-     c.razonSocial AS cliente_razon_social
-     FROM
-     solicitudes_cotizacion sc
+        $sql = "SELECT 
+        sc.*,
+        c.razonSocial AS cliente_razon_social
+    FROM
+        solicitudes_cotizacion sc
     LEFT JOIN
-    cliente c ON sc.id_cliente = c.idCliente;";
+        cliente c ON sc.id_cliente = c.idCliente
+    WHERE
+        sc.estado = 'en proceso';";
     $datos = $consulta->getSolicitudesCotizacion($sql);
     if(!empty($datos)){
         $response = array('success' => true, 'dataSolicitud'  => $datos);

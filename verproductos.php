@@ -147,8 +147,8 @@ require_once 'layout/menu_admin.php';
 <script>
 
     // Script personalizado para validación en tiempo real
-    var formulario = document.getElementById('formUpdateProducto');
-    var enviarButton = document.getElementById('EButton'); // Agrega un ID al botón de envío
+    let formulario = document.getElementById('formUpdateProducto');
+    let enviarButton = document.getElementById('EButton'); // Agrega un ID al botón de envío
 
     formulario.addEventListener('input', function (event) {
         if (event.target.checkValidity()) {
