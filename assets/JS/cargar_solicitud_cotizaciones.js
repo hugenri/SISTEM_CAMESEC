@@ -14,15 +14,7 @@ formData.append('action', 'mostarSolicitudes');
   fetch("actions/solicitudes_cotizacion.php", {
     method: 'POST', // Especifica que la solicitud sea POst
     body: formData  // Usar el objeto FormData como cuerpo de la solicitud
-   }).
-   then(response => {
-    if (!response.ok) {
-        return response.json().then(errorData => {
-            throw new Error('Error en la solicitud. Código de estado: ' + response.status + ', Tipo de error: ' + errorData.error + ', Mensaje: ' + errorData.message);
-        });
-    }
-    return response.json(); // Suponiendo que la respuesta es JSON
-})
+   }).then(response => response.json())
       .then(data => { 
           if (data.success == true) {
               document.getElementById("tabla").innerHTML = ""; // Limpiamos la tabla
@@ -263,10 +255,10 @@ function calculateTotalPrice(items) {
  function eliminar_item(event, id) {
     event.preventDefault(); // Prevenir el envío del formulario
     var formData = new FormData();
-    formData.append('action', 'addListProduct');
+    formData.append('action', 'eliminarItem');
     formData.append('rowid', id);
     
-  fetch("actions/eliminar_item.php", {
+  fetch("actions/solicitudes_cotizacion.php", {
     method: 'POST', // Especifica que la solicitud sea POst
     body: formData  // Usar el objeto FormData como cuerpo de la solicitud
    })
@@ -313,4 +305,27 @@ function limpiarDatos() {
     document.getElementById("totaldescuento").innerHTML = "Descuento: $<span class='invoice-discount'>0.00</span>";
     document.getElementById("iva").innerHTML = "IVA: $<span class='invoice-vat'>0.00</span>";
     document.getElementById("total-iva").innerHTML = "Total: $<span class='invoice-total'>0.00</span>";
+}
+
+
+function eliminar_items(){
+    
+    //Definir formData 
+    const formData = new FormData();
+    formData.append('action', 'eliminarItems');
+
+    // Utiliza Fetch para enviar la acción al servidor
+    fetch('actions/solicitudes_cotizacion.php', {
+        method: 'POST',
+        body: formData,  // Usar el objeto FormData como cuerpo de la solicitud
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            console.log(data.message);
+        } else {
+            console.error(data.message);
+        }
+    })
+    .catch(error => console.error('Error al eliminar', error));
 }

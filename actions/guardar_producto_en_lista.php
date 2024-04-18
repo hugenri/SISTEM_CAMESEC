@@ -8,26 +8,6 @@ if ($session->getSessionVariable('rol_usuario') != 'admin') {
   header('location:' . $site);
 }
 
-// Función para manejar errores fatales y convertirlos en una respuesta JSON
-function handleFatalError() {
-    $error = error_get_last();
-    if ($error !== null) {
-        // Limpiar el búfer de salida
-        if (ob_get_contents()) ob_clean();
-        
-        http_response_code(500);
-        header('Content-Type: application/json');
-        $errorData = [
-            'error' => 'Error fatal',
-            'message' =>  $error['message']
-        ];
-        exit(json_encode($errorData));
-    }
-}
-
-// Registra la función para manejar errores fatales
-register_shutdown_function('handleFatalError');
-
 include_once '../model/SolicitudCotizacionModel.php';
 include_once '../model/ProductoModel.php';
 require_once '../clases/Response_json.php';
@@ -39,6 +19,7 @@ include_once '../clases/Cart.php';
 $consulta = new SolicitudCotizacionModel();
 $cosulta_Producto = new ProductoModel();
 $respuesta_json = new ResponseJson();
+
 
 $response = array();
 

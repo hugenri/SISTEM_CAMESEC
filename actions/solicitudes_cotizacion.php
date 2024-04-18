@@ -8,25 +8,6 @@ if ($session->getSessionVariable('rol_usuario') != 'admin') {
   header('location:' . $site);
 }
 
-// Función para manejar errores fatales y convertirlos en una respuesta JSON
-function handleFatalError() {
-    $error = error_get_last();
-    if ($error !== null) {
-        // Limpiar el búfer de salida
-        if (ob_get_contents()) ob_clean();
-        
-        http_response_code(500);
-        header('Content-Type: application/json');
-        $errorData = [
-            'error' => 'Error fatal',
-            'message' =>  $error['message']
-        ];
-        exit(json_encode($errorData));
-    }
-}
-
-// Registra la función para manejar errores fatales
-register_shutdown_function('handleFatalError');
 
 include_once '../model/SolicitudCotizacionModel.php';
 include_once '../model/ProductoModel.php';
@@ -64,71 +45,55 @@ if(isset($action) && !empty($action)){
         $respuesta_json->handle_response_json(false, 'No hay registros');
 
     }
-} else {
-    $respuesta_json->handle_response_json(false, 'Método de solicitud no admitido');
-}   
-if($action == 'addToListProduct'){
-$id = 3;//DataSanitizer::sanitize_input($_POST['id']);
-    $cantidad = 3;// DataSanitizer::sanitize_input($_POST['quantity']);
-
-    $datos = [$id, $cantidad];
-    $messageLetters = "Ingrese solo numeros en el dato";
-    $response = DataValidator::validateNumbersOnlyArray($datos, $messageLetters);
-    if ($response !== true) {
-        $respuesta_json->response_json($response);
-    }
-
-   // Obtener detalles del producto
-   $itemData = $cosulta_Producto->getProducto($id);
-       if(!empty($itemData)){
-     $cart = new Cart();
- 
-     // Ajustar el formato para que coincida con las expectativas de la función insert
-     $productForCart = array(
-         'id' => $itemData['id'],
-         'name' => $itemData['nombre'],  // Ajusta esto según la estructura de tu tabla
-         'imagen' => $itemData['imagen'], 
-         'price' => $itemData['precio'], // Ajusta esto según la estructura de tu tabla
-         'qty' => $cantidad,  // Puedes ajustar la cantidad predeterminada según tus necesidades
-     );
- 
-     // Intentar agregar el producto al carrito
-     $insertItem = $cart->insert($productForCart);
- 
-     $response = array(); // Inicializar $response
- 
-     if($insertItem){
-         $Items = $cart->getRowCount();
-         $response['success'] = true;
-         $response['message'] = 'El producto se agregó correctamente al carrito.';
-         $response['cartItems'] = $Items;
-         
-        $respuesta_json->response_json($response);
-    } else {
+}elseif($action == 'addToListProduct'){
+    
         $respuesta_json->handle_response_json(false, 'No hay registros');
-    }
 
-       }
-}elseif($action == 'elimonarProducto'){
-    $cart = new Cart;
+/******************* */
+}elseif($action == 'eliminarItems'){
+    $items = new Cart();
+    
+    $items->clear_cart();
+    
+    if($items->getRowCount() == 0){
+        $response['succes'] = true;
+      $response['message'] = 'Los items  fueron eliminados...';
+        
+    } else {
+        $response['succes'] = false;
+        $response['message'] = 'Error al eliminar los items.';
+    }
+    $respuesta_json->response_json($response);
+}elseif ($action == 'eliminarItem') {
+    $items = new Cart;
 
     $rowid = $_POST['rowid'];
     // Intentar obtener los elementos del carrito
-    $removeCartItem = $cart->remove($rowid);
+    $removeCartItem = $items->remove($rowid);
     
     if($removeCartItem){
-        $response['succes'] = true;
-            $response['message'] = 'El el elemento  fue eliminado.';
+        // Intentar obtener los elementos del carrito
+        $datos = $items->contents();
+        if($datos){
+            $response['success'] = true;
+            $response['items'] = array_values($datos); // Convertir el array asociativo a un array indexado
+            $respuesta_json->response_json($response);
     
+          } else {
+            $response['success'] = false;
+            $response['message'] = 'Error al obtener los elementos.';
+            $respuesta_json->response_json($response);
+    
+           }
         
     } else {
         $response['succes'] = false;
         $response['message'] = 'Error al eliminar el elemento.';
-    }
-    // Enviar la respuesta como JSON
-    header('Content-Type: application/json');
-    echo json_encode($response);
-    exit();
-   }
+        $respuesta_json->response_json($response);
 
+    }
 }
+
+} else {
+    $respuesta_json->handle_response_json(false, 'Método de solicitud no admitido');
+}  

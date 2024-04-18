@@ -19,6 +19,7 @@ function getCotizaciones() {
                   <th class="text-nowrap">Descuento</th>
                   <th class="text-nowrap">Costo de Instalación</th>
                   <th class="text-nowrap">Servicio</th>
+                  <th class="text-nowrap">Estatus</th>
                   <th class="text-nowrap" colspan="2">Acciones</th>
               </tr>
           </thead>`;
@@ -36,6 +37,7 @@ function getCotizaciones() {
                   <td class="text-nowrap">${x.descuento}</td>
                   <td class="text-nowrap">${x.costo_instalacion}</td>
                   <td class="text-nowrap">${x.servicio}</td>
+                  <td class="text-nowrap">${x.estatus}</td>
                   <td><button class="bEliminar custom-button btn btn-danger btn-sm" data-id="${x.idCotizacion}" onclick="eliminar('${x.idCotizacion}')">Eliminar</button></td>
                   <td><button class="bActualizar btn custom-button btn-primary btn-sm" data-id="${x.idCotizacion}" onclick="cargarForm()">Editar</button></td>
               </tr>`;

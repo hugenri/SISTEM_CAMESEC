@@ -44,7 +44,7 @@ require_once 'layout/menu_user1.php';
                 <img src="assets/images/imagen_servicios.png" class="card-img-top mx-auto" alt="Imagen de servicios">
                 <div class="card-body">
                     <h5 class="card-title">Servicios</h5>
-                    <p class="card-text">Descubre nuestros servicios y cómo podemos ayudarte.</p>
+                    <p class="card-text">Aquí puedes solicitar una cotización de los servicios</p>
                 </div>
             </div>
         </div>

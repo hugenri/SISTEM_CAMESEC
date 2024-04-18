@@ -258,7 +258,7 @@ function abrirModal(modalId) {
     modal.style.display = 'block';
     modal.setAttribute('aria-modal', 'true');
     modal.setAttribute('aria-hidden', 'false');
-    cargarProductos(); // Llama a cualquier función necesaria al abrir el modal
+    cargarProductos(); // Llama a la función al abrir el modal
 }
 
 // Función para cerrar el modal
@@ -270,8 +270,12 @@ function cerrarModal(modalId) {
     modal.setAttribute('aria-hidden', 'true');
 }
 function cerrarPopup(){
-
+    let containerElement = document.getElementById('ItemsContent');
+   containerElement.innerHTML = '';
     document.getElementById("popup").style.display = "none";
+    eliminar_items();
+   
+   
 }
 </script>
 
