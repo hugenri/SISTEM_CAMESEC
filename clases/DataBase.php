@@ -6,27 +6,23 @@ class ConsultaBaseDatos{
     private $conexion;//variable para el objeto de la conexion 
 
     // Método para ejecutar consultas
-    public static function ejecutarConsulta($sql, $parametros = [], $regresarDatos = false) {
+    public static function ejecutarConsulta($sql, $parametros = [], $regresarDatos = false, $filas = "all") {
         try {
             //se crea la conexion a la base de datos
             $conexion = ConexionBD::getconexion();
             // Preparar la consulta
             $consulta = $conexion->prepare($sql);
-
-            // Si hay parámetros, bindearlos
-            /*
-            if ($parametros) {
-                foreach ($parametros as $nombre => $valor) {
-                    $consulta->bindValue(":$nombre", $valor);
-                }
-        }
-        */
+ 
             // Ejecutar la consulta
             $consulta->execute($parametros);
 
             // Dependiendo del tipo de consulta y del parámetro $returnData, manejar el resultado
             if ($regresarDatos) {
+                if($filas == "all"){
                 return $consulta->fetchAll(PDO::FETCH_ASSOC);
+            }else{
+                return $consulta->fetch(PDO::FETCH_ASSOC);
+            }
             } elseif (strpos($sql, 'INSERT') === 0) {
                 // Si es una inserción, devolver el último ID insertado
                 return $conexion->lastInsertId();

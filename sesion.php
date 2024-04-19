@@ -3,7 +3,7 @@ include_once 'clases/Session.php';
 $session = new Session();
 $session->startSession(); // Llamada a la función para iniciar la sesión
 $site = $session->checkAndRedirect();
-if($session->getSessionVariable('rol_usuario') == 'admin' || $session->getSessionVariable('rol_usuario') == 'usuario' ){
+if($session->getSessionVariable('rol_usuario') == 'admin' || $session->getSessionVariable('rol_usuario') == 'cliente' ){
 
   header('location:' . $site);
 }
