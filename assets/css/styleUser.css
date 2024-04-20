@@ -26,3 +26,20 @@ body {
     .ServiciobackColor{
         background-color: #f7f8aaa6;
     }
+	
+	/* estilo del popup*/
+
+    .divPopup {
+        display: none;
+        position: fixed; 
+        z-index: 1; 
+        padding-top: 100px; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%;
+        overflow: auto; 
+        background-color: #dfe2daf6; /* Cambiado a opacidad completa */
+        margin: 0;
+    }
+    

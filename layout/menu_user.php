@@ -9,9 +9,8 @@
       <i></i>
     </button>
     <div class="dropdown-content">
-      <a href="#">Link 1</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
+      <a href="carrito.php">Productos</a>
+     
     </div>
   </div> 
   <div class="custom-dropdown">
@@ -32,8 +31,7 @@
     </button>
     <div class="dropdown-content">
       <a href="cotizaciones_servicios.php">Mis cotizaciones</a>
-      <a href="#">Link 2</a>
-      <a href="#">Link 3</a>
+      <a href="aviso_cotizacion.php">Aviso de cotizaciones</a>
     </div>
   </div> 
 
