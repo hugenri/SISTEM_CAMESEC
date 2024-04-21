@@ -79,3 +79,18 @@ body {
   color: #ffffff; /* Cambia el color del texto dentro del card */
 }
 
+/* Ajustes de estilo para el card */
+    .card-body-notificacion {
+      cursor: pointer; /* Cambia el cursor al hacer clic */
+    }
+
+    /* Ajustes para que el dropdown ocupe todo el ancho del card */
+    .dropdown-menu {
+      width: 95%;
+    }
+	
+	.card-notificacion {
+    height: 54px; /* Cambia esta altura según tus necesidades */
+    background-color: rgb(229, 241, 119); /* Cambia este color según tus necesidades */
+    color: red;
+}

@@ -30,24 +30,17 @@ require_once 'layout/menu_admin1.php';
             <h3>Dashboard</h3>           
         </div>
         <div>
+        <p>Solicitudes de cotizacion pendientes</p>
 </div>
-<div id="containerNotificacionSolicitudes" class="col-md-4" style="display: none;">
-      <div class="card card-notificacion">
-        
-        <div class="card-body card-body-notificacion" id="dropdown-card">
-        <span style="display: inline;">
-    <h6 class="card-title me-2" style="display: inline;">Solicitudes para cotización</h6>
-    <img src="assets/images/ctz.png" class="me-2" alt="Imagen de cliente" style="display: inline;">
+<div class="dropdown">
+  <button class="btn" type="button" id="notification-dropdown" aria-expanded="false">
+    <img src="assets/images/notificacion.png" />
     <span id="notification-count"></span>
-</span>
-
-          <!-- Dropdown oculto -->
-          <ul class="dropdown-menu" id="notification-menu">
-            
-          </ul>
-        </div>
-      </div>
-    </div>
+  </button>
+  <ul class="dropdown-menu dropdown-menu-start" aria-labelledby="notification-dropdown" id="notification-menu" style="display: none;">
+    <!-- Aquí se insertarán las notificaciones -->
+  </ul>
+</div>
 
 
     </div>

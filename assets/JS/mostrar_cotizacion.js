@@ -105,9 +105,9 @@ function getCotizaciones() {
                             Cotización
                         </div>
                         <div class="card-body">
+                           <p class="card-text">Razón Social: ${cotizacion.razonSocial}</p>
                             <p class="card-text">Fecha de cotización: ${cotizacion.fecha}</p>
                             <p class="card-text">Servicio: ${cotizacion.servicio}</p>
-                            <p class="card-text">Razón Social: ${cotizacion.razonSocial}</p>
                             <a href="#" class="btn btn-success rounded-pill  d-block mx-auto addToCartBtn" data-product-id="${cotizacion.idCotizacion}">Ver Cotización</a>
                         </div>
                     </div>

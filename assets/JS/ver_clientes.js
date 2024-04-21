@@ -12,7 +12,6 @@ fetch("actions/verclientes.php")
           Nombre</th><th class="text-nowrap">Apellido paterno</th>
           <th class="text-nowrap">Apellido materno</th>
           <th class="text-nowrap">Razon Social</th>
-          <th class="text-nowrap">informacion de contacto</th>
           <th class="text-nowrap">Calle</th>
           <th class="text-nowrap">Numero</th>
            <th class="text-nowrap">Colonia</th>
@@ -21,18 +20,17 @@ fetch("actions/verclientes.php")
            <th class="text-nowrap">Estado</th>
           <th class="text-nowrap">Email</th>
           <th class="text-nowrap">Telefono</th>
-           <th class="text-nowrap">Detalles</th>
           <th class="text-nowrap" colspan="2">Acciones</th></thead>`;
 
            tabla += `<tbody>`; 
           for (let x of data.dataclients) {
          
-            tabla += `<tr data-id="${x.idCliente}"><td class="text-nowrap">${x.idCliente}</td>
-            <td class="text-nowrap">${x.nombre}</td>
+            tabla += `<tr data-id="${x.idCliente}">
+                     <td class="text-nowrap">${x.idCliente}</td>
+                        <td class="text-nowrap">${x.nombre}</td>
                       <td class="text-nowrap">${x.apellidoPaterno}</td>
                       <td class="text-nowrap">${x.apellidoMaterno}</td>
                       <td class="text-nowrap">${x.razonSocial}</td>
-                      <td class="text-nowrap">${x.informacionContacto}</td>
                       <td class="text-nowrap">${x.calle}</td>
                       <td class="text-nowrap">${x.numero}</td>
                       <td class="text-nowrap">${x.colonia}</td>
@@ -41,7 +39,6 @@ fetch("actions/verclientes.php")
                       <td class="text-nowrap">${x.estado}</td>
                       <td class="text-nowrap">${x.email}</td>
                       <td class="text-nowrap">${x.telefono}</td>
-                      <td class="text-nowrap">${x.otrosDetalles}</td>
                       <td><button class="bEliminar custom-button btn btn-danger btn-sm" data-id="${x.idCliente}" onclick="eliminar(${x.idCliente})">Eliminar</button></td>
                        <td><button class="bActualizar btn custom-button btn-primary btn-sm" data-id="${x.idCliente}" onclick="cargarForm()">Editar</button></td>
                       </tr>`;
@@ -79,14 +76,14 @@ function cargarForm() {
       const emailInput = document.getElementById("email");
       const telefonoInput = document.getElementById("telefono");
       const razonSocialInput = document.getElementById("razonSocial");
-      const informacionContactoInput = document.getElementById("informacionContacto");
+  
       const calleInput = document.getElementById("calle");
       const numeroInput = document.getElementById("numero");
       const coloniaInput = document.getElementById("colonia");
      //const estadoInput = document.getElementById("estado");
     // const municipioInput = document.getElementById("municipio");
       const cpInput = document.getElementById("cp");
-      const otrosDetallesInput = document.getElementById("otrosDetalles");
+    
       
       // Asignar los datos de la fila al formulario
       IdInput.value = celdas[0].innerHTML;
@@ -94,19 +91,18 @@ function cargarForm() {
       apellidoPaternoInput.value = celdas[2].innerHTML;
       apellidoMaternoInput.value = celdas[3].innerHTML;
       razonSocialInput.value = celdas[4].innerHTML;
-      informacionContactoInput.value = celdas[5].innerHTML;
-      calleInput.value = celdas[6].innerHTML;
-      numeroInput.value = celdas[7].innerHTML;
-      coloniaInput.value = celdas[8].innerHTML;
-     cpInput.value = celdas[9].innerHTML;
+      calleInput.value = celdas[5].innerHTML;
+      numeroInput.value = celdas[6].innerHTML;
+      coloniaInput.value = celdas[7].innerHTML;
+     cpInput.value = celdas[8].innerHTML;
      //municipioInput.value = celdas[10].innerHTML;
     //estadoInput.value = celdas[11].innerHTML;
-      emailInput.value = celdas[12].innerHTML;
-      telefonoInput.value = celdas[13].innerHTML;
-      otrosDetallesInput.value = celdas[14].innerHTML;
+      emailInput.value = celdas[11].innerHTML;
+      telefonoInput.value = celdas[12].innerHTML;
 
-      let estadoSeleccionado = celdas[11].innerHTML;
-      let municipioSeleccionado = celdas[10].innerHTML;
+
+      let estadoSeleccionado = celdas[10].innerHTML;
+      let municipioSeleccionado = celdas[9].innerHTML;
       cargarEstados(estadoSeleccionado);
       cargarMunicipios(estadoSeleccionado, municipioSeleccionado);
 /*
@@ -169,8 +165,16 @@ fetch('actions/actualizarcliente.php', {
 
 function eliminar(id) {
   
-  const confirmar = window.confirm("¿Deseas eliminar el registro?");  
-  if (confirmar) {
+  Swal.fire({
+    title: '¿Desea eliminar el registro del cliente?',
+    text: 'Esta acción no se puede deshacer',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Sí, eliminar'
+  }).then((result) => {
+    if (result.isConfirmed) {
     const formData = new FormData();
     formData.append('id', id);
     
@@ -185,16 +189,21 @@ function eliminar(id) {
         if (row) {
           row.remove();
         }
-        alert(data.message);
-        //verUsuarios();
+        Swal.fire({
+          title: 'Éxito',
+          text: data.message,
+          icon: 'success'
+      });
       } else {
-        alert(data.message);
+        Swal.fire('Error', data.message, 'error');
       }
-    })
-    .catch(error => {
+  })
+  .catch(error => {
       console.error('Error:', error);
-    });
-  }
+  });
+}
+});
+return ;
 }
 
 function cargarEstados(valorInicial) {

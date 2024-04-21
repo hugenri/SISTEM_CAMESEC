@@ -42,4 +42,9 @@ body {
         background-color: #dfe2daf6; /* Cambiado a opacidad completa */
         margin: 0;
     }
+    .contenedor-notificacion {
+        background-color: #abf3c1; /* Color de fondo */
+        color: red; /* Color de fuente */
+        
+    }
     

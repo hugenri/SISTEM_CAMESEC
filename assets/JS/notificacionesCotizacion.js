@@ -2,9 +2,14 @@ function notificaciorSolicitidesCotizacion() {
     fetch('actions/notificarSolicitudesCotizacion.php')
         .then(response => response.json())
         .then(data => {
-            // Aquí manejas la respuesta exitosa
+            // la respuesta exitosa
             if (data.success) {
+            // Obtener la longitud del array de objetos en la propiedad 'data'
+            const numero = data.dataSolicitud.length;
+            
+            if(numero > 0){
                 mostrarNotificaciones(data.dataSolicitud);
+            }
             }
         })
         .catch(error => {
@@ -15,61 +20,52 @@ function notificaciorSolicitidesCotizacion() {
 
 
 function mostrarNotificaciones(data) {
-    let notificationMenu = document.getElementById('notification-menu');
-    notificationMenu.innerHTML = ''; // Limpiar contenido anterior
+  let notificationMenu = document.getElementById('notification-menu');
+  notificationMenu.innerHTML = ''; // Limpiar contenido anterior
+  
+  // Mostrar el contenedor de cotizaciones si hay cotizaciones disponibles
+  const containerNotificacionSolicitudes = document.getElementById('containerNotificacionSolicitudes');
+         containerNotificacionSolicitudes.style.display = 'block';
 
-    data.forEach(datos => {
-        let listItem = document.createElement('li');
-        listItem.innerHTML = `<a class="dropdown-item" href="#"><p>${datos.servicio}</p>
-        <p>${datos.fecha_solicitud}</p>
-        </a>`;
-        notificationMenu.appendChild(listItem); // Agregar elemento al menú de notificaciones
-         
-        // Agregar línea de separación después de cada elemento <li>
-        let separator = document.createElement('hr');
-        notificationMenu.appendChild(separator);
-    });
+  data.forEach((datos, index) => {
+      let listItem = document.createElement('li');
+      listItem.innerHTML = `<a class="dropdown-item" href="cotizar_solicitud.php?idCliente=${datos.id_cliente}&idSolicitud=${datos.id}&razonSocial=${datos.razonSocial}&servicio=${datos.servicio}"">
+      <p>Cliente: ${datos.razonSocial}</p>
+      <p>Servicio: ${datos.servicio}</p>
+      <p>Fecha: ${datos.fecha_solicitud}</p></a>`;
+      notificationMenu.appendChild(listItem); // Agregar elemento al menú de notificaciones
 
-    // Actualizar el contador de notificaciones
-    let notificationCount = document.getElementById('notification-count');
-    notificationCount.textContent = data.length;
+      // Agregar línea de separación después de cada elemento <li> excepto el último
+      if (index !== data.length - 1) {
+          let separator = document.createElement('hr');
+          notificationMenu.appendChild(separator);
+      }
+  });
 
-    // Mostrar el menú de notificaciones
-    notificationMenu.style.display = 'block';
+  // Actualizar el contador de notificaciones
+  let notificationCount = document.getElementById('notification-count');
+  notificationCount.textContent = data.length;
+
+  // Mostrar el menú de notificaciones
+ // notificationMenu.style.display = 'block';
 }
 
-/*
-document.getElementById('notification-dropdown').addEventListener('click', function() {
-    let notificationMenu = document.getElementById('notification-menu');
-    let isExpanded = this.getAttribute('aria-expanded') === 'true';
 
-    if (isExpanded) {
-      this.setAttribute('aria-expanded', 'false');
-      notificationMenu.style.display = 'none';
-    } else {
-      this.setAttribute('aria-expanded', 'true');
-      notificationMenu.style.display = 'block';
-    }
-  });
-*/
-  document.addEventListener('DOMContentLoaded', function() {
-    let notificationMenu = document.getElementById('notification-menu');
-    let notificationDropdown = document.getElementById('notification-dropdown');
+// JavaScript para mostrar y ocultar el dropdown al hacer clic en el card
+document.getElementById('dropdown-card').addEventListener('click', function(event) {
+  var dropdownMenu = document.getElementById('notification-menu');
+  if (dropdownMenu.style.display === 'block') {
+    dropdownMenu.style.display = 'none';
+  } else {
+    dropdownMenu.style.display = 'block';
+  }
+  event.stopPropagation(); // Evita que el evento se propague al hacer clic en el card
+});
 
-    // Ocultar el menú de notificaciones al cargar la página
-    notificationMenu.style.display = 'none';
-    notificationDropdown.setAttribute('aria-expanded', 'false');
-
-    // Agregar el evento de clic al botón del menú de notificaciones
-    notificationDropdown.addEventListener('click', function() {
-      let isExpanded = this.getAttribute('aria-expanded') === 'true';
-
-      if (isExpanded) {
-        this.setAttribute('aria-expanded', 'false');
-        notificationMenu.style.display = 'none';
-      } else {
-        this.setAttribute('aria-expanded', 'true');
-        notificationMenu.style.display = 'block';
-      }
-    });
-  });
+// JavaScript para ocultar el dropdown al hacer clic fuera del card
+document.addEventListener('click', function(event) {
+  var dropdownMenu = document.getElementById('notification-menu');
+  if (event.target.closest('#dropdown-card') === null && dropdownMenu.style.display === 'block') {
+    dropdownMenu.style.display = 'none';
+  }
+});

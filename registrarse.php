@@ -135,21 +135,17 @@
         <h6>Contacto</h6>
     </div>
     <div class="row mb-3">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label for="correo" class="form-label">Correo Electrónico</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico" required>
             <div class="invalid-feedback">Por favor, ingresa un correo electrónico válido</div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label for="telefono" class="form-label">Teléfono</label>
             <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" required pattern="\d{10}">
             <div class="invalid-feedback">Por favor, ingresa un número de teléfono válido (solo números de 10 dígitos)</div>
         </div>
-        <div class="col-md-4">
-            <label for="informacionContacto" class="form-label">Información de Contacto</label>
-            <input type="text" class="form-control" id="informacionContacto" name="informacionContacto" placeholder="Información de Contacto" required pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{3,30}">
-            <div class="invalid-feedback">Por favor, ingresa información de contacto válida (solo letras, mínimo 3, máximo 30 caracteres)</div>
-        </div>
+        
     </div>
 
     <div class="row mb-3">

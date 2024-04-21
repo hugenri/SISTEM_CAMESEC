@@ -121,8 +121,7 @@
     <button class="dropbtn  fonnt-bolt">Cotizaciones 
     </button>
     <div class="dropdown-content">
-    <a href="ver_solicitudes_cotizaciones.php">Solicitud de cotizaciones</a>
-    <a href="agregarcotizacion.php">Agregar cotización</a>
+    <a href="ver_solicitudes_cotizaciones.php">Solicitudes de cotizacion</a>
       <a href="vercotizaciones.php">Ver lista cotizaciones</a>
       <a href="detalles_cotizaciones.php">Ver detalles de las cotizaciones</a>
 

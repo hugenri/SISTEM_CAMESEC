@@ -17,7 +17,6 @@ $respuesta_json = new ResponseJson();
   $razonSocial = DataSanitizer::sanitize_input($_POST['razonSocial']);
   $email = DataSanitizer::sanitize_input($_POST['email']);
   $telefono = DataSanitizer::sanitize_input($_POST['telefono']);
-  $infoContacto = DataSanitizer::sanitize_input($_POST['informacionContacto']);
   $calle = DataSanitizer::sanitize_input($_POST['calle']);
   $numero = DataSanitizer::sanitize_input($_POST['numero']);
   $colonia = DataSanitizer::sanitize_input($_POST['colonia']);
@@ -27,15 +26,14 @@ $respuesta_json = new ResponseJson();
   $nombre = DataSanitizer::sanitize_input($_POST['nombre']);
   $apellidoP = DataSanitizer::sanitize_input($_POST['apellidoPaterno']);
   $apellidoM = DataSanitizer::sanitize_input($_POST['apellidoMaterno']);
-  $otrosDetalles = 'sin detalles';
 
   $reCaptchaToken = $_POST['RCtoken']; //se obtiene el  token recaptcha
   $reCaptchaAction = $_POST['RCaction']; //se obtiene el  action del token recaptcha
 
 
 
-$data = [$nombre, $apellidoP, $apellidoM, $email, $telefono, $infoContacto,
-            $calle, $numero, $colonia,$municipio, $estado, $cp, $otrosDetalles];
+$data = [$nombre, $apellidoP, $apellidoM, $email, $telefono,
+            $calle, $numero, $colonia,$municipio, $estado, $cp];
    
         // Verificar si el ReCAPTCHA es válido
 if (!ReCaptchaVerifier::verify($reCaptchaToken, $reCaptchaAction)) {
@@ -106,8 +104,8 @@ if (!ReCaptchaVerifier::verify($reCaptchaToken, $reCaptchaAction)) {
         $claveGenerada = new Clave();
        $password = $claveGenerada->generarClave();
         $hashPassword = password_hash($password, PASSWORD_DEFAULT);
-        $result = $consulta->createClient($razonSocial, $nombre, $apellidoP, $apellidoM, $infoContacto, $calle, $numero, $colonia, 
-         $municipio, $estado, $cp, $email, $telefono, $otrosDetalles, $hashPassword);
+        $result = $consulta->createClient($razonSocial, $nombre, $apellidoP, $apellidoM, $calle, $numero, $colonia, 
+         $municipio, $estado, $cp, $email, $telefono, $hashPassword);
 
          if($result === true){
           $respuesta_json->handle_response_json(true, 'Cliente registrado con exito!');

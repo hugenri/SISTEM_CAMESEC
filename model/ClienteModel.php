@@ -73,15 +73,17 @@ public function clientExists($email){
     }
 }
 
-public function createClient($razonSocial, $nombre, $apellidoPaterno, $apellidoMaterno, $informacionContacto, $calle, $numero, $colonia, 
-    $municipio, $estado, $cp, $email, $telefono, $otrosDetalles, $password) {
+public function createClient($razonSocial, $nombre, $apellidoPaterno, $apellidoMaterno,  $calle, $numero, $colonia, 
+    $municipio, $estado, $cp, $email, $telefono, $password) {
     try {
         $this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
 
         // Se establece la sentencia de la consulta SQL
-        $sql = "INSERT INTO cliente (razonSocial, nombre, apellidoPaterno, apellidoMaterno, informacionContacto, calle, numero, colonia, municipio, estado, cp, email, telefono, 
-               otrosDetalles, password) VALUES (:razonSocial, :nombre, :apellidoPaterno, :apellidoMaterno, :informacionContacto, :calle, :numero, :colonia, :municipio,
-                :estado, :cp, :email, :telefono, :otrosDetalles, :password);";
+        $sql = "INSERT INTO cliente (razonSocial, nombre, apellidoPaterno, apellidoMaterno,
+         calle, numero, colonia, municipio, estado, cp, email, telefono, password)
+          VALUES (:razonSocial, :nombre, :apellidoPaterno, :apellidoMaterno,
+            :calle, :numero, :colonia, :municipio,
+                :estado, :cp, :email, :telefono, :password);";
 
         // Se prepara la sentencia de la consulta SQL
         $query = $this->conexion->prepare($sql);
@@ -91,7 +93,6 @@ public function createClient($razonSocial, $nombre, $apellidoPaterno, $apellidoM
         $query->bindParam(':nombre', $nombre);
         $query->bindParam(':apellidoPaterno', $apellidoPaterno);
         $query->bindParam(':apellidoMaterno', $apellidoMaterno);
-        $query->bindParam(':informacionContacto', $informacionContacto);
         $query->bindParam(':calle', $calle);
         $query->bindParam(':numero', $numero);
         $query->bindParam(':colonia', $colonia);
@@ -100,7 +101,6 @@ public function createClient($razonSocial, $nombre, $apellidoPaterno, $apellidoM
         $query->bindParam(':cp', $cp);
         $query->bindParam(':email', $email);
         $query->bindParam(':telefono', $telefono);
-        $query->bindParam(':otrosDetalles', $otrosDetalles);
         $query->bindParam(':password', $password);
 
 

@@ -98,36 +98,37 @@ require_once 'layout/menu_admin.php';
         <h6>Contacto</h6>
     </div>
     <div class="row mb-3">
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label for="correo" class="form-label">Correo Electrónico</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico" required>
             <div class="invalid-feedback">Por favor, ingresa un correo electrónico válido</div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-6">
             <label for="telefono" class="form-label">Teléfono</label>
             <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" required pattern="\d{10}">
             <div class="invalid-feedback">Por favor, ingresa un número de teléfono válido (solo números de 10 dígitos)</div>
         </div>
-        <div class="col-md-4">
-            <label for="informacionContacto" class="form-label">Información de Contacto</label>
-            <input type="text" class="form-control" id="informacionContacto" name="informacionContacto" placeholder="Información de Contacto" required pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{3,30}">
-            <div class="invalid-feedback">Por favor, ingresa información de contacto válida (solo letras, mínimo 3, máximo 30 caracteres)</div>
-        </div>
+        
     </div>
 
-    <div class="row mb-3">
-        <div class="col-md-12">
-            <label for="razonSocial" class="form-label">Razón Social</label>
-            <input type="text" class="form-control" id="razonSocial" name="razonSocial" placeholder="Razón Social" required minlength="8" maxlength="30">
-            <div class="invalid-feedback">Por favor, ingresa una razón social válida (mínimo 8, máximo 30 caracteres)</div>
+    <div class="row mb-3"> <!-- Utiliza la clase align-items-end para alinear los elementos a la parte inferior -->
+    <div class="col-md-6">
+        <label for="password" class="form-label">Contraseña:</label>
+        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required
+               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s])[A-Za-z\d\W\S]{8,16$}">
+        <div class="invalid-feedback">
+            La contraseña debe tener mínimo 8 y máximo 16 caracteres, incluir al menos una letra mayúscula, una letra minúscula, un número y al menos un carácter especial.
         </div>
     </div>
-
-    <div class="mb-3">
-        <label for="otrosDetalles" class="form-label">Otros Detalles</label>
-        <textarea class="form-control" id="otrosDetalles" rows="3" name="otrosDetalles" placeholder="Agrega detalles adicionales" required minlength="8" maxlength="120" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"></textarea>
-        <div class="invalid-feedback">Por favor, ingresa otros detalles válidos (solo letras, mínimo 8, máximo 120 caracteres)</div>
+    <div class="col-md-6">
+        <label for="razonSocial" class="form-label">Razón Social</label>
+        <input type="text" class="form-control" id="razonSocial" name="razonSocial" placeholder="Razón Social" required minlength="8" maxlength="30">
+        <div class="invalid-feedback">Por favor, ingresa una razón social válida (mínimo 8, máximo 30 caracteres)</div>
     </div>
+</div>
+
+
+    
 
     <button type="submit" class="custom-button btn btn-primary w-40">Enviar</button>
 </form>

@@ -26,8 +26,25 @@ require_once 'layout/menu_user1.php';
 
 
 
-<div id="div-contenido" class="container-fluid flex-grow-1">
-    <div class="row">
+<div class="row mt-2" id="cotizaciones-container" style="display: none;"> <!-- Contenedor oculto por defecto -->
+    <div class="col-12 d-flex justify-content-end align-items-center"> <!-- Alineación a la derecha -->
+    <a id="notificacion " href="aviso_cotizacion.php" class="text-decoration-none  cursor-pointer"> <!-- Agrega el enlace aquí -->
+        <div class="card contenedor-notificacion">
+            <div class="card-body card-body-notificacion" id="dropdown-card">
+                <span style="display: inline;">
+                    <h6 class="card-title" style="display: inline;">Cotizaciones por aprobar</h6>
+                    <img src="assets/images/ctz2.png" class="" alt="Imagen de cliente" style="display: inline;">
+                    <span id="notification-count"></span>
+                </span>
+
+            </div>
+        </div>
+</a>
+    </div>
+</div>
+
+    <!-- ########################## -->
+    <div class="row mt-3">
         <!-- Card para compra de productos -->
         <div class="col-lg-6 col-md-6 mt-3">
             <div class="card text-center" onclick="window.location.href='carrito.php';" style="cursor: pointer;">
@@ -59,6 +76,7 @@ require_once 'layout/menu_user1.php';
 
 </div> <!-- fin del contenido-->
 
+<script  src="assets/JS/getNumeroCotizaciones.js"></script>
 
 
 <script>

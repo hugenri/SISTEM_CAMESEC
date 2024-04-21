@@ -20,57 +20,14 @@ require_once 'layout/menu_admin.php';
 
 <div id="div-contenido" class="container-fluid flex-grow-1"> <!-- el contenido  en este div -->
 
-    <div class="row justify-content-center align-items-center mt-2 mb-3">
-        <div class="col-lg-12 col-md-6 col-sm-12 text-center">
-            <h3 id="titulo" class="mb-3">Solicitudes de cotizacion</h3>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                <div class="row justify-content-between align-items-center">
-                <div class="col-lg-6 col-md-6 col-sm-6 mt-1 mb-1">
-                        <div class="input-group">
-                            <label for="searchInput" class="input-group-text">Filtro de búsqueda:</label>
-                            <input type="text" id="searchInput" class="form-control" placeholder="Buscar..." oninput="filtrar('tabla')">
-
-                        </div>
-                    </div>
-                </div>
-                </div>
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="tabla" class="table table-striped table-sm">
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="row justify-content-center">
-        <div class="col-lg-12 col-md-12 col-sm-12">
-            <div class="justify-content-center">
-                <h4 id="NoData"></h4> <!-- mensaje si no hay datos que mostrar -->
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- popup -->
-<div id="popup" class="divPopup">
+   
 <div class="container-fluid">
     <div class="row justify-content-center">
         <div class="col-lg-11 col-md-11">
         <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
         <h4 class="text-center mb-0">Cotizar Servicio</h4>
-        <button id="closeButton" class="close-button"
-        onclick="cerrarPopup()">
-        <img src="assets/images/cerrar.png" alt="Cerrar">
-        </button>
+       
         </div>
         <div class="card-body">
         <form id="form">
@@ -160,7 +117,7 @@ require_once 'layout/menu_admin.php';
    </div>
     </div>
     </div>
-    </div>
+
 </div> <!-- fin del contenido-->
 
 <div class="modal fade" id="ModalProducto" tabindex="-1" role="dialog">
@@ -196,9 +153,8 @@ require_once 'layout/menu_admin.php';
     <script  src="assets/JS/form_validation.js"></script>
 <!--  -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script  src="assets/JS/cargar_solicitud_cotizaciones.js"></script>
-<script  src="assets/JS/agregarcotizacion.js"></script>
 <script  src="assets/JS/filtrar.js"></script>
+<script  src="assets/JS/cotizar_solicitud.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
@@ -269,14 +225,7 @@ function cerrarModal(modalId) {
     modal.setAttribute('aria-modal', 'false');
     modal.setAttribute('aria-hidden', 'true');
 }
-function cerrarPopup(){
-    let containerElement = document.getElementById('ItemsContent');
-   containerElement.innerHTML = '';
-    document.getElementById("popup").style.display = "none";
-    eliminar_items();
-   
-   
-}
+
 </script>
 
 

@@ -17,9 +17,11 @@ $respuesta_json = new ResponseJson();
 $validacion = true;
 $response = array();
 
-$sql = "SELECT *, (SELECT COUNT(*) FROM solicitudes_cotizacion WHERE estado = 'en proceso') as numRegistros 
-FROM solicitudes_cotizacion 
-WHERE estado = 'en proceso';";
+$sql = "SELECT sc.*, c.razonSocial 
+        FROM solicitudes_cotizacion sc 
+        INNER JOIN cliente c ON sc.id_cliente = c.idCliente 
+        WHERE sc.estado = 'en proceso';";
+
     // Si no se proporciona un ID, se asume que es una solicitud para obtener todas las cotizaciones
     $datos = $consulta->getSolicitudesCotizacion($sql);
 
