@@ -108,10 +108,24 @@ if (!ReCaptchaVerifier::verify($reCaptchaToken, $reCaptchaAction)) {
          $municipio, $estado, $cp, $email, $telefono, $hashPassword);
 
          if($result === true){
-          $respuesta_json->handle_response_json(true, 'Cliente registrado con exito!');
-         }else{
-          $respuesta_json->handle_response_json(false, 'Error en el registro');
-         }
+          $enlaceAcceso = 'https://golemsiseg.com/sesion.php';
+             // Después de la inserción exitosa en la base de datos
+            $correoElectronico = new CorreoElectronico();
+             $envioPassword = $correoElectronico->enviarCorreoRegistroExitoso($email, $nombre, $password, $enlaceAcceso);
+             if ($envioPassword) {
+              $response = array("success" => true, 'message' => 'Usuario registrado con éxito. Se ha enviado un correo electrónico.');
+              $respuesta_json->response_json($response);
+
+          } else {
+              $response = array('success' => true, 'message' => 'Usuario registrado con éxito. No se pudo enviar el correo electrónico.');
+              $respuesta_json->response_json($response);
+
+          }        }else{
+               $response = array('success' => false, 'message' => 'Error en el registro');
+               $respuesta_json->response_json($response);
+
+        }
+
          } 
 
 
