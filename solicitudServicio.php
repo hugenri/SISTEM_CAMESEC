@@ -106,7 +106,7 @@ require_once 'layout/menu_user.php';
     </div>
     <div class="col-lg-6">
       <h4 class="mb-3">Servicio a cotizar: <span id="servicio-seleccionado"></span></h4>
-      <p class="lead">Un especialista de la empresa se pondrá en contacto contigo para hacer una visita a tu empresa o realizar una video llamada y así tomar los requerimientos para realizar tu cotización del servicio.</p>
+      <p class="lead text-justify">Un especialista de la empresa se pondrá en contacto contigo para hacer una visita a tu empresa o realizar una video llamada y así tomar los requerimientos para realizar tu cotización del servicio.</p>
       <div class="d-grid gap-2 mt-2">
         <button id="solicitar-cotizacion" class="btn btn-primary btn-lg rounded-pill" onclick="cotizar()">Solicitar Cotización</button>
         <button id="cancelar" class="btn btn-danger  btn-lg rounded-pill">Cancelar</button>

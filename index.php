@@ -1,36 +1,14 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Inicio</title>
-  <!-- Incluir los estilos de Bootstrap 5 -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
-  <link href="assets/css/index.css" rel="stylesheet">
+<?php
+$titulo_pagina = "Inicio";
+require_once 'layout/header_public.php';
+?>
+    
 
 </head>
 <body>
-
- <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-      <div class="container">
-       
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a class="nav-link" href="index.php">Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="registrarse.php">Registrarse</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="sesion.php">Iniciar sesión</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+<?php
+require_once 'layout/menu_public.php';
+?>
     </nav>
   <div id="containerCarousel" class="container mt-5">
     <div class="row justify-content-center">
@@ -49,32 +27,32 @@
           <!-- Slides -->
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <a href="amenidad.html?id=1">
+              <a href="servicio.php?id=1">
                <img src="assets/images/CCtv.jpg" class="d-block w-100 img-fluid" alt="Imagen 1">
               </a>
             </div>
             <div class="carousel-item">
-              <a href="amenidad.html?id=2">
+              <a href="servicio.php?id=2">
                <img src="assets/images/monitoreo.jpg" class="d-block w-100 img-fluid" alt="Imagen 2"> 
              </a>
             </div>
             <div class="carousel-item">
-              <a href="amenidad.html?id=3">
+              <a href="servicio.php?id=3">
                 <img src="assets/images/acceso.jpg" class="d-block w-100 img-fluid" alt="Imagen 3">
               </a>
             </div>
 			<div class="carousel-item">
-              <a href="amenidad.html?id=4">
+              <a href="servicio.php?id=4">
                 <img src="assets/images/personal.jpg" class="d-block w-100 img-fluid" alt="Imagen 4">
               </a>
             </div>
 			<div class="carousel-item">
-              <a href="amenidad.html?id=5">
+              <a href="servicio.php?id=5">
                 <img src="assets/images/perimetro.jpg" class="d-block w-100 img-fluid" alt="Imagen 5">
               </a>
             </div>
 			<div class="carousel-item">
-                <a href="amenidad.html?id=6">
+                <a href="servicio.php?id=6">
                 <img src="assets/images/plataforma.jpg" class="d-block w-100" alt="Imagen 6">
               </a>
             </div>
@@ -93,35 +71,79 @@
     </div>
   </div>
   
-<div class="container">
-
-	<!-- Primera sección -->
-<div class="row mt-4">
-  <h3>Nuestros productos y servicios </h3>
+  <div class="container mb-3">
+  <div class="row">
+    <div class="col-lg-4 col-md-4 col-sm-12 mt-4 mb-2">
+      <a href="servicio.php?id=1" class="card-link">
+        <div class="card justify-content-center">
+          <div class="card-body">
+            <h6 class="card-title text-center">Sistema de CCTV</h6>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 mt-4 mb-2">
+      <a href="servicio.php?id=2" class="card-link">
+        <div class="card justify-content-center">
+          <div class="card-body">
+            <h6 class="card-title text-center">Centro de Monitoreo</h6>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 mt-4 mb-2">
+      <a href="servicio.php?id=3" class="card-link">
+        <div class="card justify-content-center">
+          <div class="card-body">
+            <h6 class="card-title text-center">Sistemas de control de accesos</h6>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div> <!-- Cierra la primera fila (row) -->
   
-  </div>
-
-
-  <div class="row mt-1">
-
-		<div class="col-lg-4 col-md-6 col-sm-12  mt-3">
-
-		<p id="texto">Sistema de CCTV : Sistemas de circuito cerrado de televisión. Contempla los equipos de alta gama en tecnología y diseño para cada solución. Contamos con la ingeniería especializada en los diseños y la selección de equipos adecuados optimizando los costos.</p>
-		</div>
-		<div class="col-lg-4 col-md-6 col-sm-12  mt-3">
-		<p id="texto">Plataforma de integración: GOLEM SISTEMAS DE SEGURIDAD. Tiene el respaldo de las marcas comerciales en plataformas de integración con otros sistemas de seguridad y control.</p>
-		</div>
-		<div class="col-lg-4 col-md-6 col-sm-12  mt-3">
-		<p id="texto">Centro de monitoreo: Realizamos proyectos completos para centros de monitoreo y arreglos de pantallas VideoWall: Centro de control y comandos & Centro de monitoreo local.</p>
-		</div>
-	</div>
+  <div class="row"> <!-- Abre una nueva fila (row) -->
+    <div class="col-lg-4 col-md-4 col-sm-12 mt-4 mb-2">
+      <a href="servicio.php?id=4" class="card-link">
+        <div class="card justify-content-center">
+          <div class="card-body">
+            <h6 class="card-title text-center">Control de personal</h6>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 mt-4 mb-2">
+      <a href="servicio.php?id=5" class="card-link">
+        <div class="card justify-content-center">
+          <div class="card-body">
+            <h6 class="card-title text-center">Control perimetral</h6>
+          </div>
+        </div>
+      </a>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-12 mt-4 mb-2">
+      <a href="servicio.php?id=6" class="card-link">
+        <div class="card justify-content-center">
+          <div class="card-body">
+            <h6 class="card-title text-center">Plataformas</h6>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div> <!-- Cierra la segunda fila (row) -->
 </div>
+
 	
   <!-- Incluir los scripts de Bootstrap 5 -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
   
+  
+<script>
+
+responsive_topnav();
+
+</script>
    <!-- Pie de página -->
-  <!-- Pie de página -->
   <?php
 
 require_once 'layout/footer.php';

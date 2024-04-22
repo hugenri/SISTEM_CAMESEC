@@ -7,50 +7,18 @@
   <script src="https://www.google.com/recaptcha/api.js?render=6Lcb4OgnAAAAANdIPDiiDfiWcEhW01H4vGXhDIvs"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
   <link href="assets/css/style.css" rel="stylesheet">
+  <link href="assets/css/index.css" rel="stylesheet">
+  <script src="assets/JS/menu.js"></script>
+    <link href="assets/css/style_menu.css" rel="stylesheet">
+    
    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
 
 <body class="d-flex flex-column min-vh-100">
 
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-
-    <div class="container">
-
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-
-        <span class="navbar-toggler-icon"></span>
-
-      </button>
-
-      <div class="collapse navbar-collapse" id="navbarNav">
-
-        <ul class="navbar-nav">
-
-          <li class="nav-item">
-
-            <a class="nav-link" href="index.php">Inicio</a>
-
-          </li>
-
-          <li class="nav-item">
-
-            <a class="nav-link" href="registrarse.php">Registrarse</a>
-
-          </li>
-
-          <li class="nav-item">
-
-            <a class="nav-link" href="sesion.php">Ingresar</a>
-
-          </li>
-
-        </ul>
-
-      </div>
-
-    </div>
-
-  </nav>
+<?php
+require_once 'layout/menu_public.php';
+?>
 
 <div id="div-contenido" class="container-fluid flex-grow-1">
 
@@ -212,6 +180,12 @@
 </script>
 <script  src="assets/JS/form_validation.js"></script>
  <!-- Pie de página -->
+ 
+<script>
+
+responsive_topnav();
+
+</script>
  <?php
 require_once 'layout/footer.php';
 
