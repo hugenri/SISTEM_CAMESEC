@@ -80,11 +80,13 @@ public function getSolicitudCotizaciones($idCliente){
 }
 
 //Función para obtener un regidtro
-public function getSolicitud_cotizacion_Servicio($servicio){
+public function getSolicitud_cotizacion_Servicio($servicio, $idCliente){
     try {
         $this->conexion = ConexionBD::getconexion();
-        $query = $this->conexion->prepare("SELECT COUNT(*) as count FROM solicitudes_cotizacion WHERE servicio = :servicio");
+        $query = $this->conexion->prepare("SELECT COUNT(*) as count FROM solicitudes_cotizacion 
+                                           WHERE servicio = :servicio AND id_cliente = :idCliente AND estado = 'en proceso';");
         $query->bindParam(':servicio', $servicio);
+        $query->bindParam(':idCliente', $idCliente);
         $query->execute();
         $row = $query->fetch(PDO::FETCH_ASSOC);
         

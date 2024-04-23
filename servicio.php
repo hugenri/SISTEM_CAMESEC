@@ -10,14 +10,14 @@ require_once 'layout/menu_public.php';
 ?>
 
 
-<div id= "div-contenido-servicios" class="container-fluid flex-grow-1 mb-3" style="margin-top: 50px;"> <!-- el contenido  en este div -->
+<div id= "div-contenido-servicios" class="container-fluid flex-grow-1 mb-3" style="margin-top: 90px;"> <!-- el contenido  en este div -->
 
 <div id="servicio-1" class="container" style="display: none;">
     <div class="row">
-      <div class="col">
+      <div class="col-lg-6 col-md-6 mb-3">
       <img src="assets/images/CCtv.jpg" class="img-fluid" alt="Imagen 1">
       </div>
-      <div class="col">
+      <div class="col-lg-6 col-md-6">
       <div>
 <h5>Sistemas de circuito cerrado de televisión</h5>
       </div>
@@ -26,21 +26,32 @@ require_once 'layout/menu_public.php';
          Son fundamentales para la seguridad en lugares públicos, empresas y residencias.
 </p>
 </div>
-<div class="text-center">
-    <a href="sesion.php" class="btn btn-outline-primary me-4">Ingresar</a>
-    <a href="registrarse.php" class="btn btn-outline-primary">Registrarse</a>
-</div>
 
+<div class="container">
+<div class="row">
+<div class="col-lg-12 col-md-12 col-sm-12 mt-3 mb-2"> 
+  <p class="fw-bold">¡Solicita el servicio  ahora o regístrate para solicitarlo!</p>
+</div>
+</div>
+<div class="row justify-content-center mb-2">
+  <div class="col-lg-6 col-md-6 col-sm-6"> 
+    <div class="d-flex justify-content-center">
+      <a href="sesion.php" class="btn btn-primary me-2">Ingresar</a>
+      <a href="registrarse.php" class="btn btn-primary">Registrarse</a>
+    </div>
+  </div>
+</div>
+</div>
       </div>
     </div>
   </div>
   
   <div id="servicio-2" class="container" style="display: none;">
     <div class="row">
-      <div class="col">
+      <div class="col-lg-6 col-md-6 mb-3">
       <img src="assets/images/monitoreo.jpg" class="d-block w-100 img-fluid" alt="Imagen 2"> 
       </div>
-      <div class="col">
+      <div class="col-lg-6 col-md-6 mb-3">
       <div>
       <h5> Centro de Monitoreo</h5>
       </div>
@@ -50,9 +61,21 @@ require_once 'layout/menu_public.php';
        sistemas de control de acceso. Permite una respuesta rápida ante cualquier incidente.
 </p>
 </div>
-<div class="text-center">
-<a href="sesion.php" class="btn btn-outline-primary me-4">Ingresar</a>
-    <a href="registrarse.php" class="btn btn-outline-primary">Registrarse</a>
+
+<div class="container">
+<div class="row">
+<div class="col-lg-12 col-md-12 col-sm-12 mt-3 mb-2"> 
+  <p class="fw-bold">¡Solicita el servicio  ahora o regístrate para solicitarlo!</p>
+</div>
+</div>
+<div class="row justify-content-center mb-2">
+  <div class="col-lg-6 col-md-6 col-sm-6"> 
+    <div class="d-flex justify-content-center">
+      <a href="sesion.php" class="btn btn-primary me-2">Ingresar</a>
+      <a href="registrarse.php" class="btn btn-primary">Registrarse</a>
+    </div>
+  </div>
+</div>
 </div>
       </div>
     </div>
@@ -60,10 +83,10 @@ require_once 'layout/menu_public.php';
 
   <div id="servicio-3" class="container" style="display: none;">
     <div class="row">
-      <div class="col">
+      <div class="col-lg-6 col-md-6 mb-3">
       <img src="assets/images/acceso.jpg" class="d-block w-100 img-fluid" alt="Imagen 3">
       </div>
-      <div class="col">
+      <div class="col-lg-6 col-md-6 mb-3">
       <div>
       <h5>Sistemas de control de accesos</h5>
       </div>
@@ -73,9 +96,21 @@ require_once 'layout/menu_public.php';
        Son esenciales para restringir el acceso a áreas sensibles y garantizar la seguridad.
 </p>
 </div>
-<div class="text-center">
-<a href="sesion.php" class="btn btn-outline-primary me-4">Ingresar</a>
-    <a href="registrarse.php" class="btn btn-outline-primary">Registrarse</a>
+
+<div class="container">
+<div class="row">
+<div class="col-lg-12 col-md-12 col-sm-12 mt-3 mb-2"> 
+  <p class="fw-bold">¡Solicita el servicio  ahora o regístrate para solicitarlo!</p>
+</div>
+</div>
+<div class="row justify-content-center mb-2">
+  <div class="col-lg-6 col-md-6 col-sm-6"> 
+    <div class="d-flex justify-content-center">
+      <a href="sesion.php" class="btn btn-primary me-2">Ingresar</a>
+      <a href="registrarse.php" class="btn btn-primary">Registrarse</a>
+    </div>
+  </div>
+</div>
 </div>
 </div>
     </div>
@@ -84,10 +119,10 @@ require_once 'layout/menu_public.php';
   <div id="servicio-4" class="container" style="display: none;">
 
     <div class="row">
-      <div class="col">
+      <div class="col-lg-6 col-md-6 mb-3">
       <img src="assets/images/personal.jpg" class="d-block w-100 img-fluid" alt="Imagen 4">
       </div>
-      <div class="col" >
+      <div class="col-lg-6 col-md-6 mb-3" >
       <div>
       <h5>  Control de personal</h5>
       </div>
@@ -97,9 +132,21 @@ require_once 'layout/menu_public.php';
        de identificación biométrica o tarjetas de proximidad para un registro preciso y seguro.
 </p>
 </div>
-<div class="text-center">
-<a href="sesion.php" class="btn btn-outline-primary me-4">Ingresar</a>
-    <a href="registrarse.php" class="btn btn-outline-primary">Registrarse</a>
+
+<div class="container">
+<div class="row">
+<div class="col-lg-12 col-md-12 col-sm-12 mt-3 mb-2"> 
+  <p class="fw-bold">¡Solicita el servicio  ahora o regístrate para solicitarlo!</p>
+</div>
+</div>
+<div class="row justify-content-center mb-2">
+  <div class="col-lg-6 col-md-6 col-sm-6"> 
+    <div class="d-flex justify-content-center">
+      <a href="sesion.php" class="btn btn-primary me-2">Ingresar</a>
+      <a href="registrarse.php" class="btn btn-primary">Registrarse</a>
+    </div>
+  </div>
+</div>
 </div>
       </div>
     </div>
@@ -107,10 +154,10 @@ require_once 'layout/menu_public.php';
 
   <div id="servicio-5" class="container" style="display: none;">
     <div class="row">
-      <div class="col">
+      <div class="col-lg-6 col-md-6 mb-3">
       <img src="assets/images/perimetro.jpg" class="d-block w-100 img-fluid" alt="Imagen 5">
       </div>
-      <div class="col">
+      <div class="col-lg-6 col-md-6 mb-3">
       <div>
       <h5> Control perimetral</h5>
       </div>
@@ -120,9 +167,21 @@ require_once 'layout/menu_public.php';
        Incluye sensores de movimiento, cercas electrificadas y sistemas de detección de intrusos.
 </p>
 </div>
-<div class="text-center">
-<a href="sesion.php" class="btn btn-outline-primary me-4">Ingresar</a>
-    <a href="registrarse.php" class="btn btn-outline-primary">Registrarse</a>
+
+<div class="container">
+<div class="row">
+<div class="col-lg-12 col-md-12 col-sm-12 mt-3 mb-2"> 
+  <p class="fw-bold">¡Solicita el servicio  ahora o regístrate para solicitarlo!</p>
+</div>
+</div>
+<div class="row justify-content-center mb-2">
+  <div class="col-lg-6 col-md-6 col-sm-6"> 
+    <div class="d-flex justify-content-center">
+      <a href="sesion.php" class="btn btn-primary me-2">Ingresar</a>
+      <a href="registrarse.php" class="btn btn-primary">Registrarse</a>
+    </div>
+  </div>
+</div>
 </div>
       </div>
     </div>
@@ -130,10 +189,10 @@ require_once 'layout/menu_public.php';
 
   <div id="servicio-6" class="container" style="display: none;">
     <div class="row">
-      <div class="col">
+      <div class="col-lg-6 col-md-6 mb-3">
       <img src="assets/images/plataforma.jpg" class="d-block w-100" alt="Imagen 6">
       </div>
-      <div class="col">
+      <div class="col-lg-6 col-md-6 mb-3">
       <div>
       <h5> Plataformas</h5>
       </div>
@@ -143,9 +202,21 @@ require_once 'layout/menu_public.php';
        centralizada, permitiendo un monitoreo y control eficiente desde cualquier ubicación.
 </p>
 </div>
-<div class="text-center">
-    <a href="sesion.php" class="btn btn-outline-primary me-4">Ingresar</a>
-    <a href="registrarse.php" class="btn btn-outline-primary">Registrarse</a>
+
+<div class="container">
+<div class="row">
+<div class="col-lg-12 col-md-12 col-sm-12 mt-3 mb-2"> 
+  <p class="fw-bold">¡Solicita el servicio  ahora o regístrate para solicitarlo!</p>
+</div>
+</div>
+<div class="row justify-content-center mb-2">
+  <div class="col-lg-6 col-md-6 col-sm-6"> 
+    <div class="d-flex justify-content-center">
+      <a href="sesion.php" class="btn btn-primary me-2">Ingresar</a>
+      <a href="registrarse.php" class="btn btn-primary">Registrarse</a>
+    </div>
+  </div>
+</div>
 </div>
       </div>
     </div>

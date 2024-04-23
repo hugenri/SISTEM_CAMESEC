@@ -56,4 +56,33 @@ class CorreoElectronico {
 
         return $contenido;
     }
+	
+	public function enviarCorreos($destinatarios) {
+    try {
+        foreach ($destinatarios as $destinatario) {
+            $email = $destinatario['email'];
+            $nombre = $destinatario['nombre'];
+            $contenidoHTML = $destinatario['contenidoHTML'];
+            $asunto = $destinatario['asunto'];
+
+            // Configuración del remitente y destinatario
+            $this->mail->setFrom('hchaparro@golemsiseg.com', 'Golem');
+            $this->mail->addAddress($email, $nombre);
+
+            // Configuración del correo
+            $this->mail->isHTML(true);
+            $this->mail->Subject = $asunto;
+            $this->mail->Body = $contenidoHTML;
+
+            // Enviar el correo electrónico
+            $this->mail->send();
+        }
+
+        return true;
+    } catch (Exception $e) {
+        // Manejar errores de envío de correo electrónico
+        return false;
+    }
+}
+
 }

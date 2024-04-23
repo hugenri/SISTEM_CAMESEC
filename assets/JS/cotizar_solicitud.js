@@ -17,7 +17,6 @@
     let idSolicitud = getParameterByName('idSolicitud');
     let razonSocial = getParameterByName('razonSocial');
     let servicio = getParameterByName('servicio');
-    console.log(idCliente+'...'+idSolicitud+'....'+servicio);
     // Asignar los valores a los campos ocultos
     document.getElementById('idCliente').value = idCliente;
     document.getElementById('id').value = idSolicitud;
@@ -289,15 +288,7 @@
         fetch('actions/crearcotizacion.php', {
             method: 'POST',
             body: datos
-        }).
-        then(response => {
-          if (!response.ok) {
-              return response.json().then(errorData => {
-                  throw new Error('Error en la solicitud. Código de estado: ' + response.status + ', Tipo de error: ' + errorData.error + ', Mensaje: ' + errorData.message);
-              });
-          }
-          return response.json(); // Suponiendo que la respuesta es JSON
-      })
+        }).then(response => response.json())
         .then(data => {
             if (data.success == true) {
               Swal.fire({

@@ -146,7 +146,11 @@ require_once 'layout/menu_admin.php';
         </div>
     </div>
 </div> <!-- fin del contenido-->
-
+<!-- Script personalizado para validación en tiempo real -->
+<script>
+  var formulario = document.getElementById('formUpdateCotizacion');
+</script>
+<script  src="assets/JS/form_validation.js"></script>
 <script  src="assets/JS/ver_cotizaciones.js"></script>
 <script  src="assets/JS/filtrar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -160,35 +164,7 @@ require_once 'layout/menu_admin.php';
     responsive_topnav();
 </script>
 
-<script>
 
-    // Script personalizado para validación en tiempo real
-    var formulario = document.getElementById('formUpdateServicio');
-    var enviarButton = document.getElementById('EButton'); // Agrega un ID al botón de envío
-
-    formulario.addEventListener('input', function (event) {
-        if (event.target.checkValidity()) {
-            event.target.classList.remove('is-invalid');
-        } else {
-            event.target.classList.add('is-invalid');
-        }
-    });
-
-    function submitForm(event) {
-        if (formulario.checkValidity()) {
-            // El formulario es válido
-            formulario.classList.add('was-validated');
-            // Llama a la función de actualización
-            actualizar(event);
-        } else {
-            // El formulario no es válido, se puede mostrar un mensaje de error o realizar acciones adicionales
-            event.preventDefault();
-            event.stopPropagation();
-            alert('Por favor, completa todos los campos correctamente antes de enviar el formulario.');
-        }
-    }
-
-</script>
 <!-- Pie de página -->
 
 <?php

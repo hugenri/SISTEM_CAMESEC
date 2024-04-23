@@ -109,8 +109,9 @@ $response = null;
  }
         
       if($validacion == true){//Si devuelve true, significa que el reCAPTCHA es válido y se puede continuar con el procesamiento del formulario
-         $result = $consulta->createClient($razonSocial, $nombre, $apellidoP, $apellidoM, $calle, $numero, $colonia, 
-         $municipio, $estado, $cp, $email, $telefono, $password);
+        $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+        $result = $consulta->createClient($razonSocial, $nombre, $apellidoP, $apellidoM, $calle, $numero, $colonia, 
+         $municipio, $estado, $cp, $email, $telefono, $hashPassword);
 
          if($result === true){
                $response = array("success" => true, 'message' => 'Cliente registrado con exito!');

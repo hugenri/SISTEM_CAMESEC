@@ -70,7 +70,14 @@ require_once 'layout/menu_public.php';
       </div>
     </div>
   </div>
-  
+  <div class="container mb-1 mt-1">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+  <h3>Explora Nuestro Catálogo de Servicios</h3>
+  </div>
+        </div>
+        </div>
+
   <div class="container mb-3">
   <div class="row">
     <div class="col-lg-4 col-md-4 col-sm-12 mt-4 mb-2">

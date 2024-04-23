@@ -7,31 +7,16 @@ $site = $session->checkAndRedirect();
   header('location:' . $site);
 }
 
-// Función para manejar errores fatales y convertirlos en una respuesta JSON
-function handleFatalError() {
-  $error = error_get_last();
-  if ($error !== null) {
-      // Limpiar el búfer de salida
-      if (ob_get_contents()) ob_clean();
-      
-      http_response_code(500);
-      header('Content-Type: application/json');
-      $errorData = [
-          'error' => 'Error fatal',
-          'message' =>  $error['message']
-      ];
-      exit(json_encode($errorData));
-  }
-}
 
-// Registra la función para manejar errores fatales
-register_shutdown_function('handleFatalError');
 include_once '../model/CotizacionModel.php';
 include_once '../clases/dataSanitizer.php';
 include_once '../clases/DataValidator.php';
 require_once '../clases/Response_json.php';
 require_once '../clases/Cart.php';
 require_once '../model/SolicitudCotizacionModel.php';
+require_once '../clases/email.php';
+require_once '../clases/DataBase.php';
+
 
 $respuesta_json = new ResponseJson();
 $consulta = new CotizacionModel();
@@ -39,8 +24,6 @@ $solicitudCotizacion = new SolicitudCotizacionModel();
 
 $validacion = true;
 $response = null;
-
-
 
   $id_solicitud_cotizacion = DataSanitizer::sanitize_input($_POST['idSolicitudCotizacion']);
   $fecha = DataSanitizer::sanitize_input($_POST['fecha']);
@@ -54,6 +37,7 @@ $response = null;
    // Sanitizar la entrada del descuento
    $descuento = isset($descuento) ? intval($descuento) : 0;
 
+
  
   $data = [$fecha, $observaciones, $idCliente, $descripcion,
           $id_solicitud_cotizacion, $costoInstalacion];
@@ -63,7 +47,7 @@ $response = null;
       $response = array('success' => false, 'message' => 'Faltan datos en el formulario');
       $respuesta_json->response_json($response);
 
-    }else{
+    }
       
     $date = $fecha; 
     $messageDate = 'Fecha no válida. Formato: Y-m-d';
@@ -107,8 +91,25 @@ $response = null;
      if ($response !== true) {
       $validacion = false;
       $respuesta_json->response_json($response);
+     }
+      // Query para verificar existencia de cotización
+  $sql = "SELECT * FROM cotizaciones WHERE idSolicitudCotizacion = :idSC";
 
+  // Parámetros para la consulta preparada
+  $parametros = array(
+      ':idSC' => $id_solicitud_cotizacion
+  );
+
+  // Ejecutar la consulta
+  $resultado = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');
+
+  // Verificar si se encontró el cliente y devolver sus datos
+  if (!empty($resultado)) {
+    $validacion = false;
+    $response = array('success' => false, 'message' => 'Existe una cotización');
+    $respuesta_json->response_json($response);
     }    
+   
     if ($validacion == true) {
       $datosItems = new Cart();
       $items = $datosItems->contents(); // Obtener los elementos del carrito
@@ -117,58 +118,99 @@ $response = null;
       $iva = $totales['iva'];
       $total = $totales['total'];
       // Llamar a createCotizacion y obtener el ID de la cotización
-      $id_cotizacion = $consulta->createCotizacion($fecha, $observaciones, $idCliente, $descripcion,
+      $id_cotizacion = $consulta->createCotizacion($fecha, $observaciones, $id_solicitud_cotizacion, $descripcion,
                                                    $subtotal, $total, $iva, $descuento, $costoInstalacion, $servicio);
       // Verificar si la cotización se creó correctamente
       if ($id_cotizacion !== false) {
+        
         if(!empty($items)){
-          // Llamar a insertOrderItems con el ID de la cotización
-         $orderitems = $consulta->insertOrderItems($id_cotizacion, $items);
-           // Si se registraron todas las ventas correctamente, vacía el carrito
-        $datosItems->clear_cart();
-        $solicitudCotizacion->updateEstado($id_solicitud_cotizacion, 'cotizada');
+           // Llamar a insertOrderItems con el ID de la cotización
+        $orderitems = $consulta->insertOrderItems($id_cotizacion, $items);
+          $datosItems->clear_cart(); // Si se registraron todas las ventas correctamente, vacía el carrito
         }
-          $response = array("success" => true, 'message' => 'Cotización registrada con éxito!');
+         
+         
+        $solicitudCotizacion->updateEstado($id_solicitud_cotizacion, 'cotizada');
+
+        $datos_cliente = obtenerDatosCliente($idCliente);
+        $emailCliente = $datos_cliente['email'];
+        $nombre = $datos_cliente['nombre'].' '. $datos_cliente['apellidoPaterno'] . ' '. $datos_cliente['apellidoMaterno'] ;
+        $razonSocial = $datos_cliente['razonSocial'];
+
+       // Verificar si se obtuvo el correo electrónico del cliente
+       if ($emailCliente !== null) {
+        $emailEnviado = email($emailCliente, $razonSocial, $nombre);
+        if ($emailEnviado) {
+          
+          $response = array("success" => true, 'message' => 'Cotización registrada con éxito! Se a enviado el email al cliente!');
           $respuesta_json->response_json($response);
+       } 
+       }
+         
       } else {
           $response = array('success' => false, 'message' => 'Error en el registro');
           $respuesta_json->response_json($response);
       }
-  }
-  
-  }
-/*
-function calcularTotales($items, $costoInstalacion, $descuento) {
-  $subtotal = 0;
-  $iva = 0;
-  $total = 0;
+      }
 
-  // Calcular el subtotal
-  foreach ($items as $item) {
-      $subtotal += $item['price'] * $item['qty'];
-  }
 
-  // Agregar el costo de instalación al subtotal
-  $subtotal += $costoInstalacion;
+//#################Funciones##################################
 
-  // Calcular el total con descuento
-  $descuento = ($descuento > 0 && $descuento <= 100) ? $descuento : 0;
-  $total = $subtotal - ($subtotal * ($descuento / 100));
+  function email($emailCliente, $razonSocial, $nombre) {
+    // Contenido HTML para el correo electrónico
+    $contenidoHTML = "
+        <html>
+        <head>
+            <title>Cotización de Servicio</title>
+        </head>
+        <body>
+            <p>Estimado(a) $nombre,</p>
+            <p>Su cotización del servicio ha sido realizada.</p>
+            <p>Por favor, ingrese al sitio web de GolemSistem para ver su cotización y aceptarla si es de su interés.</p>
+            <p><a href='https://golemsiseg.com/sesion.php'>Acceder a GolemSiseg</a></p>
+            <p>Gracias por su interés.</p>
+        </body>
+        </html>
+    ";
 
-  // Calcular el IVA (asumiendo un 16%)
-  $iva = $subtotal * 0.16;
+    // Configurar los datos para enviar el correo electrónico
+    $datosEmail = array(
+        'email' => $emailCliente,
+        'nombre' => $razonSocial,
+        'contenidoHTML' => $contenidoHTML,
+        'asunto' => 'Cotización de Servicio'
+    );
 
-  // Sumar el IVA al total
-  $total += $iva;
+    // Instanciar el objeto CorreoElectronico y enviar el correo
+    $email = new CorreoElectronico();
+    $emailEnviado = $email->enviarCorreos([$datosEmail]);
 
-  return [
-      'subtotal' => $subtotal,
-      'iva' => $iva,
-      'total' => $total
-  ];
+    return $emailEnviado;
 }
 
-*/
+function obtenerDatosCliente($idCliente) {
+  
+
+  // Query para obtener los datos del cliente
+  $sql = "SELECT nombre, apellidoPaterno, apellidoMaterno, razonSocial, email FROM cliente WHERE idCliente = :idCliente";
+
+  // Parámetros para la consulta preparada
+  $parametros = array(
+      ':idCliente' => $idCliente
+  );
+
+  // Ejecutar la consulta
+  $resultado = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');
+
+  // Verificar si se encontró el cliente y devolver sus datos
+  if (!empty($resultado)) {
+      return $resultado;
+  } else {
+      // En caso de que no se encuentre el cliente, puedes manejarlo según tus necesidades, como lanzar una excepción o devolver un valor predeterminado
+      return null;
+  }
+}
+
 function calcularTotales($items, $costoInstalacion, $descuento) {
   $subtotal = 0;
   $iva = 0;
@@ -208,3 +250,4 @@ function calcularTotales($items, $costoInstalacion, $descuento) {
       'total' => $total
   ];
 }
+  

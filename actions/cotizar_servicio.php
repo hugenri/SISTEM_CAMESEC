@@ -36,7 +36,7 @@ if(DataValidator::validateVariables($data) === false){
 
 }else{
 
-    $result = $consulta->getSolicitud_cotizacion_Servicio($servicio);
+    $result = $consulta->getSolicitud_cotizacion_Servicio($servicio, $idCliente);
     if($result){
         $validacion = false;
         $respuesta_json->handle_response_json(false, 'Ya tiene una solicitud de cotización en proceso del servicio.');

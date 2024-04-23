@@ -14,15 +14,15 @@ $this->conexion = null;
     }
 
  // Función para crear registro de cotizacion
-public function createCotizacion($fecha, $observaciones, $idCliente, $descripcion,
+public function createCotizacion($fecha, $observaciones, $idSolicitud, $descripcion,
 $subtotal, $total, $iva, $descuento, $costo_instalacion, $servicio) {
 try {
 $this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
 
 // Se establece la sentencia de la consulta SQL
-$sql = "INSERT INTO cotizaciones (fecha, observaciones, idCliente, descripcion, 
+$sql = "INSERT INTO cotizaciones (fecha, observaciones, idSolicitudCotizacion, descripcion, 
 subtotal, total, iva, descuento, costo_instalacion, servicio) 
-VALUES (:fecha, :observaciones, :idCliente, :descripcion, 
+VALUES (:fecha, :observaciones, :idsolicitud, :descripcion, 
 :subtotal, :total, :iva, :descuento, :costo_instalacion, :servicio)";
 
 // Se prepara la sentencia de la consulta SQL
@@ -31,7 +31,7 @@ $query = $this->conexion->prepare($sql);
 // Se vincula cada parámetro al nombre de variable especificado
 $query->bindParam(':fecha', $fecha);
 $query->bindParam(':observaciones', $observaciones);
-$query->bindParam(':idCliente', $idCliente);
+$query->bindParam(':idsolicitud', $idSolicitud);
 $query->bindParam(':descripcion', $descripcion);
 $query->bindParam(':subtotal', $subtotal);
 $query->bindParam(':total', $total);
@@ -69,9 +69,9 @@ public function getCotizaciones(){
           ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
          $sql = "SELECT c.*, cl.razonSocial AS razonSocialCliente
          FROM cotizaciones c
-         INNER JOIN cliente cl ON c.idCliente = cl.idCliente;";
-         
-         
+         INNER JOIN solicitudes_cotizacion sc ON c.idSolicitudCotizacion = sc.id
+         INNER JOIN cliente cl ON sc.id_cliente = cl.idCliente;;";
+      
       
           $query = $this->conexion->prepare($sql);
         
