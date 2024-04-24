@@ -128,17 +128,14 @@ require_once 'layout/menu_admin.php';
 </div>
 
 
-    
-
-    <div class="row mb-3 justify-content-center mt-2">
-    <div class="col-md-6 text-center">
-        <!-- Agregar un botón para resetear el formulario -->
-        <button type="reset" class="custom-button btn btn-danger me-2" style="width: 150px;">Limpiar</button>
-        <!-- Botón de envío -->
-        <button type="submit" class="custom-button btn btn-primary" style="width: 150px;">Enviar</button>
+    <div class="row justify-content-between mt-4">
+                <div class="col-5">
+                    <input type="submit" class="btn btn-primary w-100 rounded-5" value="Registrar Cliente">
+                </div>
+                <div class="col-5">
+                    <input type="reset" class="btn btn-secondary w-100 rounded-5" value="Borrar">
+                </div>
     </div>
-</div>
-
 
 </form>
 

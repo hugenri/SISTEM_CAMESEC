@@ -52,7 +52,7 @@ require_once 'layout/menu_admin.php';
               </div>
               <div class="mb-3">
     <label for="descripcion" class="form-label">Descripción del producto</label>
-    <textarea class="form-control" id="descripcion" rows="3" name="descripcion" placeholder="Agrega detalles" required minlength="8" maxlength="120" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"></textarea>
+    <textarea class="form-control" id="descripcion" rows="3" name="descripcion" placeholder="Agrega detalles" required minlength="8" maxlength="150" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"></textarea>
     <div class="invalid-feedback">La descripción debe tener entre 8 y 120 caracteres y solo puede contener letras y espacios.</div>
 </div>
 
@@ -60,8 +60,17 @@ require_once 'layout/menu_admin.php';
               <label for="imagen" class="form-label">Selecciona una imagen:</label>
         <input type="file" class="form-control" name="image" id="image" accept="image/*" required> 
         <div class="invalid-feedback">Selecciona una imagen.</div>
-      </div>        
-    <button type="submit"  class="custom-button btn btn-primary w-40">Enviar</button>
+      </div>  
+      <!--#####################-->
+
+      <div class="row justify-content-between mt-4 mb-3">
+                <div class="col-5">
+                <input type="submit" class="btn btn-primary w-100 rounded-5" value="Registrar Producto">
+                </div>
+                <div class="col-5">
+                    <input type="reset" class="btn btn-secondary w-100 rounded-5" value="Borrar">
+                </div>
+            </div>
     </form>
 
     </div>

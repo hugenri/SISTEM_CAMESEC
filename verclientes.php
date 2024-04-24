@@ -146,12 +146,12 @@ require_once 'layout/menu_admin.php';
         <h6>Contacto</h6>
     </div>
     <div class="row mb-3">
-        <div class="col-md-12">
+        <div class="col-md-6">
             <label for="correo" class="form-label">Correo Electrónico</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico" required>
             <div class="invalid-feedback">Por favor, ingresa un correo electrónico válido</div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-6">
             <label for="telefono" class="form-label">Teléfono</label>
             <input type="tel" class="form-control" id="telefono" name="telefono" placeholder="Teléfono" required pattern="\d{10}">
             <div class="invalid-feedback">Por favor, ingresa un número de teléfono válido (solo números de 10 dígitos)</div>
@@ -166,10 +166,17 @@ require_once 'layout/menu_admin.php';
             <div class="invalid-feedback">Por favor, ingresa una razón social válida (mínimo 8, máximo 30 caracteres)</div>
         </div>
     </div>
-
+ <!--#######################-->
     
+ <div class="row justify-content-between mt-4 mb-3">
+                <div class="col-5">
+                <button type="submit"  onclick="actualizar(event)" class="btn btn-primary w-100 rounded-5">Editar</button>
+                </div>
+                <div class="col-5">
+                    <input type="reset" class="btn btn-secondary w-100 rounded-5" value="Borrar">
+                </div>
+            </div>
                                                    
-    <button type="submit"  onclick="actualizar(event)" class="custom-button btn btn-primary w-40">Editar</button>
     </form>
   </div>
   </div>

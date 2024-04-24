@@ -108,7 +108,7 @@ require_once 'layout/menu_admin.php';
                         <div class="mb-3">
                             <label for="descripcion" class="form-label">Descripción del producto</label>
                             <textarea class="form-control" id="descripcion" rows="3" name="descripcion"
-                                      placeholder="Agrega detalles" required minlength="8" maxlength="120"
+                                      placeholder="Agrega detalles" required minlength="8" maxlength="150"
                                       pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"></textarea>
                             <div class="invalid-feedback">La descripción debe tener entre 8 y 120 caracteres y
                                 solo puede contener letras y espacios.
@@ -121,8 +121,15 @@ require_once 'layout/menu_admin.php';
                         </div>
                         <div id="mensajeError" class="alert alert-danger mb-3" style="display:none;"></div>
 
-                        <button type="button" id="EButton" onclick="submitForm(event)"
-                                class="custom-button btn btn-primary w-40">Editar</button>
+            <div class="row justify-content-between mt-4 mb-3">
+                <div class="col-5">
+                <button type="button" id="EButton" onclick="submitForm(event)"
+                                class="btn btn-primary w-100 rounded-5">Editar</button> 
+                 </div>
+                <div class="col-5">
+                    <input type="reset" class="btn btn-secondary w-100 rounded-5" value="Borrar">
+                </div>
+            </div>
                     </form>
                 </div>
             </div>

@@ -17,8 +17,6 @@ $validacion = true;
 $response = null;
 
 
-
-
   $nombre = DataSanitizer::sanitize_input($_POST['nombre']);
   $precio = DataSanitizer::sanitize_input($_POST['precio']);
   $descripcion = DataSanitizer::sanitize_input($_POST['descripcion']);
@@ -32,15 +30,6 @@ $response = null;
       $response = array('success' => false, 'message' => 'Faltan datos en el formulario');
     }else{
       
-      
-    $messageLetters = "Ingrese solo letras en el dato";
-     $response = DataValidator::validateLettersOnly($descripcion, $messageLetters);
-     if ($response !== true) {
-      $validacion = false;
-        echo json_encode($response);
-        exit();
-    }
-
     $messageLength = "El dato debe tener más de 5 caracteres y menos de 25";
      $response = DataValidator::validateLength($nombre, 5, 25, $messageLength);
      if ($response !== true) {
@@ -48,8 +37,8 @@ $response = null;
         echo json_encode($response);
         exit();
     }
-    $messageLength = "El dato debe tener más de 8 caracteres y menos de 120";
-    $response = DataValidator::validateLength($descripcion, 8, 120, $messageLength);
+    $messageLength = "El dato debe tener más de 8 caracteres y menos de 150";
+    $response = DataValidator::validateLength($descripcion, 8, 150, $messageLength);
     if ($response !== true) {
      $validacion = false;
        echo json_encode($response);
