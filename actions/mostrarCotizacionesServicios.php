@@ -1,6 +1,5 @@
 <?php
 
-
 include_once '../clases/Session.php';
 $session = new Session();
 $session->startSession(); // Llamada a la función para iniciar la sesión
@@ -12,10 +11,22 @@ if ($session->getSessionVariable('rol_usuario') != 'cliente') {
 
 include_once '../model/SolicitudCotizacionModel.php';
 include_once '../clases/dataSanitizer.php';
+require_once '../clases/Response_json.php';
+include_once '../clases/DataBase.php';
+
 
 $consulta = new SolicitudCotizacionModel();
 $response = array();
-$id_cliente = $session->getSessionVariable('id_cliente');
+
+$respuesta_json = new ResponseJson();
+
+$response = array();
+
+$action =  $_POST['action'];
+
+if(isset($action) && !empty($action)){
+  if($action == "mostarCotizacionServicios"){
+$id_cliente  = $session->getSessionVariable('id_cliente');
     // Si no se proporciona un ID, se asume que es una solicitud para obtener todas las cotizaciones
     $dataCotizaciones = $consulta->getSolicitudCotizaciones($id_cliente);
 
@@ -29,4 +40,8 @@ $id_cliente = $session->getSessionVariable('id_cliente');
   header('Content-Type: application/json');
   echo json_encode($response);
   exit();
-?>
+  }
+//++++++
+} else {
+    $respuesta_json->handle_response_json(false, 'Método de solicitud no admitido');
+}  

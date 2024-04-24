@@ -16,8 +16,10 @@ $respuesta_json = new ResponseJson();
 $id = $session->getSessionVariable('id_cliente');
 
 $sql = "SELECT COUNT(*) as num_cotizaciones 
-        FROM cotizaciones 
-        WHERE idCliente = :idCliente AND estatus = 'enviada'";
+        FROM cotizaciones c
+        INNER JOIN solicitudes_cotizacion sc ON c.idSolicitudCotizacion = sc.id
+        WHERE sc.id_cliente = :idCliente AND c.estatus = 'enviada';";
+
 $parametros = array(
     ':idCliente' => $id
 );

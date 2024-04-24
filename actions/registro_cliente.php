@@ -6,7 +6,6 @@ require_once '../clases/dataSanitizer.php';
 require_once '../clases/DataValidator.php';
 require_once '../clases/ReCaptcha.php';
 require_once '../clases/email.php';
-require_once '../clases/clave.php';
 
 $consulta = new ClienteModel();
 $validacion = true;
@@ -27,6 +26,7 @@ $response = null;
   $nombre = DataSanitizer::sanitize_input($_POST['nombre']);
   $apellidoP = DataSanitizer::sanitize_input($_POST['apellidoPaterno']);
   $apellidoM = DataSanitizer::sanitize_input($_POST['apellidoMaterno']);
+  $password = DataSanitizer::sanitize_input($_POST['password']);
 
    $data = [$nombre, $apellidoP, $apellidoM, $email, $telefono, $infoContacto,
             $calle, $numero, $colonia,$municipio, $estado, $cp, $otrosDetalles];
@@ -92,10 +92,17 @@ $response = null;
      echo json_encode($response);
      exit();
  }
+ $mesagePass = "La contraseña no cumple con el formato: letras minúsculas, mayúsculas, números y caracteres especiales. Mayor a 20  y menor a 8 caracteres.";
+  $response = DataValidator::validateFormatPassword($password, 8, 20, $mesagePass);
+  if ($response !== true) {
+    $validacion = false;
+      echo json_encode($response);
+      exit();
+  }
         
-      if($validacion == true){//Si devuelve true, significa que el reCAPTCHA es válido y se puede continuar con el procesamiento del formulario
+      if($validacion == true){
         $claveGenerada = new Clave();
-       $password = $claveGenerada->generarClave();
+      
         $hashPassword = password_hash($password, PASSWORD_DEFAULT);
         $result = $consulta->createClient($razonSocial, $nombre, $apellidoP, $apellidoM, $infoContacto, $calle, $numero, $colonia, 
          $municipio, $estado, $cp, $email, $telefono, $otrosDetalles, $hashPassword);

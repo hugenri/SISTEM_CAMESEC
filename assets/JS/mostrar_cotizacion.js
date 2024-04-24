@@ -172,15 +172,8 @@ function setEstatus(event, idCotizacion, estatus) {
             fetch("actions/mostrar_cotizacion.php", {
                 method: 'POST',
                 body: formData
-            })
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(errorData => {
-                        throw new Error('Error en la solicitud. Código de estado: ' + response.status + ', Tipo de error: ' + errorData.error + ', Mensaje: ' + errorData.message);
-                    });
-                }
-                return response.json();
-            })
+            }).then(response => response.json())
+
             .then(data => {
                 if (data.success === true) {
                     Swal.fire({
@@ -188,8 +181,12 @@ function setEstatus(event, idCotizacion, estatus) {
                         text: data.message,
                         icon: 'success'
                     });
-                    getCotizaciones();
-                    document.getElementById("popup").style.display = "none";
+                   
+                    setTimeout(() => {
+                        document.getElementById("popup").style.display = "none";
+                      location.reload(); // Recargar la página después de 1 segundo
+                
+                    }, 3000); 
                 } else {
                     Swal.fire('Error', data.message, 'error');
                 }

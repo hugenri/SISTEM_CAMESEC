@@ -49,73 +49,86 @@ require_once 'layout/menu_user.php';
         </div>
     </div>
 
-    
-    
 </div>
+
+<!-- ......................................-->
+
+<!-- popup -->
+<div id="popup" class="divPopup">
+<div id="div-cotizacion" class="container">
+<!-- Botón de cerrar -->
+        <div class="d-flex justify-content-end mt-3">
+        <img id="closeButton" class="close-button" src="assets/images/cerrar.png" alt="Cerrar" onclick='document.getElementById("popup").style.display = "none";' style="cursor: pointer;">
+
+        </div>
+	<div class="row">
+	<div class="col-lg-12 col-md-12 mb-3">
+    <h5>Datos del Cliente</h5>
+    <div class="row">
+        <div class="col-md-6">
+            <p id="nombre" class="mb-0"><strong>Nombre:</strong> Nombre del cliente aquí</p>
+        </div>
+        <div class="col-md-6">
+            <p id="razonSocial" class="mb-0"><strong>Razón Social:</strong> Razón social del cliente aquí</p>
+        </div>
+    </div>
+	<hr style="margin-top: 10px; margin-bottom: 10px;">
+</div>
+
+			<div class="col-lg-8 col-md-8">
+			<div class="row">
+				<div class="col-md-12">
+				<h5>Datos de la Cotización</h5>
+				     <p id="fecha"><strong>Fecha:</strong></p>
+                    <p id="servicio"><strong>Servicio:</strong></p>
+                    <p id="observaciones"><strong>Observaciones:</strong></p>
+                    <p id="descripcion"><strong>Descripción:</strong></p>
+				</div>
+				
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+				<h5>Datos del Producto</h5>
+                    <div  id="ItemsContent">
+     <!--  agregará dinámicamente aquí los productos -->
+     </div>
+				</div>
+				
+			</div>
+		</div>
+		<div class="col-lg-4 col-md-4" style="border: 1px solid black; padding: 10px;">
+			<div class="row">
+				<div class="col-lg-12 col-md-12">
+				<h5>Costo del servicio</h5>
+				 <p id="costoInstalacion"><strong>Costo de Instalación:</strong></p>
+                <p id="subtotal"><strong>Subtotal:</strong></p>
+                <p id="descuento"><strong>Descuento:</strong></p>
+                <p id="iva"><strong>IVA:</strong></p>
+                <p id="total"><strong>Total:</strong></p>
+				<!-- Línea divisoria -->
+				<hr style="margin-top: 10px; margin-bottom: 10px;">
+				<div class="col-md-12">
+    <h5>Acciones de Cotización</h5>
+    <div id="accionesCotizacion" class="d-flex justify-content-start">
+        <!--
+    <button  id="btnAceptar" type="button" class="btn btn-primary btn-sm rounded me-3" onclick="getEstatus(event, idCotizacion, 'aceptada')">Aceptar cotización</button>
+    <button id="btnRechazar" type="button" class="btn btn-primary btn-sm rounded" onclick="getEstatus(event, idCotizacion, 'rechasada')">Rechazar cotización</button>
+-->
+</div>
+</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+</div>
+
+
+</div><!-- fin popup -->
    
-
-
-
-
-
 </div> <!-- fin del contenido-->
-
-<script>
-document.addEventListener('DOMContentLoaded', function() {
-    mostrarCotizaciones();
-});
-
-function mostrarCotizaciones() {
-    let noData = document.getElementById("NoData"); // Limpiamos el mensaje de no hay datos
-    noData.innerHTML = "";
-    let tabla = document.getElementById("tablaCotizaciones") // Limpiamos la tabla
-
-    // Obtener las cotizaciones
-    fetch('actions/mostrarCotizacionesServicios.php')
-    .then(response => response.json())
-    .then(data => {
-        if (data.success == true) {
-            tabla.innerHTML = "";
-        // Verificar si se recibió un objeto o un array
-        const cotizaciones = Array.isArray(data.cotizaciones) ? data.cotizaciones : [data.cotizaciones];
-
-        // Mostrar las cotizaciones en una tabla utilizando Bootstrap 5
-        let tablaCotizaciones = `
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Servicio</th>
-                    <th>Fecha de Solicitud</th>
-                    <th>Estado</th>
-                </tr>
-            </thead>
-            <tbody>`;
-        
-        cotizaciones.forEach(cotizacion => {
-            tablaCotizaciones += `
-            <tr>
-                <td>${cotizacion.id}</td>
-                <td>${cotizacion.servicio}</td>
-                <td>${cotizacion.fecha_solicitud}</td>
-                <td>${cotizacion.estado}</td>
-            </tr>`;
-        });
-
-        tablaCotizaciones += `</tbody>`;
-        // Insertar la tabla en el contenedor deseado en tu página
-        tabla.innerHTML = tablaCotizaciones;
-    }else {
-              noData.innerHTML = data.message;
-          } 
-        
-    })
-    .catch(error => {
-        console.error(error);
-    });
-}
-
-
-</script>
+<script  src="assets/JS/cotizaciones_servicios.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
 
