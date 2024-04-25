@@ -26,6 +26,8 @@ $respuesta_json = new ResponseJson();
   $nombre = DataSanitizer::sanitize_input($_POST['nombre']);
   $apellidoP = DataSanitizer::sanitize_input($_POST['apellidoPaterno']);
   $apellidoM = DataSanitizer::sanitize_input($_POST['apellidoMaterno']);
+  $rfc = DataSanitizer::sanitize_input($_POST['rfc']);
+
 
   $reCaptchaToken = $_POST['RCtoken']; //se obtiene el  token recaptcha
   $reCaptchaAction = $_POST['RCaction']; //se obtiene el  action del token recaptcha
@@ -33,7 +35,7 @@ $respuesta_json = new ResponseJson();
 
 
 $data = [$nombre, $apellidoP, $apellidoM, $email, $telefono,
-            $calle, $numero, $colonia,$municipio, $estado, $cp];
+            $calle, $numero, $colonia,$municipio, $estado, $cp, $rfc];
    
         // Verificar si el ReCAPTCHA es válido
 if (!ReCaptchaVerifier::verify($reCaptchaToken, $reCaptchaAction)) {
@@ -99,13 +101,26 @@ if (!ReCaptchaVerifier::verify($reCaptchaToken, $reCaptchaAction)) {
    $validacion = false;
    $respuesta_json->response_json($response);
  }
+
+ $messageRFC = "¡Ingrese mínimo 12 y máximo 13 caracteres en el RFC¡";
+ $response = DataValidator::validateLength($rfc, 12, 13, $messageRFC);
+ if ($response !== true) {
+   $validacion = false;
+   $respuesta_json->response_json($response);
+ }
         
+ $messageRFC = "¡Ingrese solo letras y números en el RFC¡";
+ $response = DataValidator::validateLettersAndNumbers($rfc, $messageRFC);
+ if ($response !== true) {
+   $validacion = false;
+   $respuesta_json->response_json($response);
+ }       
       if($validacion == true){//Si devuelve true, significa que el reCAPTCHA es válido y se puede continuar con el procesamiento del formulario
         $claveGenerada = new Clave();
        $password = $claveGenerada->generarClave();
         $hashPassword = password_hash($password, PASSWORD_DEFAULT);
         $result = $consulta->createClient($razonSocial, $nombre, $apellidoP, $apellidoM, $calle, $numero, $colonia, 
-         $municipio, $estado, $cp, $email, $telefono, $hashPassword);
+         $municipio, $estado, $cp, $email, $telefono, $hashPassword, $rfc);
 
          if($result === true){
           $enlaceAcceso = 'https://golemsiseg.com/sesion.php';

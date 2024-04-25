@@ -20,6 +20,8 @@ fetch("actions/verclientes.php")
            <th class="text-nowrap">Estado</th>
           <th class="text-nowrap">Email</th>
           <th class="text-nowrap">Telefono</th>
+          <th class="text-nowrap">RFC</th>
+
           <th class="text-nowrap" colspan="2">Acciones</th></thead>`;
 
            tabla += `<tbody>`; 
@@ -39,6 +41,8 @@ fetch("actions/verclientes.php")
                       <td class="text-nowrap">${x.estado}</td>
                       <td class="text-nowrap">${x.email}</td>
                       <td class="text-nowrap">${x.telefono}</td>
+                      <td class="text-nowrap">${x.rfc}</td>
+
                       <td><button class="bEliminar custom-button btn btn-danger btn-sm" data-id="${x.idCliente}" onclick="eliminar(${x.idCliente})">Eliminar</button></td>
                        <td><button class="bActualizar btn custom-button btn-primary btn-sm" data-id="${x.idCliente}" onclick="cargarForm()">Editar</button></td>
                       </tr>`;
@@ -80,9 +84,10 @@ function cargarForm() {
       const calleInput = document.getElementById("calle");
       const numeroInput = document.getElementById("numero");
       const coloniaInput = document.getElementById("colonia");
-     //const estadoInput = document.getElementById("estado");
-    // const municipioInput = document.getElementById("municipio");
+    
       const cpInput = document.getElementById("cp");
+      const rfc = document.getElementById("rfc");
+
     
       
       // Asignar los datos de la fila al formulario
@@ -97,12 +102,12 @@ function cargarForm() {
      cpInput.value = celdas[8].innerHTML;
      //municipioInput.value = celdas[10].innerHTML;
     //estadoInput.value = celdas[11].innerHTML;
+    let municipioSeleccionado = celdas[9].innerHTML;
+      let estadoSeleccionado = celdas[10].innerHTML;
       emailInput.value = celdas[11].innerHTML;
       telefonoInput.value = celdas[12].innerHTML;
+      rfc.value = celdas[13].innerHTML;
 
-
-      let estadoSeleccionado = celdas[10].innerHTML;
-      let municipioSeleccionado = celdas[9].innerHTML;
       cargarEstados(estadoSeleccionado);
       cargarMunicipios(estadoSeleccionado, municipioSeleccionado);
 /*
@@ -137,8 +142,16 @@ function cargarForm() {
 function actualizar(evento) {//metodo para actualizar el registro
   evento.preventDefault();
 const datos = new URLSearchParams(new FormData(document.getElementById("formUpdateCliente")));
-const confirmar = window.confirm("¿Desea actializar el registro del cliente?");  
-if (confirmar) {
+Swal.fire({
+  title: '¿Desea actualizar el registro del cliente?',
+  text: 'Esta acción no se puede deshacer',
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Sí, actualizar'
+}).then((result) => {
+  if (result.isConfirmed) {
 fetch('actions/actualizarcliente.php', {
     method: 'POST',
     body: datos
@@ -146,22 +159,25 @@ fetch('actions/actualizarcliente.php', {
     .then(response => response.json())
     .then(data => {
       if (data.success == true) {
-        alert(data.message);
+        Swal.fire({
+          title: 'Éxito',
+          text: data.message,
+          icon: 'success'
+      });
         document.getElementById("formUpdateCliente").reset(); //se limpia el formulario
         document.getElementById("popup").style.display = "none";//estilo para ocultar el popup
         getClients();
       } else {
-        alert(data.message);
+        Swal.fire('Error', data.message, 'error');
       }
-      
-      }
-    ).catch(error => {
+  })
+  .catch(error => {
       console.error('Error:', error);
-    });
-  }
-  return ;
+  });
 }
-
+});
+return ;
+}
 
 function eliminar(id) {
   

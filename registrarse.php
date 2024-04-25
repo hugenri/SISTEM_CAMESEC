@@ -37,12 +37,12 @@ require_once 'layout/menu_public.php';
   <input type="hidden" id="recaptchaToken" name="RCtoken"> <!-- campos ocultos del token -->
   <input type="hidden" id="recaptchaAction" name="RCaction">            
     <div class="row mb-3">
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2">
             <label for="nombre" class="form-label">Nombre</label>
             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{3,20}">
             <div class="invalid-feedback">Por favor, ingresa un nombre válido (solo letras, mínimo 3, máximo 20 caracteres)</div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2">
             <label for="apellidoPaterno" class="form-label">Apellido Paterno</label>
             <input type="text" class="form-control" id="apellidoPaterno" name="apellidoPaterno" placeholder="Apellido Paterno" required pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{3,20}">
             <div class="invalid-feedback">Por favor, ingresa un apellido paterno válido (solo letras, mínimo 3, máximo 20 caracteres)</div>
@@ -58,12 +58,12 @@ require_once 'layout/menu_public.php';
         <h6>Dirección</h6>
     </div>
     <div class="row mb-3">
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2">
             <label for="calle" class="form-label">Calle</label>
             <input type="text" class="form-control" id="calle" name="calle" placeholder="Calle" required pattern="[a-zA-Z0-9\s]{3,30}">
             <div class="invalid-feedback">Por favor, ingresa una calle válida (solo letras y números, mínimo 3, máximo 30 caracteres)</div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2">
             <label for="numero" class="form-label">Número</label>
             <input type="text" class="form-control" id="numero" name="numero" placeholder="Número" required pattern="\d{1,5}">
             <div class="invalid-feedback">Por favor, ingresa un número válido (solo números, 5 dígitos)</div>
@@ -76,7 +76,7 @@ require_once 'layout/menu_public.php';
     </div>
 
     <div class="row mb-3">
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2">
             <label for="estado" class="form-label">Estado</label>
             <select id="estado" name="estado" class="form-control form-select" required>
                 <option value="">Seleccionar estado</option>
@@ -84,7 +84,7 @@ require_once 'layout/menu_public.php';
             </select>
             <div class="invalid-feedback">El estado es obligatorio.</div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4 mb-2">
             <label for="municipio" class="form-label">Municipio</label>
             <select id="municipio" name="municipio" class="form-control form-select" required>
                 <option value="">Seleccionar municipio</option>
@@ -103,7 +103,7 @@ require_once 'layout/menu_public.php';
         <h6>Contacto</h6>
     </div>
     <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-md-6 mb-2">
             <label for="correo" class="form-label">Correo Electrónico</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Correo Electrónico" required>
             <div class="invalid-feedback">Por favor, ingresa un correo electrónico válido</div>
@@ -115,12 +115,19 @@ require_once 'layout/menu_public.php';
         </div>
         
     </div>
-
+    <div class="mb-3">
+        <h6>Datos de la empresa</h6>
+    </div>
     <div class="row mb-3">
-        <div class="col-md-12">
+        <div class="col-md-6 mb-2">
             <label for="razonSocial" class="form-label">Razón Social</label>
             <input type="text" class="form-control" id="razonSocial" name="razonSocial" placeholder="Razón Social" required minlength="8" maxlength="30">
             <div class="invalid-feedback">Por favor, ingresa una razón social válida (mínimo 8, máximo 30 caracteres)</div>
+        </div>
+        <div class="col-md-6 mb-1">
+            <label for="rfc" class="form-label">RFC</label>
+            <input type="text" class="form-control" id="rfc" name="rfc" placeholder="Registro Federal de Contribuyentes" required minlength="12" maxlength="13"
+            pattern="[A-Za-z0-9]+" title="Por favor, ingresa un RFC válido (solo letras y números)">
         </div>
     </div>
 

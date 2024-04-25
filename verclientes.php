@@ -39,7 +39,7 @@ require_once 'layout/menu_admin.php';
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6 d-flex justify-content-end mt-1 mb-1"> 
-                   <a id="pdfLink" class="btn btn-primary btn-md custom-button" href="#"onclick="generarInformePDF('reporteclientespdf.js')">Generar informe PDF</a>
+                   <a id="pdfLink" class="btn btn-primary btn-md custom-button" href="#"onclick="generarInformePDF('reporteclientesPDF.php')">Generar informe PDF</a>
                     </div>
                 </div>
        </div>
@@ -159,13 +159,21 @@ require_once 'layout/menu_admin.php';
         
     </div>
 
-    <div class="row mb-3">
-        <div class="col-md-12">
-            <label for="razonSocial" class="form-label">Razón Social</label>
-            <input type="text" class="form-control" id="razonSocial" name="razonSocial" placeholder="Razón Social" required minlength="8" maxlength="30">
-            <div class="invalid-feedback">Por favor, ingresa una razón social válida (mínimo 8, máximo 30 caracteres)</div>
-        </div>
+    <div class="mb-3">
+        <h6>Datos de la empresa</h6>
     </div>
+    <div class="row mb-3">
+    <div class="col-md-6">
+        <label for="razonSocial" class="form-label">Razón Social</label>
+        <input type="text" class="form-control" id="razonSocial" name="razonSocial" placeholder="Razón Social" required minlength="8" maxlength="30">
+        <div class="invalid-feedback">Por favor, ingresa una razón social válida (mínimo 8, máximo 30 caracteres)</div>
+    </div>
+    <div class="col-md-6">
+    <label for="rfc" class="form-label">RFC</label>
+            <input type="text" class="form-control" id="rfc" name="rfc" placeholder="Registro Federal de Contribuyentes" required minlength="12" maxlength="13"
+            pattern="[A-Za-z0-9]+" title="Por favor, ingresa un RFC válido (solo letras y números)">
+    </div>
+</div>
  <!--#######################-->
     
  <div class="row justify-content-between mt-4 mb-3">

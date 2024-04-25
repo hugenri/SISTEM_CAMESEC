@@ -22,21 +22,21 @@ $id = DataSanitizer::sanitize_input($_POST['id']);
 $razonSocial = DataSanitizer::sanitize_input($_POST['razonSocial']);
 $email = DataSanitizer::sanitize_input($_POST['email']);
 $telefono = DataSanitizer::sanitize_input($_POST['telefono']);
-$infoContacto = DataSanitizer::sanitize_input($_POST['informacionContacto']);
 $calle = DataSanitizer::sanitize_input($_POST['calle']);
 $numero = DataSanitizer::sanitize_input($_POST['numero']);
 $colonia = DataSanitizer::sanitize_input($_POST['colonia']);
 $municipio = DataSanitizer::sanitize_input($_POST['municipio']);
 $estado = DataSanitizer::sanitize_input($_POST['estado']);
 $cp = DataSanitizer::sanitize_input($_POST['cp']);
-$otrosDetalles = DataSanitizer::sanitize_input($_POST['otrosDetalles']);
 $nombre = DataSanitizer::sanitize_input($_POST['nombre']);
 $apellidoP = DataSanitizer::sanitize_input($_POST['apellidoPaterno']);
 $apellidoM = DataSanitizer::sanitize_input($_POST['apellidoMaterno']);
+$rfc = DataSanitizer::sanitize_input($_POST['rfc']);
 
 
-$data = [$nombre, $apellidoP, $apellidoM, $email, $telefono, $infoContacto,
-$calle, $numero, $colonia,$municipio, $estado, $cp, $otrosDetalles];
+
+$data = [$nombre, $apellidoP, $apellidoM, $email, $telefono,
+$calle, $numero, $colonia,$municipio, $estado, $cp, $rfc];
 
     //si se envia formulario sin datos se marca un error
 if(DataValidator::validateVariables($data) === false){
@@ -94,12 +94,25 @@ if(DataValidator::validateVariables($data) === false){
      echo json_encode($response);
      exit();
      }
+     $messageRFC = "¡Ingrese mínimo 12 y máximo 13 caracteres en el RFC¡";
+ $response = DataValidator::validateLength($rfc, 12, 13, $messageRFC);
+ if ($response !== true) {
+   $validacion = false;
+   $respuesta_json->response_json($response);
+ }
+        
+ $messageRFC = "¡Ingrese solo letras y números en el RFC¡";
+ $response = DataValidator::validateLettersAndNumbers($rfc, $messageRFC);
+ if ($response !== true) {
+   $validacion = false;
+   $respuesta_json->response_json($response);
+ }       
      
      if($validacion == true){//Si devuelve true, significa que el reCAPTCHA es válido y se puede continuar con el procesamiento del formulario
         $result = $consulta->updateClient($id, $razonSocial, $nombre, $apellidoP, $apellidoM, 
-                                             $infoContacto,  $numero, $calle, $colonia, 
+                                            $numero, $calle, $colonia, 
                                                $municipio, $estado, $cp, $email, $telefono,
-                                               $otrosDetalles);
+                                               $rfc);
 
            if($result == true){
             $response = array("success" => true, 'message' => 'Se actualizaron los datos del cliente!');

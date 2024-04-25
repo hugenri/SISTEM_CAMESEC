@@ -31,11 +31,12 @@ $response = null;
   $apellidoP = DataSanitizer::sanitize_input($_POST['apellidoPaterno']);
   $apellidoM = DataSanitizer::sanitize_input($_POST['apellidoMaterno']);
   $password = DataSanitizer::sanitize_input($_POST['password']);
+  $rfc = DataSanitizer::sanitize_input($_POST['rfc']);
 
 
 
    $data = [$nombre, $apellidoP, $apellidoM, $email, $telefono,
-            $calle, $numero, $colonia,$municipio, $estado, $cp, $password];
+            $calle, $numero, $colonia,$municipio, $estado, $cp, $password, $rfc];
 
     //si se envia formulario sin datos se marca un error
     if(DataValidator::validateVariables($data) === false){
@@ -107,11 +108,25 @@ $response = null;
      echo json_encode($response);
      exit();
  }
+ $messageRFC = "¡Ingrese mínimo 12 y máximo 13 caracteres en el RFC¡";
+ $response = DataValidator::validateLength($rfc, 12, 13, $messageRFC);
+ if ($response !== true) {
+   $validacion = false;
+   echo json_encode($response);
+   exit(); 
+  }
         
+ $messageRFC = "¡Ingrese solo letras y números en el RFC¡";
+ $response = DataValidator::validateLettersAndNumbers($rfc, $messageRFC);
+ if ($response !== true) {
+   $validacion = false;
+   echo json_encode($response);
+   exit();
+   }             
       if($validacion == true){//Si devuelve true, significa que el reCAPTCHA es válido y se puede continuar con el procesamiento del formulario
         $hashPassword = password_hash($password, PASSWORD_DEFAULT);
         $result = $consulta->createClient($razonSocial, $nombre, $apellidoP, $apellidoM, $calle, $numero, $colonia, 
-         $municipio, $estado, $cp, $email, $telefono, $hashPassword);
+         $municipio, $estado, $cp, $email, $telefono, $hashPassword, $rfc);
 
          if($result === true){
                $response = array("success" => true, 'message' => 'Cliente registrado con exito!');

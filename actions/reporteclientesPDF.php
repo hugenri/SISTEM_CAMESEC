@@ -33,9 +33,9 @@ $html = '
 <head>
     <style>
         table {
-            width: 90%;
+            width: 70%;
             border-collapse: collapse;
-            font-size: 10px; /* Tamaño de fuente más pequeño */
+            font-size: 8px; /* Tamaño de fuente más pequeño */
         }
         th, td {
             border: 1px solid #000;
@@ -73,7 +73,6 @@ $html = '
                 <th>Nombre</th>
                 <th>Apellido Paterno</th>
                 <th>Apellido Materno</th>
-                <th>Información de Contacto</th>
                 <th>Calle</th>
                 <th>Número</th>
                 <th>Colonia</th>
@@ -82,6 +81,8 @@ $html = '
                 <th>CP</th>
                 <th>Email</th>
                 <th>Teléfono</th>
+                <th>RFC</th>
+
             </tr>
         </thead>
         <tbody>
@@ -95,7 +96,6 @@ foreach ($clientes as $cliente) {
     $html .= '<td>' . $cliente['nombre'] . '</td>';
     $html .= '<td>' . $cliente['apellidoPaterno'] . '</td>';
     $html .= '<td>' . $cliente['apellidoMaterno'] . '</td>';
-    $html .= '<td>' . $cliente['informacionContacto'] . '</td>';
     $html .= '<td>' . $cliente['calle'] . '</td>';
     $html .= '<td>' . $cliente['numero'] . '</td>';
     $html .= '<td>' . $cliente['colonia'] . '</td>';
@@ -104,6 +104,7 @@ foreach ($clientes as $cliente) {
     $html .= '<td>' . $cliente['cp'] . '</td>';
     $html .= '<td>' . $cliente['email'] . '</td>';
     $html .= '<td>' . $cliente['telefono'] . '</td>';
+    $html .= '<td>' . $cliente['rfc'] . '</td>';
     $html .= '</tr>';
 }
 

@@ -90,6 +90,16 @@ public static function validateLengthInArray($texts, $minLength, $maxLength, $me
     return true; // Todos los textos en el array cumplen con la longitud requerida
 }
 
+public static function validateLettersAndNumbers($text, $message) {
+    $text2 = str_replace(" ", "", $text);
+    if (preg_match("/^[\p{L}0-9\s]+$/u", $text2) === 1) {
+        return true;
+    } else {
+        $response = array('success' => false, 'message' => $message . ': '. $text);
+        return $response;
+    }
+}
+
 
 public static function validateVariables($variables) {
 

@@ -111,19 +111,29 @@ require_once 'layout/menu_admin.php';
         
     </div>
 
-    <div class="row mb-3"> <!-- Utiliza la clase align-items-end para alinear los elementos a la parte inferior -->
+    <div class="row mb-3">
     <div class="col-md-6">
-        <label for="password" class="form-label">Contraseña:</label>
+        <label for="password" class="form-label">Contraseña</label>
         <input type="password" class="form-control" id="password" name="password" placeholder="Password" required
                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\w\d\s])[A-Za-z\d\W\S]{8,16$}">
         <div class="invalid-feedback">
             La contraseña debe tener mínimo 8 y máximo 16 caracteres, incluir al menos una letra mayúscula, una letra minúscula, un número y al menos un carácter especial.
         </div>
     </div>
+</div>
+<div class="mb-3">
+        <h6>Datos de la empresa</h6>
+    </div>
+    <div class="row mb-3">
     <div class="col-md-6">
         <label for="razonSocial" class="form-label">Razón Social</label>
         <input type="text" class="form-control" id="razonSocial" name="razonSocial" placeholder="Razón Social" required minlength="8" maxlength="30">
         <div class="invalid-feedback">Por favor, ingresa una razón social válida (mínimo 8, máximo 30 caracteres)</div>
+    </div>
+    <div class="col-md-6">
+    <label for="rfc" class="form-label">RFC</label>
+            <input type="text" class="form-control" id="rfc" name="rfc" placeholder="Registro Federal de Contribuyentes" required minlength="12" maxlength="13"
+            pattern="[A-Za-z0-9]+" title="Por favor, ingresa un RFC válido (solo letras y números)">
     </div>
 </div>
 

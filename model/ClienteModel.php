@@ -74,16 +74,16 @@ public function clientExists($email){
 }
 
 public function createClient($razonSocial, $nombre, $apellidoPaterno, $apellidoMaterno,  $calle, $numero, $colonia, 
-    $municipio, $estado, $cp, $email, $telefono, $password) {
+    $municipio, $estado, $cp, $email, $telefono, $password, $rfc) {
     try {
         $this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
 
         // Se establece la sentencia de la consulta SQL
         $sql = "INSERT INTO cliente (razonSocial, nombre, apellidoPaterno, apellidoMaterno,
-         calle, numero, colonia, municipio, estado, cp, email, telefono, password)
+         calle, numero, colonia, municipio, estado, cp, email, telefono, password, rfc)
           VALUES (:razonSocial, :nombre, :apellidoPaterno, :apellidoMaterno,
             :calle, :numero, :colonia, :municipio,
-                :estado, :cp, :email, :telefono, :password);";
+                :estado, :cp, :email, :telefono, :password, :rfc);";
 
         // Se prepara la sentencia de la consulta SQL
         $query = $this->conexion->prepare($sql);
@@ -102,6 +102,8 @@ public function createClient($razonSocial, $nombre, $apellidoPaterno, $apellidoM
         $query->bindParam(':email', $email);
         $query->bindParam(':telefono', $telefono);
         $query->bindParam(':password', $password);
+        $query->bindParam(':rfc', $rfc);
+
 
 
         // Se ejecuta la consulta en la base de datos
@@ -150,10 +152,9 @@ public function deleteClient($id){
   }
 
     //método para actualizar los datos 
-    public function updateClient($id, $razonSocial, $nombre, $apellidoPaterno, $apellidoMaterno, 
-                               $informacionContacto,  $numero, $calle, $colonia, 
+    public function updateClient($id, $razonSocial, $nombre, $apellidoPaterno, $apellidoMaterno, $numero, $calle, $colonia, 
                                $municipio, $estado, $cp, $email, $telefono,
-                                $otrosDetalles) {
+                                $rfc) {
         try{
             $this->conexion = ConexionBD::getconexion();//se crea la conexión a la BD
 
@@ -162,8 +163,7 @@ public function deleteClient($id){
         SET razonSocial = :razonSocial, 
             nombre = :nombre, 
             apellidoPaterno = :apellidoPaterno, 
-            apellidoMaterno = :apellidoMaterno, 
-            informacionContacto = :informacionContacto, 
+            apellidoMaterno = :apellidoMaterno,  
             calle = :calle, 
             numero = :numero, 
             colonia = :colonia, 
@@ -172,7 +172,7 @@ public function deleteClient($id){
             cp = :cp, 
             email = :email, 
             telefono = :telefono, 
-            otrosDetalles = :otrosDetalles
+            rfc = :rfc
         WHERE idCliente = :idCliente;";
         
     //se  prepara la sentencia de la  consulta sql
@@ -183,7 +183,6 @@ public function deleteClient($id){
      $query->bindParam(':nombre', $nombre);
      $query->bindParam(':apellidoPaterno', $apellidoPaterno);
      $query->bindParam(':apellidoMaterno', $apellidoMaterno);
-     $query->bindParam(':informacionContacto', $informacionContacto);
      $query->bindParam(':calle', $calle);
      $query->bindParam(':numero', $numero);
      $query->bindParam(':colonia', $colonia);
@@ -192,7 +191,7 @@ public function deleteClient($id){
      $query->bindParam(':cp', $cp);
      $query->bindParam(':email', $email);
      $query->bindParam(':telefono', $telefono);
-     $query->bindParam(':otrosDetalles', $otrosDetalles);
+     $query->bindParam(':rfc', $rfc);
    // Ejecutar la consulta
    $result = $query->execute();
    // Verificar si la actualización se realizó correctamente
