@@ -39,7 +39,7 @@ public function startSession()
                 return 'home';
                 break;
             case 'empleado':
-                return 'home';
+                return 'tecnico';
                 break;
             default:
                 return '';

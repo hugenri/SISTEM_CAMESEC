@@ -9,7 +9,7 @@ $site = $session->checkAndRedirect();
 ?>
 
 <?php
-$titulo_pagina = "Crear Administrador";
+$titulo_pagina = "Crear Usuario Empleado";
 require_once 'layout/header_admin.php';
 ?>
 <body class="d-flex flex-column min-vh-100">
@@ -32,7 +32,7 @@ require_once 'layout/menu_admin.php';
 
 
 
-<h3 class="mt-3">Crear administrar del sitio web</h3>
+<h3 class="mt-3">Crear usuario empleado</h3>
 
             
 
@@ -45,10 +45,10 @@ require_once 'layout/menu_admin.php';
 <div class="card">
 <div class="card-header text-center">
 
-<h4>Formulario Administrador</h4>
+<h4>Formulario Empleado</h4>
 </div>
 <div class="card-body">
-<form id="formCreate">
+<form id="form">
 <div class="mb-3">
   <h6>Datos Personales</h6>
   </div>            
@@ -134,7 +134,7 @@ require_once 'layout/menu_admin.php';
 </div>
 
 </div> <!-- fin del contenido-->
-<script languaje= "javascript" src="assets/JS/crearAdmin.js"></script>
+<script languaje= "javascript" src="assets/JS/crearEmpleado.js"></script>
 
 <script>
 responsive_topnav();
@@ -142,7 +142,7 @@ responsive_topnav();
 
 <!-- Script personalizado para validación en tiempo real -->
 <script>
-  var formulario = document.getElementById('formCreate');
+  var formulario = document.getElementById('form');
 </script>
 <script  src="assets/JS/form_validation2.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

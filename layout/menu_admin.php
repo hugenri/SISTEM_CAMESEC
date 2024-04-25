@@ -9,6 +9,7 @@
     </button>
     <div class="dropdown-content">
       <a href="crearAdmin.php">Crear Usuario Administrador</a>
+      <a href="crearEmpleado.php">Crear Usuario Empleado</a>
       <a href="restablecerpassword.php">Restablecer contraseña de usuario</a>
       <a href="listausuarios.php">Ver lista de usuarios</a>
     </div>

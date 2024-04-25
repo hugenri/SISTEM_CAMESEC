@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function() {//con el submit se eje
 
   const datos = new FormData(document.getElementById("formCreate"));
   Swal.fire({
-    title: '¿Desea registar los datos del cliente?',
+    title: '¿Desea registar al administrador?',
     text: 'Esta acción no se puede deshacer',
     icon: 'warning',
     showCancelButton: true,

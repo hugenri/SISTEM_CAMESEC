@@ -80,7 +80,7 @@ $messageEmail = "La dirección de correo electrónico no es válida";
 
   
 
-      if($validacion == true){//Si devuelve true, significa que el reCAPTCHA es válido y se puede continuar con el procesamiento del formulario
+      if($validacion == true){
           $result = $consulta->userExists($email);
 
           if($result == true){
