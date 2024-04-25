@@ -9,12 +9,15 @@ if ($session->getSessionVariable('rol_usuario') != 'admin') {
 }
 
 
+
 include_once '../model/SolicitudCotizacionModel.php';
 include_once '../model/ProductoModel.php';
 require_once '../clases/Response_json.php';
 include_once '../clases/dataSanitizer.php';
 include_once '../clases/DataValidator.php';
 include_once '../clases/Cart.php';
+include_once '../clases/DataBase.php';
+
 
 $consulta = new SolicitudCotizacionModel();
 $cosulta_Producto = new ProductoModel();
@@ -92,6 +95,32 @@ if(isset($action) && !empty($action)){
         $respuesta_json->response_json($response);
 
     }
+    /*********************** */
+}elseif ($action == "eliminar") {
+    $id = DataSanitizer::sanitize_input($_POST['id']);
+
+    if($id == ""){
+        $respuesta_json->handle_response_json(false, 'Faltan datos');
+
+    }
+    $sql = "DELETE FROM solicitudes_cotizacion
+    WHERE id = :id;";
+    
+
+$parametros = array(
+':id' => $id
+);
+
+// Ejecutar la consulta
+$consulta = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros);
+
+if($consulta){
+    $respuesta_json->handle_response_json(true, 'El registro de la solicitud de cotización fue eliminado!');
+
+} else {
+    $respuesta_json->handle_response_json(false, 'El registro no se pudo eliminar');
+}
+
 }
 
 } else {

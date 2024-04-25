@@ -30,12 +30,12 @@ if(isset($action) && !empty($action)){
      } 
         
        $sql = "SELECT c.*, cl.nombre, cl.apellidoPaterno, cl.apellidoMaterno, cl.razonSocial,
-       p.nombre AS nombre_producto, p.precio, ps.cantidad
+       p.nombre AS nombre_producto, p.precio, pc.cantidad
        FROM cotizaciones c
        INNER JOIN solicitudes_cotizacion sc ON c.idSolicitudCotizacion = sc.id
        INNER JOIN cliente cl ON sc.id_cliente = cl.idCliente
-       INNER JOIN productos_solicitud_cotizacion ps ON c.idCotizacion = ps.id_solicitud
-       INNER JOIN producto p ON ps.id_producto = p.id
+       INNER JOIN productos_cotizacion pc ON c.idCotizacion = pc.idCotizacion
+       INNER JOIN producto p ON pc.id_producto = p.id
        WHERE c.idCotizacion = :idCotizacion";
 
        

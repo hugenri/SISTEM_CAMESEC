@@ -321,11 +321,55 @@ function eliminar_items(){
     })
     .then(response => response.json())
     .then(data => {
-        if (data.status === 'success') {
+        if (data.success) {
             console.log(data.message);
         } else {
             console.error(data.message);
         }
     })
     .catch(error => console.error('Error al eliminar', error));
+}
+
+function eliminar(id){
+    
+    //Definir formData 
+    const formData = new FormData();
+    formData.append('action', 'eliminar');
+    formData.append('id', id);
+
+    Swal.fire({
+        title: '¿Desea elininar la solicitud de cotización?',
+        text: 'Esta acción no se puede deshacer',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+    // Utiliza Fetch para enviar la acción al servidor
+    fetch('actions/solicitudes_cotizacion.php', {
+        method: 'POST',
+        body: formData,  // Usar el objeto FormData como cuerpo de la solicitud
+    }).then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            mostrarSolicitudCotizaciones();
+            Swal.fire({
+                title: 'Éxito',
+                text: data.message,
+                icon: 'success'
+            });
+          
+        }else {
+            Swal.fire('Error', data.message, 'error');
+
+          }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+    }
+});
+    return ;
 }

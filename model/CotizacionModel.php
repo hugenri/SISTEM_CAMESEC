@@ -259,8 +259,8 @@ public function createSolicitudCotizacion($servicio, $idCliente, $fechaSolicitud
     }
 }
 
-function insertOrderItems($idSolicitud, $items) {
-    $sql = "INSERT INTO productos_solicitud_cotizacion (id_solicitud, id_producto, cantidad) VALUES ";
+function insertOrderItems($idCotizacion, $items) {
+    $sql = "INSERT INTO productos_cotizacion (idCotizacion, id_producto, cantidad) VALUES ";
    
     $values = array();
     try {
@@ -268,7 +268,7 @@ function insertOrderItems($idSolicitud, $items) {
    
         foreach ($items as $item) {
             $sql .= "(?, ?, ?),";
-            $values[] = $idSolicitud;
+            $values[] = $idCotizacion;
             $values[] = $item['id']; // Accede al id del producto
             $values[] = $item['qty']; // Accede a la cantidad del producto
         }

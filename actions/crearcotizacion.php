@@ -25,6 +25,7 @@ $solicitudCotizacion = new SolicitudCotizacionModel();
 $validacion = true;
 $response = null;
 
+
   $id_solicitud_cotizacion = DataSanitizer::sanitize_input($_POST['idSolicitudCotizacion']);
   $fecha = DataSanitizer::sanitize_input($_POST['fecha']);
   $observaciones = DataSanitizer::sanitize_input($_POST['observaciones']);
@@ -126,6 +127,7 @@ $response = null;
         if(!empty($items)){
            // Llamar a insertOrderItems con el ID de la cotización
         $orderitems = $consulta->insertOrderItems($id_cotizacion, $items);
+		
           $datosItems->clear_cart(); // Si se registraron todas las ventas correctamente, vacía el carrito
         }
          
@@ -136,7 +138,9 @@ $response = null;
         $emailCliente = $datos_cliente['email'];
         $nombre = $datos_cliente['nombre'].' '. $datos_cliente['apellidoPaterno'] . ' '. $datos_cliente['apellidoMaterno'] ;
         $razonSocial = $datos_cliente['razonSocial'];
-
+		$response = array("success" => true, 'message' => 'Cotización registrada con éxito! Se a enviado el email al cliente!');
+          $respuesta_json->response_json($response);
+      /*
        // Verificar si se obtuvo el correo electrónico del cliente
        if ($emailCliente !== null) {
         $emailEnviado = email($emailCliente, $razonSocial, $nombre);
@@ -146,7 +150,9 @@ $response = null;
           $respuesta_json->response_json($response);
        } 
        }
-         
+	   $response = array("success" => true, 'message' => 'Cotización registrada con éxito! Se a enviado el email al cliente!');
+          $respuesta_json->response_json($response);
+         */
       } else {
           $response = array('success' => false, 'message' => 'Error en el registro');
           $respuesta_json->response_json($response);

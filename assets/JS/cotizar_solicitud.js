@@ -254,7 +254,7 @@
           })
           .then(response => response.json())
           .then(data => {
-              if (data.status === 'success') {
+              if (data.success) {
                   console.log(data.message);
               } else {
                   console.error(data.message);
@@ -288,7 +288,7 @@
         fetch('actions/crearcotizacion.php', {
             method: 'POST',
             body: datos
-        }).then(response => response.json())
+        }) .then(response => response.json())
         .then(data => {
             if (data.success == true) {
               Swal.fire({
