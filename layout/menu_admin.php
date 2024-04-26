@@ -20,6 +20,7 @@
     <div class="dropdown-content">
       <a href="agregarcliente.php">Agregar cliente</a>
       <a href="verclientes.php">Ver lista de clientes</a>
+      <a href="restablecerPasswordCliente.php">Cambiar password</a>
     </div>
   </div> 
 

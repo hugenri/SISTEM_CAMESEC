@@ -8,17 +8,19 @@ $site = $session->checkAndRedirect();
 }
 
 
-include_once '../model/UsuarioModel.php';
+require_once '../clases/Response_json.php';
 include_once '../clases/dataSanitizer.php';
 include_once '../clases/DataValidator.php';
+include_once '../clases/DataBase.php';
 
 
+$respuesta_json = new ResponseJson();
 
-$consulta = new UsuarioModel();
-
+$response = array();
 $validacion = true;
 
-$response = null;
+
+
 
 
 
@@ -56,14 +58,20 @@ if(DataValidator::validateVariables($data) === false){
       exit();
 
   }
- $sql = "SELECT * FROM usuarios WHERE email = :email;";
-  $result = $consulta->userExists($sql, $email);
+ $sql = "SELECT * FROM cliente WHERE email = :email;";
+ $parametros = array(
 
-        if($result != true){
+    'email' => $email,
+
+);
+// Ejecutar la consulta
+$consulta = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');
+
+        if(empty($consulta)){
 
             // Si el usuario no existe 
 
-           $response = array('success' => false, 'message' => 'Usuario no registrado');
+           $response = array('success' => false, 'message' => 'Cliente no registrado');
 
            $validacion = false;
 
@@ -107,13 +115,22 @@ if(DataValidator::validateVariables($data) === false){
 
      if($validacion == true){//Si devuelve true, significa que el reCAPTCHA es válido y se puede continuar con el procesamiento del formulario
 
-		
-
        $newPassword = password_hash($password, PASSWORD_DEFAULT); // Hasheo de la nueva contraseña
+       $sql =  "UPDATE cliente
+       SET password = :newpassword
+       WHERE email = :email;";
 
-        $result = $consulta->resetPasswordPassword($email, $newPassword);
+       $parametros = array(
 
-           if($result == true){
+        'email' => $email,
+        ':newpassword' => $newPassword,
+       
+    
+    );
+    // Ejecutar la consulta
+    $consulta = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros);
+
+           if($consulta == true){
 
             $response = array("success" => true, 'message' => 'Se restableció la contraseña con éxito!');
 

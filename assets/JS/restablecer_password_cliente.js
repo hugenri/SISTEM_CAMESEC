@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }).then((result) => {
       if (result.isConfirmed) {
 
-    fetch('actions/restablecerpassword.php', {
+    fetch('actions/restablecerpasswordCliente.php', {
         method: 'POST',
         body: datos
     }).then(response => response.json())

@@ -95,7 +95,7 @@ $consulta = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');
     $respuesta_json->handle_response_json(false, 'Existe un usuario registrado con el email!');
 
   }
-
+   $hash_password = password_hash($password, PASSWORD_DEFAULT);
     $sql = "INSERT INTO usuarios (nombre, apellidoPaterno, apellidoMaterno, rol_usuario, email, password)
        VALUES (:nombre, :apellidoPaterno, :apellidoMaterno, :rol_usuario, :email, :password);";
 
@@ -106,7 +106,7 @@ $parametros = array(
     ':apellidoMaterno' => $apellidoM,
     ':rol_usuario' => $rol_usuario,
     ':email' => $email,
-    ':password' => $password
+    ':password' =>  $hash_password
 
 );
 // Ejecutar la consulta
