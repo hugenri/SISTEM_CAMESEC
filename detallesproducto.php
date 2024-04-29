@@ -70,15 +70,25 @@ require_once 'layout/header_admin.php';
                     </button>
                 </div>
                 <div class="card-body">
+    <div class="row mt-4">
+    <div class="col-md-5">
+            <!-- Aquí colocas la imagen -->
+            <img id="imagenDescripcion" src="" alt="Descripción de la imagen" class="img-fluid">
+        </div>
+        <div class="col-md-7">
+        <h5 class="mb-2">Detalles del producto</h5>
+
                     <p id="descripcionTextarea" class="text-justify"></p>
                 </div>
+                </div>
+                </div>
+
             </div>
         </div>
     </div>
 </div>   
     <script  src="assets/JS/detallesproducto.js"></script>
     <script  src="assets/JS/filtrar.js"></script>
-    <script  src="assets/JS/consultarDetalles.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             verDetalles(); // Llama a la función cuando la página esté cargada
