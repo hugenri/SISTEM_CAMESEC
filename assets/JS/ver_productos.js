@@ -72,6 +72,7 @@ function cargarForm() {
       // Asignar los datos de la fila al formulario
       IdInput.value = celdas[0].innerHTML;
       nombreInput.value = celdas[1].innerHTML;
+      let razon_socialProveedor = celdas[2].innerHTML;
       precioInput.value = celdas[3].innerHTML;
       descripcionInput.value = celdas[4].innerHTML;
       stockInput.value = celdas[5].innerHTML;
@@ -81,7 +82,7 @@ function cargarForm() {
     pathImage.value = imagenSrc;
       document.getElementById("popup").style.display = "block";//estilo para mostrar el popup
      
-      cargarProveedores();
+      cargarProveedores(razon_socialProveedor);
    
     });
   });
@@ -175,7 +176,45 @@ function eliminar(id, image){
 });
     return ;
 }
+function cargarProveedores(proveedorRazonSocial) { 
+  // Cargar proveedores al inicio
+  fetch('actions/getProveedores.php')
+  .then(response => response.json())
+  .then(data => {
+      const proveedorSelect = document.getElementById('proveedor');
+      proveedorSelect.innerHTML = '';
+      
+      // Verificar si los datos son un objeto con la propiedad 'datosProveedor' que es un array
+      if (data && Array.isArray(data.datosProveedor)) {
+          data.datosProveedor.forEach(proveedor => { 
+              // Creamos primero la opción que cumple la condición
+              if(proveedorRazonSocial == proveedor.razonSocial) {
+                  const option = document.createElement('option');
+                  option.value = proveedor.idProveedor;
+                  option.textContent = proveedor.razonSocial;
+                  proveedorSelect.appendChild(option);
+              }
+          });
+          
+          // Luego agregamos las demás opciones
+          data.datosProveedor.forEach(proveedor => { 
+              if(proveedorRazonSocial != proveedor.razonSocial) {
+                  const option = document.createElement('option');
+                  option.value = proveedor.idProveedor;
+                  option.textContent = proveedor.razonSocial;
+                  proveedorSelect.appendChild(option);
+              }
+          });
+      } else {
+          console.error('Error: Los datos de proveedores no son un array válido', data);
+      }
+  })
+  .catch(error => {
+      console.error('Error al cargar proveedores: ' + error);
+  });
+}
 
+/*
 function cargarProveedores(){ 
    // Cargar estados al inicio
    fetch('actions/getProveedores.php')
@@ -204,3 +243,4 @@ function cargarProveedores(){
    });
 
 }
+*/

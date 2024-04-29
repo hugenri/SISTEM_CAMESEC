@@ -110,8 +110,7 @@ require_once 'layout/menu_admin.php';
               <div class="col-md-6">
             <label for="municipio" class="form-label">Proveedor</label>
             <select id="proveedor" name="proveedor" class="form-control form-select">
-            <option value="">Seleccionar Proveedor</option>
-                <!-- Opciones del municipio -->
+                
             </select>
             <div class="invalid-feedback">El proveedor es obligatorio.</div>
         </div>
