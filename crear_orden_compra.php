@@ -9,7 +9,7 @@ if ($session->getSessionVariable('rol_usuario') != 'admin') {
 ?>
 
 <?php
-$titulo_pagina = "Agregar servicio";
+$titulo_pagina = "Crear orden de compra";
 require_once 'layout/header_admin.php';
 ?>
 
@@ -24,17 +24,17 @@ require_once 'layout/header_admin.php';
         <div class="col-lg-10 col-md-10">
         <div class="card">
         <div class="card-header text-center">
-        <h5>Formulario Requisición</h5>
+        <h5>Formulario Orden de Compra</h5>
         </div>
         <div class="card-body">
-         <form id="formRequisicion">
+         <form id="form">
         <div class="mb-3">
-        <h6>Datos de la requisición</h6>
+        <h6>Datos de la orden de compra</h6>
         </div>
         <div class="row mb-3">
         <div class="col-md-6">
-        <label for="idCotizaciones" class="form-label">ID Cotizacion</label>
-            <input type="text" class="form-control" id="idCotizaciones" name="idCotizaciones" pattern="[1-9]\d{0,10}" required>
+        <label for="idCotizacion" class="form-label">ID Cotizacion</label>
+            <input type="text" class="form-control" id="idCotizacion" name="idCotizacion" placeholder="ID Cotización" pattern="[1-9]\d{0,10}" required>
             <div class="invalid-feedback">Ingrese solo números enteros positivos de 1 a 11 dígitos.</div>
             </div>
         
@@ -83,13 +83,14 @@ require_once 'layout/header_admin.php';
             </div>
             <div class="modal-body table-responsive">
                 <!-- Aquí se mostrará la tabla -->
-                <table id="tablaServicios" class="table">
+                <table id="tablaCotizaciones" class="table table-sm">
                     <thead>
                         <tr>
-                            <th class="text-nowrap">ID Servicio</th>
-                            <th class="text-nowrap">Nombre del Servicio</th>
-                            <th class="text-nowrap">Cliente</th>
-                            <th class="text-nowrap">Accion</th>
+                            <th class="text-nowrap fs-7">ID Cotización</th>
+                            <th class="text-nowrap fs-7">Nombre del Servicio</th>
+                            <th class="text-nowrap fs-7">Cliente</th>
+                            <th class="text-nowrap fs-7">Fecha Cotización</th>
+                            <th class="text-nowrap fs-7">Accion</th>
 
                         </tr>
                     </thead>
@@ -110,7 +111,7 @@ require_once 'layout/header_admin.php';
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
-    <script language="javascript" src="assets/JS/crear_requisicion.js"></script>
+    <script language="javascript" src="assets/JS/crearOrdencompra.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
@@ -118,63 +119,10 @@ require_once 'layout/header_admin.php';
     </script>
     <!-- Script personalizado para validación en tiempo real -->
 <script>
-  var formulario = document.getElementById('formRequisicion');
+  var formulario = document.getElementById('form');
 </script>
 <script src="assets/JS/form_validation.js"></script>
 
-<script>
-
-// Función para cargar los datos de servicios desde la API
-    function cargarServicios() {
-        
-        fetch("actions/cargar_datos_cotizacion.php")
-            .then(response => response.json())
-            .then(data => {
-                mostrarTabla(data.dataCotizacion);
-                
-            })
-            .catch(error => console.error('Error al cargar los servicios:', error));
-    }
-
-    // Función para mostrar la tabla con los datos de servicios
-    function mostrarTabla(datos) {
-        var tbody = document.getElementById("tablaServicios").querySelector("tbody");
-
-        // Limpiar contenido previo de la tabla
-        tbody.innerHTML = "";
-
-        // Agregar filas con los datos de los servicios
-       datos.forEach(function(cotizacion) {
-            var row = document.createElement("tr");
-            row.innerHTML = `
-                      <td class="text-nowrap">${cotizacion.idCotizacion}</td>
-                      <td class="text-nowrap">${cotizacion.servicio}</td>
-                      <td>${cotizacion.razonSocial}</td>
-                      <td><button class="btn-seleccionar btn custom-button btn-primary btn-sm" data-id="${cotizacion.idCotizacion}">Seleccionar</button></td>
-                      `;    
-                      tbody.appendChild(row);
-        });
-         // Agregar eventos de clic a los botones de selección
-         var btnSeleccionar = document.querySelectorAll('.btn-seleccionar');
-        btnSeleccionar.forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                var id = this.getAttribute('data-id');
-                var nombre = this.getAttribute('data-nombre');
-                var cliente = this.getAttribute('data-cliente');
-                document.getElementById('idCotizaciones').value = id; // Actualizamos el valor del input con los datos seleccionados
-                var tablaModal = bootstrap.Modal.getInstance(document.getElementById('tablaModal'));
-                tablaModal.hide(); // Cerramos el modal después de seleccionar
-            });
-        });
-        var tablaModal = new bootstrap.Modal(document.getElementById('tablaModal')); // Inicializar el modal
-            tablaModal.show();
-    }
-
-    // Evento al hacer clic en el input para cargar los servicios
-    document.getElementById("idCotizaciones").addEventListener("click", function() {
-        cargarServicios();
-    });
-</script>
     <!-- Pie de página -->
     <?php
     require_once 'layout/footer2.php';

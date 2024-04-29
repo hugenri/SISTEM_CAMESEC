@@ -109,21 +109,7 @@ require_once 'layout/menu_admin1.php';
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 col-md-6">
-                <div class="card custom-card text-center mb-2 align-items-center justify-content-center">
-                    <img src="assets/images/requisicion.png" class="card-img-top mt-1" alt="Imagen de cliente">
-                    <div class="card-body">
-                        <h5 class="card-title">Requisiciones</h5>
-                         <span id="numRequisiciones"></span></p>
-                        <a href="ver_requisiciones.php" class="btn">Ver más</a>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-<div class="row">
-
+          
             <div class="col-lg-2 col-md-6">
                 <div class="card custom-card text-center mb-2 align-items-center justify-content-center">
                     <img src="assets/images/cotizacion.png" class="card-img-top mt-1" alt="Imagen de cliente">
@@ -134,13 +120,19 @@ require_once 'layout/menu_admin1.php';
                     </div>
                 </div>
             </div>
+          
+        </div>
+
+<div class="row">
+
+            
             <div class="col-lg-2 col-md-6">
                 <div class="card custom-card text-center mb-2 align-items-center justify-content-center">
                     <img src="assets/images/compra.png" class="card-img-top mt-1" alt="Imagen de cliente">
                     <div class="card-body">
                         <h5 class="card-title">Compras</h5>
                          <span id="numOrdenesCompra"></span></p>
-                        <a href="vercompras.php" class="btn">Ver más</a>
+                        <a href="ver_ordenes_compras.php" class="btn">Ver más</a>
                     </div>
                 </div>
             </div>

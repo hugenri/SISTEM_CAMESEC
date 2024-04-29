@@ -46,3 +46,30 @@ function agregarProducto(evento) {
 });
   return ;
 }
+
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Cargar estados al inicio
+  fetch('actions/getProveedores.php')
+      .then(response => response.json())
+      .then(data => {
+          const proveedorSelect = document.getElementById('proveedor');
+          
+          // Verificar si los datos son un objeto con la propiedad 'data' que es un array
+          if (data && Array.isArray(data.datosProveedor)) {
+              data.datosProveedor.forEach(proveedor => {
+                  const option = document.createElement('option');
+                  option.value = proveedor.idProveedor;
+                  option.textContent = proveedor.razonSocial;
+                  proveedorSelect.appendChild(option);
+              });
+          } else {
+              console.error('Error: Los datos de estados no son un array válido', data);
+          }
+      })
+      .catch(error => {
+          console.error('Error al cargar estados: ' + error);
+      });
+
+  
+});

@@ -8,8 +8,10 @@ fetch("actions/verproductos.php")
         if (data.success == true) {
           document.getElementById("tablaProducto").innerHTML = ""; // Limpiamos la tabla
                
-          let tabla = `<thead><tr><th class="text-nowrap">ID</th><th class="text-nowrap">
-          Nombre</th><th class="text-nowrap">Precio</th>
+          let tabla = `<thead><tr><th class="text-nowrap">ID</th>
+          <th class="text-nowrap">Nombre</th>
+          <th class="text-nowrap">Proveedor</th>
+          <th class="text-nowrap">Precio</th>
           <th class="text-nowrap">Descripción</th>
           <th class="text-nowrap">Stock</th>
           <th class="text-nowrap">Imagen</th>
@@ -18,8 +20,10 @@ fetch("actions/verproductos.php")
            tabla += `<tbody>`; 
           for (let x of data.dataProduct) {
          
-            tabla += `<tr data-id="${x.id}"><td class="text-nowrap">${x.id}</td>
+            tabla += `<tr data-id="${x.id}">
+            <td class="text-nowrap">${x.id}</td>
             <td class="text-nowrap">${x.nombre}</td>
+            <td class="text-nowrap">${x. razon_social_proveedor}</td>
              <td class="text-nowrap">${x.precio}</td>
              <td>${x.descripcion}</td>
              <td class="text-nowrap">${x.stock}</td>
@@ -45,6 +49,7 @@ fetch("actions/verproductos.php")
 
 // Función para cargar formulario
 function cargarForm() {
+  document.getElementById('name_image').value = '';
   const botones = document.querySelectorAll(".bActualizar");
 
   botones.forEach(boton => {
@@ -60,23 +65,23 @@ function cargarForm() {
       const precioInput = document.getElementById("precio");
       const descripcionInput = document.getElementById("descripcion");
       const stockInput = document.getElementById("stock");
-      const imageInput = document.getElementById("name_image");
+      const pathImage = document.getElementById("pathImage");
 
       
       
       // Asignar los datos de la fila al formulario
       IdInput.value = celdas[0].innerHTML;
       nombreInput.value = celdas[1].innerHTML;
-      precioInput.value = celdas[2].innerHTML;
-      descripcionInput.value = celdas[3].innerHTML;
-      stockInput.value = celdas[4].innerHTML;
-      
+      precioInput.value = celdas[3].innerHTML;
+      descripcionInput.value = celdas[4].innerHTML;
+      stockInput.value = celdas[5].innerHTML;
       // Obtener la ruta de la imagen
-      const imagenSrc = celdas[5].querySelector('img').getAttribute('src');
+      const imagenSrc = celdas[6].querySelector('img').getAttribute('src');
       // Asignar la ruta de la imagen al atributo src del elemento de entrada de imagen
-      imageInput.value = imagenSrc;
-      // Mostrar el formulario
+    pathImage.value = imagenSrc;
       document.getElementById("popup").style.display = "block";//estilo para mostrar el popup
+     
+      cargarProveedores();
    
     });
   });
@@ -86,6 +91,7 @@ function actualizar(evento) {//metodo para actualizar el registro
   evento.preventDefault();
   const formulario = document.getElementById("formUpdateProducto");
   const datos = new FormData(formulario);
+  
   Swal.fire({
     title: '¿Desea actualizar los datos del producto?',
     text: 'Esta acción no se puede deshacer',
@@ -100,8 +106,8 @@ function actualizar(evento) {//metodo para actualizar el registro
       method: 'POST',
       body: datos
      
-  })
-    .then(response => response.json())
+  }).then(response => response.json())
+
     .then(data => {
       if (data.success == true) {
         Swal.fire({
@@ -170,3 +176,31 @@ function eliminar(id, image){
     return ;
 }
 
+function cargarProveedores(){ 
+   // Cargar estados al inicio
+   fetch('actions/getProveedores.php')
+   .then(response => response.json())
+   .then(data => {
+    const proveedorSelect = document.getElementById('proveedor');
+    proveedorSelect.innerHTML = '';
+    const option1 = document.createElement('option');           
+    option1.value = '';
+    option1.textContent = 'Seleccionar Proveedor';
+    proveedorSelect.appendChild(option1);
+       // Verificar si los datos son un objeto con la propiedad 'data' que es un array
+       if (data && Array.isArray(data.datosProveedor)) {
+           data.datosProveedor.forEach(proveedor => {    
+            const option = document.createElement('option');           
+               option.value = proveedor.idProveedor;
+               option.textContent = proveedor.razonSocial;
+               proveedorSelect.appendChild(option);
+           });
+       } else {
+           console.error('Error: Los datos de estados no son un array válido', data);
+       }
+   })
+   .catch(error => {
+       console.error('Error al cargar estados: ' + error);
+   });
+
+}

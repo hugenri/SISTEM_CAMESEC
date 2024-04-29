@@ -75,7 +75,8 @@ require_once 'layout/menu_admin.php';
                     <form id="formUpdateProducto" enctype="multipart/form-data">
                         <!-- Campo oculto para el ID -->
                         <input type="hidden" id="id" name="id">
-                        <input type="hidden" id="name_image" name="name_image">
+                        <input type="hidden" id="pathImage" name="pathImage">
+
                         <div class="mb-3">
                             <h6>Datos del producto</h6>
                         </div>
@@ -105,6 +106,16 @@ require_once 'layout/menu_admin.php';
                                 </div>
                             </div>
                         </div>
+                        <div class="row mb-3">
+              <div class="col-md-6">
+            <label for="municipio" class="form-label">Proveedor</label>
+            <select id="proveedor" name="proveedor" class="form-control form-select">
+            <option value="">Seleccionar Proveedor</option>
+                <!-- Opciones del municipio -->
+            </select>
+            <div class="invalid-feedback">El proveedor es obligatorio.</div>
+        </div>
+</div>
                         <div class="mb-3">
                             <label for="descripcion" class="form-label">Descripción del producto</label>
                             <textarea class="form-control" id="descripcion" rows="3" name="descripcion"
@@ -115,12 +126,12 @@ require_once 'layout/menu_admin.php';
                             </div>
                         </div>
 
+                        
                         <div class="mb-3">
-                            <label for="imagen" class="form-label">Selecciona una imagen:</label>
-                            <input type="file" class="form-control" name="image" id="image" accept="image/*">
-                        </div>
-                        <div id="mensajeError" class="alert alert-danger mb-3" style="display:none;"></div>
-
+              <label for="name_imagen" class="form-label">Selecciona una imagen:</label>
+        <input type="file" class="form-control" name="name_image" id="name_image" accept="image/*"> 
+    
+      </div>        
             <div class="row justify-content-between mt-4 mb-3">
                 <div class="col-5">
                 <button type="button" id="EButton" onclick="submitForm(event)"

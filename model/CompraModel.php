@@ -15,14 +15,13 @@ $this->conexion = null;
 
    
 //Función para crear registro de compra
-public function createOrdenCompra($fecha, $observaciones, $idProveedor,
-                                   $idRequisicion, $idCatalogoOrdenCompra){
+public function createOrdenCompra($fecha, $observaciones, $descripcion, $idCotizacion){
     try {
         $this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
 
         // Se establece la sentencia de la consulta SQL
-        $sql = "INSERT INTO ordencompra (fecha, observaciones, idProveedor, idRequisicion, idCatalogoOrdenCompra)
-                VALUES (:fecha, :observaciones, :idProveedor, :idRequisicion, :idCatalogoOrdenCompra);";
+        $sql = "INSERT INTO orden_compras (fecha, descripcion, observaciones, idCotizacion)
+                VALUES (:fecha, :descripcion, :observaciones, :idCotizacion);";
 
 
         // Se prepara la sentencia de la consulta SQL
@@ -30,9 +29,8 @@ public function createOrdenCompra($fecha, $observaciones, $idProveedor,
           // Se vincula cada parámetro al nombre de variable especificado
           $query->bindParam(':fecha', $fecha);
           $query->bindParam(':observaciones', $observaciones);
-          $query->bindParam(':idProveedor', $idProveedor);
-          $query->bindParam(':idRequisicion', $idRequisicion);
-          $query->bindParam(':idCatalogoOrdenCompra', $idCatalogoOrdenCompra);
+          $query->bindParam(':descripcion', $descripcion);
+          $query->bindParam(':idCotizacion', $idCotizacion);
         
         // Se ejecuta la consulta en la base de datos
         $result = $query->execute();
@@ -50,7 +48,7 @@ public function createOrdenCompra($fecha, $observaciones, $idProveedor,
 }
 
 //Función para obtener los registros de orden compra
-public function getCompras(){
+public function getOrdenesCompras(){
         
     try{
     
@@ -151,7 +149,7 @@ public function getNumerOrdenesCompra(){
     try{
         //se crea la conexion a la base de datos
         $this->conexion = ConexionBD::getconexion();
-          $sql = "SELECT COUNT(*) as numRegistros FROM ordencompra";
+          $sql = "SELECT COUNT(*) as numRegistros FROM orden_compras";
            ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
            $query = $this->conexion->prepare($sql);
         //se ejecuta la consulta sql

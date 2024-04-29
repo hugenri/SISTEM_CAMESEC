@@ -79,9 +79,8 @@ require_once 'layout/header_admin.php';
     </div>
 </div>
 
-    <script  src="assets/JS/detalles_compras.js"></script>
+    <script  src="assets/JS/detalles_orden_compras.js"></script>
     <script  src="assets/JS/filtrar.js"></script>
-    <script  src="assets/JS/consultarDetalles.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
             verDetalles(); // Llama a la función cuando la página esté cargada

@@ -73,55 +73,88 @@ require_once 'layout/menu_admin.php';
         </button>
         </div>
         <div class="card-body">
-        <form id="formUpdateCompra">
-        <!-- Campo oculto para el ID -->
-        <input type="hidden" id="id" name="id">
+         <form id="form">
+         <input type="hidden" id="idOrdenCompra" name="idOrdenCompra">
         <div class="mb-3">
         <h6>Datos de la orden de compra</h6>
         </div>
         <div class="row mb-3">
-        <div class="col-md-6 mb-2">
+        <div class="col-md-6">
+        <label for="idCotizacion" class="form-label">ID Cotizacion</label>
+            <input type="text" class="form-control" id="idCotizacion" name="idCotizacion" pattern="[1-9]\d{0,10}" required>
+            <div class="invalid-feedback">Ingrese solo números enteros positivos de 1 a 11 dígitos.</div>
+            </div>
+        
+            <div class="col-md-6">
             <label for="fecha" class="form-label">Fecha</label>
             <input type="date" class="form-control" id="fecha" name="fecha" required>
         </div>
+        </div>
         
-        <div class="col-md-6 ">
-            <label for="idProveedor" class="form-label">ID Proveedor</label>
-            <input type="text" class="form-control" id="idProveedor" name="idProveedor" pattern="[1-9]\d{0,10}" required>
-            <div class="invalid-feedback">Ingrese solo números enteros positivos de 1 a 11 dígitos.</div>
-        </div>    
-        
-        </div>
-        <div class="row mb-3">
-        <div class="col-md-6 mb-2">
-            <label for="idRequisicion" class="form-label">ID Requisición</label>
-            <input type="text" class="form-control" id="idRequisicion" name="idRequisicion" pattern="[1-9]\d{0,10}" required>
-            <div class="invalid-feedback">Ingrese solo números enteros positivos de 1 a 11 dígitos.</div>
-        </div>
-
-        <div class="col-md-6">
-            <label for="idCatalogoOrdenCompra" class="form-label">ID Catalogo Orden Compra</label>
-            <input type="text" class="form-control" id="idCatalogoOrdenCompra" name="idCatalogoOrdenCompra" pattern="[1-9]\d{0,10}" required>
-            <div class="invalid-feedback">Ingrese solo números enteros positivos de 1 a 11 dígitos.</div>
-        </div>
-        </div>
-        <div class="row mb-3">
-        
-        <div class="col-md-12">
-            <label for="observaciones" class="form-label">Observaciones</label>
-            <textarea type="text" class="form-control" rows="3" id="observaciones" name="observaciones" placeholder="Observaciones de la orden de compra" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" minlength="8" maxlength="100" required></textarea>
-            <div class="invalid-feedback">Las observaciones deben tener entre 8 y 100 letras y solo pueden contener letras y espacios.</div>
-        </div>
+    <div class="row mb-3">
+         <div class="col-md-6">
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea type="text" class="form-control" rows="3" id="descripcion" name="descripcion" placeholder="Descripción del servicio"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" minlength="8" maxlength="100" required></textarea>
+        <div class="invalid-feedback">La descripción debe tener entre 8 y 150 letras y
+                                      solo puede contener letras y espacios.</div>
     </div>
-     <button type="submit" onclick="actualizar(event)" class="custom-button btn btn-primary w-40">Editar</button>
-    </form>
+    <div class="col-md-6">
+        <label for="observaciones" class="form-label">Observaciones</label>
+        <textarea type="text" class="form-control" rows="3" id="observaciones" name="observaciones" placeholder="Observaciones del servicio"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" minlength="8" maxlength="100" required></textarea>
+        <div class="invalid-feedback">La observaciones debe tener entre 8 y 100 letras y
+                                      solo puede contener letras y espacios.</div>
     </div>
     </div>
-        </div>
+    <div class="row justify-content-between mt-4">
+                <div class="col-5">
+                    <input type="submit" onclick="actualizar(event)" class="btn btn-primary w-100 rounded-5" value="Enviar">
+                </div>
+                <div class="col-5">
+                    <input type="reset" class="btn btn-secondary w-100 rounded-5" value="Borrar">
+                </div>
+            </div>
+</form>
+                    </div>
+</div>
+     </div>
     </div>
 </div> <!-- fin del contenido-->
+<!-- Modal -->
+<div class="modal fade" id="tablaModal" tabindex="-1" aria-labelledby="tablaModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tablaModalLabel">Cotizaciones aceptadas</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body table-responsive">
+                <!-- Aquí se mostrará la tabla -->
+                <table id="tablaCotizaciones" class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th class="text-nowrap fs-7">ID Cotización</th>
+                            <th class="text-nowrap fs-7">Nombre del Servicio</th>
+                            <th class="text-nowrap fs-7">Cliente</th>
+                            <th class="text-nowrap fs-7">Fecha Cotización</th>
+                            <th class="text-nowrap fs-7">Accion</th>
 
-<script  src="assets/JS/ver_compras.js"></script>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Las filas se añadirán dinámicamente aquí -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Script de Bootstrap 5 -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script  src="assets/JS/ver_ordenes_compras.js"></script>
 <script  src="assets/JS/filtrar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -138,7 +171,7 @@ require_once 'layout/menu_admin.php';
 <script>
 
     // Script personalizado para validación en tiempo real
-    var formulario = document.getElementById('formUpdateCompra');
+    var formulario = document.getElementById('form');
     var enviarButton = document.getElementById('EButton'); // Agrega un ID al botón de envío
 
     formulario.addEventListener('input', function (event) {

@@ -10,6 +10,8 @@ fetch("actions/vercotizaciones.php")
              
         let tabla = `<thead><tr><th class="text-nowrap">ID</th>
         <th class="text-nowrap">Fecha</th>
+        <th class="text-nowrap">Cliente</th>
+        <th class="text-nowrap">Servicio</th>
         <th>Detalles</th>`;
 
          tabla += `<tbody>`; 
@@ -17,6 +19,8 @@ fetch("actions/vercotizaciones.php")
        
           tabla += `<tr data-id="${x.idCotizacion}"><td class="text-nowrap">${x.idCotizacion}</td>
           <td class="text-nowrap">${x.fecha}</td>
+          <td class="text-nowrap">${x.razonSocialCliente}</td>
+          <td class="text-nowrap">${x.servicio}</td>
           <td>
           <img src="assets/images/ver.png" alt="ver"  class="tabla-image-accion" onclick="consultarDetalles('vercotizaciones', ${x.idCotizacion})" style="cursor: pointer;">
           </td>

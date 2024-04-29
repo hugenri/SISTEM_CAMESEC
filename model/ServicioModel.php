@@ -21,7 +21,7 @@ public function createService($nombre, $descripcion, $tarifa, $disponibilidad,
         $this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
 
         // Se establece la sentencia de la consulta SQL
-        $sql = "INSERT INTO servicio (nombre, descripcion, tarifa,  disponibilidad,
+        $sql = "INSERT INTO servicios (nombre, descripcion, tarifa,  disponibilidad,
                 idCotizacion, idRequisicion, idOrdenCompra) VALUES (:nombre, :descripcion, :tarifa,
                 :disponibilidad, :idCotizacion,  :idRequisicion, :idOrdenCompra);";
 
@@ -159,7 +159,7 @@ public function getNumerServices(){
     try{
         //se crea la conexion a la base de datos
         $this->conexion = ConexionBD::getconexion();
-          $sql = "SELECT COUNT(*) as numRegistros FROM servicio";
+          $sql = "SELECT COUNT(*) as numRegistros FROM servicios";
            ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
            $query = $this->conexion->prepare($sql);
         //se ejecuta la consulta sql

@@ -41,7 +41,7 @@ require_once 'layout/menu_admin.php';
                 </div>
                 <div class="col-md-4">
                   <label for="precio" class="form-label">Precio</label>
-                  <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio del producto" required pattern="^\d{1,12}(\.\d{1,2})?$">
+                  <input type="text" class="form-control" id="precio" name="precio" placeholder="Precio del producto" required pattern="^\d{1,8}(\.\d{1,2})?$">
                   <div class="invalid-feedback">Ingresa un precio válido (máx. 12 dígitos, opcionalmente con hasta 2 decimales).</div>
                 </div>
                 <div class="col-md-4">
@@ -50,6 +50,16 @@ require_once 'layout/menu_admin.php';
                   <div class="invalid-feedback">Ingresa una cantidad válida de stock (mín. 1).</div>
                 </div>
               </div>
+              <div class="row mb-3">
+              <div class="col-md-6">
+            <label for="municipio" class="form-label">Proveedor</label>
+            <select id="proveedor" name="proveedor" class="form-control form-select" required>
+                <option value="">Seleccionar proveedor</option>
+                <!-- Opciones del municipio -->
+            </select>
+            <div class="invalid-feedback">El proveedor es obligatorio.</div>
+        </div>
+</div>
               <div class="mb-3">
     <label for="descripcion" class="form-label">Descripción del producto</label>
     <textarea class="form-control" id="descripcion" rows="3" name="descripcion" placeholder="Agrega detalles" required minlength="8" maxlength="150" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+"></textarea>
@@ -80,6 +90,7 @@ require_once 'layout/menu_admin.php';
     </div>
 
 </div> <!-- fin del contenido-->
+
 <script languaje= "javascript" src="assets/JS/agregar_producto.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

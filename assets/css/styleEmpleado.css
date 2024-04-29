@@ -1,0 +1,44 @@
+body {
+    margin: 0em;
+    padding: 0em;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #dfe2daf6;
+    }
+  
+  
+
+/* Estilo para agregar margen superior al contenido para evitar que quede detrás de la barra de navegación */
+    #div-contenido {
+      margin-top: 140px; /* Ajusta la altura según la altura de tu barra de navegación */
+	  margin-bottom: 40px;
+
+    }
+
+ 
+	
+	/* estilo del popup*/
+
+    .divPopup {
+        display: none;
+        position: fixed; 
+        z-index: 1; 
+        padding-top: 100px; 
+        left: 0;
+        top: 0;
+        width: 100%; 
+        height: 100%;
+        overflow: auto; 
+        background-color: #dfe2daf6; /* Cambiado a opacidad completa */
+        margin: 0;
+    }
+    
+    #card-contenido {
+        max-width: 50%; /* Ajusta el ancho máximo del contenedor de las tarjetas según tus necesidades */
+        margin: 0 auto; /* Centra el contenedor horizontalmente */
+    }
+    
+    .card {
+        width: 100%; /* Hace que las tarjetas ocupen todo el ancho disponible dentro del contenedor */
+        margin-bottom: 20px; /* Agrega un margen inferior entre las tarjetas */
+    }
+    

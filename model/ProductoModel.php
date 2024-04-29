@@ -15,18 +15,19 @@ $this->conexion = null;
 
    
 //Función para crear registro de producto
-public function createProduct($nombre, $precio, $descripcion, $stock, $imagen) {
+public function createProduct($nombre, $precio, $descripcion, $stock, $imagen, $idProveedor) {
     try {
         $this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
 
         // Se establece la sentencia de la consulta SQL
-        $sql = "INSERT INTO producto (nombre, precio, descripcion, stock, imagen
-        ) VALUES (:nombre, :precio, :descripcion, :stock, :imagen);";
+        $sql = "INSERT INTO producto (idProveedor, nombre, precio, descripcion, stock, imagen
+        ) VALUES (:idProveedor, :nombre, :precio, :descripcion, :stock, :imagen);";
 
         // Se prepara la sentencia de la consulta SQL
         $query = $this->conexion->prepare($sql);
 
         // Se vincula cada parámetro al nombre de variable especificado
+        $query->bindParam(':idProveedor', $idProveedor);
         $query->bindParam(':nombre', $nombre);
         $query->bindParam(':precio', $precio);
         $query->bindParam(':descripcion', $descripcion);
@@ -57,8 +58,14 @@ public function getProducts(){
     
         //se crea la conexion a la base de datos
         $this->conexion = ConexionBD::getconexion();
+
+        $sql = "SELECT pr.*, p.razonSocial AS razon_social_proveedor
+        FROM producto pr
+        JOIN proveedor p ON pr.idProveedor = p.idProveedor;";
+
+        
           ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
-        $query = $this->conexion->prepare("SELECT * FROM producto;");
+        $query = $this->conexion->prepare($sql);
         
         //se ejecuta la consulta sql
         $query->execute();
@@ -108,12 +115,14 @@ public function deleteProduct($id){
   }
 
   //método para actualizar los datos 
-  public function updateProduct($id, $nombre, $precio, $descripcion, $stock, $imagen) {
+  public function updateProduct($id, $nombre, $precio, $descripcion, $stock, $imagen, $idProveedor) {
     try {
         $this->conexion = ConexionBD::getconexion(); // se crea la conexión a la BD
         // se establece la sentencia de la consulta sql para actualizar datos de un registro
         $sql = "UPDATE producto 
-                SET nombre = :nombre, 
+                SET
+                idProveedor = :idProveedor,
+                 nombre = :nombre, 
                 precio = :precio, 
                 descripcion = :descripcion, 
                 stock = :stock";
@@ -133,6 +142,8 @@ public function deleteProduct($id){
         $query->bindParam(':precio', $precio);
         $query->bindParam(':descripcion', $descripcion);
         $query->bindParam(':stock', $stock);
+        $query->bindParam(':idProveedor', $idProveedor);
+
 
         // Vincular la imagen solo si se proporciona una nueva imagen
         if ($imagen != '') {

@@ -33,26 +33,15 @@
       <a href="categoriaproveedor.php">Asignación de categoría</a>
     </div>
   </div> 
-  <div class="custom-dropdown">
-    <button class="dropbtn  fonnt-bolt">Requisiciones 
-    </button>
-    <div class="dropdown-content">
-      <a href="crear_requisicion.php">Crear requisición</a>
-      <a href="ver_requisiciones.php">Ver lista de requisiciones</a>
-      <a href="detalles_requisiciones.php">Ver detalles de las requisiciones</a>
-    </div>
-  </div> 
-
   
-
   <div class="custom-dropdown">
-    <button class="dropbtn  fonnt-bolt">Ordenes de compra 
+    <button class="dropbtn  fonnt-bolt">Orden de compras 
     </button>
 
     <div class="dropdown-content">
-      <a href="crear_compra.php">Crear orden de compra</a>
-      <a href="vercompras.php">Ver lista de ordenes de compra</a>
-      <a href="detalles_compras.php">Ver detalles de las ordenes de compra</a>
+      <a href="crear_orden_compra.php">Crear orden de compra</a>
+      <a href="ver_ordenes_compras.php">Ver lista de ordenes de compras</a>
+      <a href="detalles_orden_compras.php">Ver detalles de las ordenes de compra</a>
 
     </div>
 

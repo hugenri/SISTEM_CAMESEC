@@ -23,7 +23,6 @@ $usuarios = new UsuarioModel();
 $proveedores = new ProveedorModel();
 $productos = new ProductoModel();
 $servicios = new ServicioModel();
-$requisiciones = new RequisicionModel();
 $cotizaciones = new CotizacionModel();
 $ordenesCompra = new CompraModel();
 
@@ -37,7 +36,6 @@ try {
  $numero_clientes = $clientes->getNumerClients();
  $numero_productos = $productos->getNumerProducts();
  $numero_servicios = $servicios->getNumerServices();
- $numero_requisiciones = $requisiciones->getNumerRequisiciones();
  $numero_cotizaciones = $cotizaciones->getNumerCotizaciones();
  $numero_ordenesCompra = $ordenesCompra->getNumerOrdenesCompra();
 
@@ -49,7 +47,6 @@ try {
         'numProveedores' => $numero_proveedores,
         'numProductos' => $numero_productos,
         'numServicios' => $numero_servicios,
-        'numRequisiciones' => $numero_requisiciones,
         'numCotizaciones'  => $numero_cotizaciones,
         'numOrdenesCompra'  => $numero_ordenesCompra
     ];
