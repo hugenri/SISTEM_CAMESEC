@@ -41,7 +41,7 @@ function getOrdenesCompra() {
                       <td class="text-nowrap cursor-pointer" data-estado="${['x.idOrdenCompra']}">${x.estado}</td>
                       <td><button class="bEliminar custom-button btn btn-danger btn-sm" data-id="${x.idOrdenCompra}" onclick="eliminar('${x.idOrdenCompra}')">Eliminar</button></td>
                       <td><button class="bActualizar btn custom-button btn-primary btn-sm" data-id="${x.idOrdenCompra}" onclick="cargarForm()">Editar</button></td>
-                      <td><button class="btn btn-primary custom-button btn-sm" onclick="cargarForm()">Ver</button></td>
+                      <td><button class="btn btn-primary custom-button btn-sm" onclick="verOrdenCompra(${x.idOrdenCompra})">Ver</button></td>
 
                   </tr>`;
               }

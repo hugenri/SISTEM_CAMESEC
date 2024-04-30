@@ -8,7 +8,7 @@ function verOrdenCompra(id){
 function get_orden_compra(id){
 
     const formData = new FormData();
-        formData.append('idOrdenCompra', id);
+        formData.append('id', id);
       
         fetch('actions/get_orden_compra.php', {
           method: 'POST',
@@ -16,6 +16,7 @@ function get_orden_compra(id){
         })
   .then(response => response.json())
   .then(data => {
+      console.log(data);
     // Insertar los datos del cliente
     document.getElementById('cliente').textContent = "Cliente: "+ data.datosOrdenCompra[0].nombre_cliente;
     document.getElementById('email_cliente').textContent = data.datosOrdenCompra[0].email_cliente;
@@ -29,6 +30,7 @@ function get_orden_compra(id){
     const filaProductos = productos.map(producto => `
       <tr>
         <td>${producto.nombre_producto}</td>
+        <td>${producto.descripcion_producto}</td>
         <td>${producto.precio_unitario}</td>
         <td>${producto.cantidad_comprar}</td>
         <td>${producto.nombre_proveedor}</td>
@@ -37,62 +39,6 @@ function get_orden_compra(id){
       </tr>
     `).join('');
     document.getElementById('tablaOrdenCompra').querySelector('tbody').innerHTML = filaProductos;
-    // Asignar el ID a los botones
-    document.getElementById('cancelarBtn').dataset.id = id;
-    document.getElementById('finalizarBtn').dataset.id = id;
 })
-
   .catch(error => console.error('Error:', error));
 }
-
-
-function cerrarModal(evento){
-        evento.preventDefault();
-
-    document.getElementById("modalPopup").style.display = "none";
-
-}
-
-function cambiarEstado(evento, estado, idOrdenCompra){
-    evento.preventDefault();
-     console.log(idOrdenCompra);
-    const datos = new FormData(formulario);
-    datos.append('idOrdenCompra', idOrdenCompra);
-    datos.append('estado', estado);
-
-  
-    Swal.fire({
-      title: '¿Desea establecer la orden de compra como '+estado+'?',
-      text: 'Esta acción no se puede deshacer',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Sí, registrar'
-    }).then((result) => {
-      if (result.isConfirmed) {
-    fetch('actions/set_estado_ordenCompra.php', {
-        method: 'POST',
-        body: datos
-    }).then(response => response.json())
-    .then(data => {
-        if (data.success == true) {
-          Swal.fire({
-            title: 'Éxito',
-            text: data.message,
-            icon: 'success'
-        });
-        getOrdenesCompra();
-        }else {
-          Swal.fire('Error', data.message, 'error');
-  
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-    });
-  }
-  });
-  return ;
-  }
-

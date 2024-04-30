@@ -204,6 +204,7 @@ require_once 'layout/menu_admin.php';
       <thead>
         <tr>
           <th>Producto</th>
+          <th>Descripción</th>
           <th>Precio Unitario</th>
           <th>Cantidad</th>
           <th>Proveedor</th>
@@ -225,29 +226,15 @@ require_once 'layout/menu_admin.php';
       </tbody>
     </table>
   </div>
-  <hr class="border-danger my-4">
 
-  <div class="row mt-3 mb-3">
+  <div class="row mt-3">
         <div class="col-lg-6">
-        <div class="row justify-content-between mt-4">
-<div class="col-5">
-            <button type="button" onclick="cerrarModal(event)" class="btn btn-primary w-100 rounded-5">Cerrar</button>
-        </div>
-        </div>
+            <button type="button" class="btn btn-primary btn-block">Cerrar</button>
         </div>
         <div class="col-lg-6">
-        <div class="row justify-content-between mt-4">
-        <div class="col-5">
-               <button type="button" id="cancelarBtn" onclick="cambiarEstado(event, 'cancelada', this.dataset.id)" 
-		       class="btn btn-danger w-100 rounded-5">Cancelada</button>
-                </div>
-                <div class="col-5">
-			    <button type="button" id="finalizarBtn" onclick="cambiarEstado(event, 'finalizada', this.dataset.id)"
-			   class="btn btn-success w-100 rounded-5">Finalizada</button>
-               </div>
-                </div>
-       </div>
-
+            <button type="button" class="btn btn-danger btn-block">Cancelada</button>
+            <button type="button" class="btn btn-success btn-block">Finalizada</button>
+        </div>
     </div>
 
 </div>
