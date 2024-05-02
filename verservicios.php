@@ -76,61 +76,79 @@ require_once 'layout/menu_admin.php';
                 <form id="formUpdateServicio">
                     <!-- Campo oculto para el ID -->
                     <input type="hidden" id="id" name="id">
-                            <div class="mb-3">
-                                <h6>Datos del servicio</h6>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <label for="nombre" class="form-label">Nombre</label>
-                                    <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Nombre" required minlength="5" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" required>
-                                    <div class="invalid-feedback">El nombre debe tener entre 5 y 30 letras.</div>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="disponibilidad" class="form-label">Disponibilidad</label>
-                                    <input type="text" class="form-control" id="disponibilidad" name="disponibilidad" placeholder="Disponibilidad del servicio" minlength="5" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" required>
-                                    <div class="invalid-feedback">El nombre debe tener entre 5 y 30 letras.</div>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="tarifa" class="form-label">Tarifa</label>
-                                    <input type="text" class="form-control" id="tarifa" name="tarifa" placeholder="Tarifa del servicio" pattern="^\d{1,6}(\.\d{1,2})?$" required>
-                                    <div class="invalid-feedback">Ingresa una tarifa válida (máx. 6 dígitos, opcionalmente con hasta 2 decimales).</div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                 <div class="col-md-12">
-                                    <label for="descripcion" class="form-label">Descripción</label>
-                                    <textarea type="text" class="form-control" rows="3" id="descripcion" name="descripcion" placeholder="Descripción del servicio"  pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" minlength="8" maxlength="150" required></textarea>
-                                    <div class="invalid-feedback">La descripción debe tener entre 8 y 150 caracteres y
-                                      solo puede contener letras y espacios.
-                                    </div>
-                                </div>
-                              </div>
-                              <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <label for="idCotizacion" class="form-label">ID Cotización</label>
-                                    <input type="text" class="form-control" id="idCotizacion" name="idCotizacion" placeholder="ID Cotización" pattern="^\d{1,10}$" maxlength="10" required>
-                                    <div class="invalid-feedback">Ingresa una numero  (mínimo 1 y máximo  10 dígitos).</div>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="idRequisicion" class="form-label">ID Requisición</label>
-                                    <input type="text" class="form-control" id="idRequisicion" name="idRequisicion" placeholder="ID Requisición" pattern="^\d{1,10}$" maxlength="10" required>
-                                    <div class="invalid-feedback">Ingresa una numero  (mínimo 1 y máximo  10 dígitos).</div>
-                                </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="idOrdenCompra" class="form-label">ID Orden de Compra</label>
-                                <input type="text" class="form-control" id="idOrdenCompra" name="idOrdenCompra" placeholder="ID Orden de Compra" pattern="^\d{1,10}$" maxlength="10" required>
-                                <div class="invalid-feedback">Ingresa una numero  (mínimo 1 y máximo  10 dígitos).</div>
-                            </div>
-                            </div>
-                            <button type="submit" onclick="actualizar(event)" class="custom-button btn btn-primary w-40">Editar</button>
+                    <input type="hidden" id="idOrdenCompra" name="idOrdenCompra" value="">
+                    <div class="row mb-3">
+                        <div class="col-lg-6 col-md-6">
+                            <label for="responsable" class="form-label">Responsable</label>
+                            <select id="responsable" name="responsable" class="form-control form-select" required>
+                                <option value="">Seleccionar responsable</option>
+                                <!-- Opciones del estado -->
+                            </select>
+                            <div class="invalid-feedback">El responsable es obligatorio.</div>
+                        </div>
+                        <div class="col-lg-6 col-md-6">
+                            <label for="fecha" class="form-label">Fecha</label>
+                            <input type="date" class="form-control" id="fecha" name="fecha">
+                        </div>
+                    </div>
+                    
+                    <div class="mb-3">
+                        <label for="detalles" class="form-label">Detalles del servicio</label>
+                        <textarea class="form-control" id="detalles" rows="3" name="detalles"
+                            placeholder="Agrega detalles" required minlength="8" maxlength="150"></textarea>
+                        <div class="invalid-feedback">Los detalles deben tener entre 8 y 120 caracteres y solo pueden
+                            contener letras y espacios.</div>
+                    </div>
+                    <div class="row mb-3 justify-content-center align-items-center">
+                        <div class="col-lg-6 col-md-6">
+                            <button type="submit" onclick="actualizar(event)" class="custom-button btn btn-primary w-100">Editar</button>
+                    </div>
+                 </div>
                         </form>
                 </div>
             </div>
         </div>
     </div>
 </div> <!-- fin del contenido-->
+<!-- Modal -->
+<div id="estadoModal" class="divPopup container-fluid flex-grow-1">
 
+<div class="row justify-content-center">
+        <div class="col-lg-5 col-md-5">
+            <div class="card">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="text-center mb-0">Editar estado del servicio</h4>
+                    <button id="closeButton" class="close-button"
+                            onclick='document.getElementById("estadoModal").style.display = "none";'>
+                        <img src="assets/images/cerrar.png" alt="Cerrar">
+                    </button>
+                </div>
+                <div class="card-body">
+        <form id="estadoServicioForm">
+          <input type="hidden" id="idServicio" name="idServicio">
+          <div class="mb-3">
+            <label for="estadoSelect" class="form-label">Nuevo Estado:</label>
+            <select class="form-select" id="estadoSelect" name="estadoSelect" required>
+            <option value="">Seleccionar estado</option>
+            <option value="pendiente">Pendiente</option>
+              <option value="en curso">en curso</option>
+              <option value="completado">Completado</option>
+            </select>
+          </div>
+          <div class="row justify-content-center mt-2">
+        <div class="col-lg-6 col-md-6 mb-2">
+          <button type="button" class=" custom-button btn btn-danger w-100"   onclick='document.getElementById("estadoModal").style.display = "none";'>Cerrar</button>
+          </div>
+        <div class="col-lg-6 col-md-6">
+          <button type="button" class=" custom-button btn btn-primary w-100" onclick="actualizarEstadoServicio(event)">Guardar Cambios</button>
+          </div>
+	  </div>
+        </form>
+        </div>
+            </div>
+        </div>
+    </div>
+	  </div>
 <script src="assets/JS/ver_servicios.js"></script>
 <script  src="assets/JS/filtrar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

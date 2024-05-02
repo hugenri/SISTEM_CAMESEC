@@ -2,6 +2,7 @@ body {
     margin: 0em;
     padding: 0em;
     font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(128, 157, 245);
     }
   
   
@@ -93,4 +94,20 @@ body {
     height: 54px; /* Cambia esta altura según tus necesidades */
     background-color: rgb(229, 241, 119); /* Cambia este color según tus necesidades */
     color: red;
+}
+
+.clickeable {
+  cursor: pointer; /* Cambia el cursor  */
+  color: #007bff !important; /* Cambia el color del texto */
+   text-decoration: underline; /* Agrega un subrayado para indicar que es clickeable */
+}
+
+/* Estilos personalizados */
+.card-customServicios {
+  background-color: #d3e9c5; /* Color de fondo personalizado */
+  color: #333; /* Color de texto personalizado */
+}
+
+.card-customServicios .card-title {
+  color: #007bff; /* Color del título personalizado */
 }

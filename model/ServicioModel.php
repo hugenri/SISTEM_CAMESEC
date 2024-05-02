@@ -15,27 +15,23 @@ $this->conexion = null;
 
    
 //Función para crear registro de producto
-public function createService($nombre, $descripcion, $tarifa, $disponibilidad,
-                             $idCotizacion, $idRequisicion, $idOrdenCompra) {
+public function createService($fecha, $detalles, $responsable, $estado, $idOrdenCompra) {
     try {
         $this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
 
         // Se establece la sentencia de la consulta SQL
-        $sql = "INSERT INTO servicios (nombre, descripcion, tarifa,  disponibilidad,
-                idCotizacion, idRequisicion, idOrdenCompra) VALUES (:nombre, :descripcion, :tarifa,
-                :disponibilidad, :idCotizacion,  :idRequisicion, :idOrdenCompra);";
+        $sql = "INSERT INTO servicios (idOrdenCompra, detalles,idEmpleado, estado, fecha) VALUES (:idOrdenCompra, :detalles, :responsable,
+                :estado, :fecha);";
 
         // Se prepara la sentencia de la consulta SQL
         $query = $this->conexion->prepare($sql);
 
         // Se vincula cada parámetro al nombre de variable especificado
-        $query->bindParam(':nombre', $nombre);
-        $query->bindParam(':descripcion', $descripcion);
-        $query->bindParam(':tarifa', $tarifa);
-        $query->bindParam(':disponibilidad', $disponibilidad);
-        $query->bindParam(':idCotizacion', $idCotizacion);
-        $query->bindParam(':idRequisicion', $idRequisicion);
-        $query->bindParam(':idOrdenCompra', $idOrdenCompra);
+        $query->bindParam('idOrdenCompra', $idOrdenCompra);
+        $query->bindParam(':detalles', $detalles);
+        $query->bindParam(':responsable', $responsable);
+        $query->bindParam(':estado', $estado);
+        $query->bindParam(':fecha', $fecha);
 
 
         
@@ -63,7 +59,13 @@ public function getServices(){
         //se crea la conexion a la base de datos
         $this->conexion = ConexionBD::getconexion();
           ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
-        $query = $this->conexion->prepare("SELECT * FROM servicio;");
+          $sql = "SELECT s.*, u.nombre AS nombre_usuario,
+          u.apellidoPaterno AS apellidoP, u.apellidoMaterno AS apellidoM
+          FROM servicios s
+          JOIN usuarios u ON s.idEmpleado = u.id
+          WHERE u.rol_usuario = 'empleado';";
+  
+          $query = $this->conexion->prepare($sql);
         
         //se ejecuta la consulta sql
         $query->execute();
@@ -91,7 +93,7 @@ public function deleteService($id){
     try{ // bloque try-catch, se capturan las  excepciones 
             $this->conexion = ConexionBD::getconexion();//se crea la conexión a la BD
             // se establece la sentencia de la consulta sql
-            $sql = "DELETE FROM servicio WHERE idServicio = :id;";
+            $sql = "DELETE FROM servicios WHERE idServicio = :id;";
             //se  prepara la sentencia de la  consulta sql
             $query = $this->conexion->prepare($sql);
             //Se vinculan los parámetros de la consulta con las variables
@@ -112,30 +114,24 @@ public function deleteService($id){
            }
   }
 
-  //método para actualizar los datos 
-  public function updateProduct($id, $nombre, $descripcion, $tarifa, $disponibilidad,
-  $idCotizacion, $idRequisicion, $idOrdenCompra) {
-try {
-$this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
+ //método para actualizar los datos 
+public function updateServicio($idServicio, $idEmpleado, $detalles, $fecha) {
+    try {
+        $this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
 
-// Se establece la sentencia de la consulta SQL
-$sql = "UPDATE servicio SET nombre = :nombre, descripcion = :descripcion,
-        tarifa = :tarifa, disponibilidad = :disponibilidad, 
-       idCotizacion = :idCotizacion, idRequisicion = :idRequisicion, 
-       idOrdenCompra = :idOrdenCompra WHERE idServicio = :id ;";
+        // Se establece la sentencia de la consulta SQL
+        $sql = "UPDATE servicios SET idEmpleado = :idEmpleado, detalles = :detalles,
+         fecha = :fecha WHERE idServicio = :idServicio";
 
-// Se prepara la sentencia de la consulta SQL
-$query = $this->conexion->prepare($sql);
+        // Se prepara la consulta SQL
+        $query = $this->conexion->prepare($sql);
 
-// Se vincula cada parámetro al nombre de variable especificado
-$query->bindParam(':id', $id);
-$query->bindParam(':nombre', $nombre);
-$query->bindParam(':descripcion', $descripcion);
-$query->bindParam(':tarifa', $tarifa);
-$query->bindParam(':disponibilidad', $disponibilidad);
-$query->bindParam(':idCotizacion', $idCotizacion);
-$query->bindParam(':idRequisicion', $idRequisicion);
-$query->bindParam(':idOrdenCompra', $idOrdenCompra);
+        // Se vincula cada parámetro al nombre de variable especificado
+        $query->bindParam(':idServicio', $idServicio);
+        $query->bindParam(':idEmpleado', $idEmpleado);
+        $query->bindParam(':detalles', $detalles);
+        $query->bindParam(':fecha', $fecha);
+
 
 
         // ejecutar la consulta

@@ -72,14 +72,14 @@ require_once 'layout/header_admin.php';
                     </button>
                 </div>
                 <div class="card-body">
-                    <p id="descripcionTextarea" class="text-justify"></p>
+                    <p id="descripcionTextarea" class="text-justify mt-3"></p>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-    <script  src="assets/JS/detalles_servicio.js"></script>
+    <script  src="assets/JS/detalles_servicios.js"></script>
     <script  src="assets/JS/filtrar.js"></script>
     <script  src="assets/JS/consultarDetalles.js"></script>
 

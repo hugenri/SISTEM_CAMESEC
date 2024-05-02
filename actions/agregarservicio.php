@@ -7,6 +7,26 @@ $site = $session->checkAndRedirect();
   header('location:' . $site);
 }
 
+// Función para manejar errores fatales y convertirlos en una respuesta JSON
+function handleFatalError() {
+  $error = error_get_last();
+  if ($error !== null) {
+      // Limpiar el búfer de salida
+      if (ob_get_contents()) ob_clean();
+      
+      http_response_code(500);
+      header('Content-Type: application/json');
+      $errorData = [
+          'error' => 'Error fatal',
+          'message' =>  $error['message']
+      ];
+      exit(json_encode($errorData));
+  }
+}
+
+// Registra la función para manejar errores fatales
+register_shutdown_function('handleFatalError');
+
 include_once '../model/ServicioModel.php';
 include_once '../clases/dataSanitizer.php';
 include_once '../clases/DataValidator.php';
@@ -15,51 +35,46 @@ $consulta = new ServicioModel();
 $validacion = true;
 $response = null;
 
-  $nombre = DataSanitizer::sanitize_input($_POST['nombre']);
-  $descripcion = DataSanitizer::sanitize_input($_POST['descripcion']);
-  $tarifa = DataSanitizer::sanitize_input($_POST['tarifa']);
-  $disponibilidad = DataSanitizer::sanitize_input($_POST['disponibilidad']);
-  $idCotizacion = DataSanitizer::sanitize_input($_POST['idCotizacion']);
-  $idRequisicion = DataSanitizer::sanitize_input($_POST['idRequisicion']);
-  $idOrdenCompra = DataSanitizer::sanitize_input($_POST['idOrdenCompra']);
 
-   $data = [$nombre, $descripcion, $tarifa, $disponibilidad, $idCotizacion,
-            $idRequisicion, $idOrdenCompra];
+  $fecha = DataSanitizer::sanitize_input($_POST['fecha']);
+  $idEmpleado = DataSanitizer::sanitize_input($_POST['responsable']);
+  $detalles = DataSanitizer::sanitize_input($_POST['detalles']);
+  $idOrdenCompra = DataSanitizer::sanitize_input($_POST['idOrdenCompra']);
+  $estado = 'en curso';
+  
+
+   $data = [$fecha, $detalles, $idOrdenCompra, $idEmpleado];
 
     //si se envia formulario sin datos se marca un error
     if(DataValidator::validateVariables($data) === false){
 
       $response = array('success' => false, 'message' => 'Faltan datos en el formulario');
+      echo json_encode($response);
+       exit();
     }else{
       
-    $datos = [$nombre, $descripcion, $disponibilidad];
-    $messageLetters = "Ingrese solo letras en el dato";
-     $response = DataValidator::validateLettersOnlyArray($datos, $messageLetters);
-     if ($response !== true) {
-      $validacion = false;
+      $date = $fecha; 
+      $messageDate = 'Fecha no válida. Formato: Y-m-d';
+      $response = DataValidator::validateDateForMySQL($date, $messageDate);
+      
+      if ($response !== true) {
+        $validacion = false;
         echo json_encode($response);
         exit();
-    }
+
+      }
     
-    $datos = [$nombre, $disponibilidad];
-    $messageLength = "El dato debe tener entre 5 y 30 letras";
-     $response = DataValidator::validateLengthInArray($datos, 5, 30, $messageLength);
-     if ($response !== true) {
-      $validacion = false;
-        echo json_encode($response);
-        exit();
-    }
 
     $messageLength = "El dato debe tener entre 8 y 150 letras";
-    $response = DataValidator::validateLength($descripcion, 8, 150, $messageLength);
+    $response = DataValidator::validateLength($detalles, 8, 150, $messageLength);
     if ($response !== true) {
      $validacion = false;
        echo json_encode($response);
        exit();
    }
-    $datos = [$idCotizacion, $idOrdenCompra, $idOrdenCompra];
+    $datos = [$idEmpleado, $idOrdenCompra];
     $messageLetters = "Ingrese solo numeros en el dato";
-   $response = DataValidator::validateNumbersFloat($datos, $messageLetters);
+   $response = DataValidator::validateNumbersOnlyArray($datos, $messageLetters);
    if ($response !== true) {
     $validacion = false;
       echo json_encode($response);
@@ -67,18 +82,10 @@ $response = null;
   }
   
   
-    $messageLetters = "Ingrese solo numeros en el dato";
-   $response = DataValidator::validateNumberFloat($tarifa, $messageLetters);
-   if ($response !== true) {
-    $validacion = false;
-      echo json_encode($response);
-      exit();
-  }
 
       if($validacion == true){//Si es true,  se puede continuar 
 
-        $result = $consulta->createService($nombre, $descripcion, $tarifa, $disponibilidad,
-                                             $idCotizacion, $idRequisicion, $idOrdenCompra);
+        $result = $consulta->createService($fecha, $detalles, $idEmpleado, $estado, $idOrdenCompra);
         $result = true;
          if($result === true){
              $response = array("success" => true, 'message' => 'Servicio registrado con exito!');

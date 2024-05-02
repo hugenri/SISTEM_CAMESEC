@@ -1,6 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById("formServicio").addEventListener('submit', agregarServicio); 
-});
 
 function agregarServicio(evento) {
   evento.preventDefault();
@@ -21,7 +18,14 @@ function agregarServicio(evento) {
       method: 'POST',
       body: datos
   })
-  .then(response => response.json())
+  .then(response => {
+    if (!response.ok) {
+        return response.json().then(errorData => {
+            throw new Error('Error en la solicitud. Código de estado: ' + response.status + ', Tipo de error: ' + errorData.error + ', Mensaje: ' + errorData.message);
+        });
+    }
+    return response.json(); // Suponiendo que la respuesta es JSON
+})
   .then(data => {
       if (data.success == true) {
         Swal.fire({
@@ -31,6 +35,10 @@ function agregarServicio(evento) {
       });
           formulario.reset(); // Se limpia el formulario
           formulario.classList.remove('was-validated');
+          const modal = document.getElementById('modalServicio');
+          const modalBS = bootstrap.Modal.getInstance(modal);
+          modalBS.hide(); //Cierra el modal
+          get_servicios();
       }else {
         // cuando data.success es false
         Swal.fire('Error', data.message, 'error');

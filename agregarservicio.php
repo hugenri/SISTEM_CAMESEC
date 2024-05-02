@@ -42,11 +42,7 @@ require_once 'layout/header_admin.php';
                                     <input type="text" class="form-control" id="disponibilidad" name="disponibilidad" placeholder="Disponibilidad del servicio" minlength="5" maxlength="30" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+" required>
                                     <div class="invalid-feedback">El nombre debe tener entre 5 y 30 letras.</div>
                                 </div>
-                                <div class="col-md-4">
-                                    <label for="tarifa" class="form-label">Tarifa</label>
-                                    <input type="text" class="form-control" id="tarifa" name="tarifa" placeholder="Tarifa del servicio" pattern="^\d{1,6}(\.\d{1,2})?$" required>
-                                    <div class="invalid-feedback">Ingresa una tarifa válida (máx. 6 dígitos, opcionalmente con hasta 2 decimales).</div>
-                                </div>
+                               
                             </div>
                             <div class="row mb-3">
                                  <div class="col-md-12">
@@ -57,26 +53,15 @@ require_once 'layout/header_admin.php';
                                     </div>
                                 </div>
                               </div>
-                              <div class="row mb-3">
-                                <div class="col-md-4">
-                                    <label for="idCotizacion" class="form-label">ID Cotización</label>
-                                    <input type="text" class="form-control" id="idCotizacion" name="idCotizacion" placeholder="ID Cotización" pattern="^\d{1,10}$" maxlength="10" required>
-                                    <div class="invalid-feedback">Ingresa una numero  (mínimo 1 y máximo  10 dígitos).</div>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="idRequisicion" class="form-label">ID Requisición</label>
-                                    <input type="text" class="form-control" id="idRequisicion" name="idRequisicion" placeholder="ID Requisición" pattern="^\d{1,10}$" maxlength="10" required>
-                                    <div class="invalid-feedback">Ingresa una numero  (mínimo 1 y máximo  10 dígitos).</div>
-                                </div>
-                            
-                            <div class="col-md-4 mb-3">
-                                <label for="idOrdenCompra" class="form-label">ID Orden de Compra</label>
-                                <input type="text" class="form-control" id="idOrdenCompra" name="idOrdenCompra" placeholder="ID Orden de Compra" pattern="^\d{1,10}$" maxlength="10" required>
-                                <div class="invalid-feedback">Ingresa una numero  (mínimo 1 y máximo  10 dígitos).</div>
-                            </div>
-                            </div>
-                            <button type="submit" class="custom-button btn btn-primary w-40">Enviar</button>
-                        </form>
+                              
+                            <div class="row justify-content-between mt-4">
+                <div class="col-5">
+                    <input type="submit" class="btn btn-primary w-100 rounded-5" value="Registrarse">
+                </div>
+                <div class="col-5">
+                    <input type="reset" class="btn btn-secondary w-100 rounded-5" value="Borrar">
+                </div>
+            </div>                        </form>
                     </div>
                 </div>
             </div>

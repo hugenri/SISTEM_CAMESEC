@@ -65,7 +65,7 @@
     <button class="dropbtn  fonnt-bolt">Servicios 
     </button>
     <div class="dropdown-content">
-      <a href="agregarservicio.php">Agregar Servicio</a>
+      <a href="activar_servicio.php">Activar Servicio</a>
       <a href="verservicios.php">Ver lista de servicios</a>
       <a href="detalles_servicios.php">Ver detalles de los servicios</a>
     </div>
