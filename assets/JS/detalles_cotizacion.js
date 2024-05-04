@@ -12,7 +12,7 @@ fetch("actions/vercotizaciones.php")
         <th class="text-nowrap">Fecha</th>
         <th class="text-nowrap">Cliente</th>
         <th class="text-nowrap">Servicio</th>
-        <th>Detalles</th>`;
+        <th>Detalles</th></thead>`;
 
          tabla += `<tbody>`; 
         for (let x of data.dataCotizaciones) {

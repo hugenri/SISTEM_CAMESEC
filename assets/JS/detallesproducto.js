@@ -10,7 +10,7 @@ fetch("actions/verproductos.php")
              
         let tabla = `<thead><tr><th class="text-nowrap">ID</th>
         <th class="text-nowrap">Nombre</th>
-        <th>Detalles</th>`;
+        <th>Detalles</th></thead>`;
 
          tabla += `<tbody>`; 
         for (let x of data.dataProduct) {

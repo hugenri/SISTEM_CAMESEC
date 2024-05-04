@@ -22,33 +22,18 @@ require_once 'layout/menu_empleado2.php';
 ?>
 
 
-<div id= "div-contenido" class="container-fluid flex-grow-1"> <!-- el contenido  en este div -->
+<div id= "divcontenidoServicios" class="container-fluid flex-grow-1"> <!-- el contenido  en este div -->
+<div class="container">
+<div class="row">
+<div class="col-lg-12 mb-2">
+<h4>Nuevos Servicios en curso</h4>
+</div>
+</div>
 
+<div id="contenedor-servicios" class="row row-cols-1 row-cols-md-2 row-cols-lg-2 g-4"></div>
 
-
-<div class="row justify-content-center align-items-center mt-4 mb-3">
-        <div class="col-lg-12 col-md-6 col-sm-12 text-center">
-            <h3 id="titulo" class="mb-3">Servicios</h3>
-        </div>
-    </div>
-
-    <div class="row justify-content-center align-items-center">
-        <div class="col-lg-10 col-md-10 col-sm-10">
-            <div class="card">
-                <div class="card-body">
-                    <div class="table-responsive">
-                        <table id="tabla" class="table table-striped table-sm">
-                        </table>
-                        <div class="text-center">
-                       <h4 id="NoData"></h4> <!-- mensaje si no hay datos que mostrar -->
-                      </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-<!--######################################-->
+</div>
+</div>
 
 <!-- modelPopup -->
 <div id="modalPopup" class="divPopup">
@@ -130,17 +115,35 @@ require_once 'layout/menu_empleado2.php';
     </div>
 </div>
 
-  </div>
-  </div>
-  </div>
- </div> 
- </div> 
-</div> 
+<div class="row">
+        <div class="col-md-12">
+            <h5 class="mb-2">Indicar el estodo del Servicio</h5>
+            </div>
+            </div>
 
+<div class="row">
+        <div class="col-md-12">
+        <div class="row justify-content-between mt-4 mb-3">
+                <div class="col-5">
+                <button onclick="actualizarEstadoServicio('terminado')" class="btn btn-primary btn-sm w-100 rounded-5">Servicio Terminado</button>
+                </div>
+                <div class="col-5">
+                    <botton  onclick="actualizarEstadoServicio('pendiente')" class="btn btn-primary btn-sm w-100 rounded-5">Servicio Pendiente</button>
+                </div>
+            </div>
+        </div>
+        </div>
+
+  </div>
+  </div>
+  </div>
+ </div> 
+ </div> 
 
 </div> <!-- fin del contenido-->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 
-<script  src="assets/JS/verificarServicios.js"></script>
+<script  src="assets/JS/get_nuevos_servicios.js"></script>
 
 
 <script>

@@ -41,4 +41,16 @@ body {
         width: 100%; /* Hace que las tarjetas ocupen todo el ancho disponible dentro del contenedor */
         margin-bottom: 20px; /* Agrega un margen inferior entre las tarjetas */
     }
-    
+    /* Estilo para agregar margen superior al contenido para evitar que quede detrás de la barra de navegación */
+#divcontenidoServicios {
+    margin-top: 70px; /* Ajusta la altura según la altura de tu barra de navegación */
+    margin-bottom: 40px;
+
+  }
+  .card-servicio {
+    background-color: #bbdae9;
+}
+
+.p-margen{
+margin-bottom: 2px;
+}

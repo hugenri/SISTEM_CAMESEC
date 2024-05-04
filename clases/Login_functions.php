@@ -16,7 +16,8 @@ function authenticateUser($dataUser, $dataCliente, $password) {
                 'nombre' => $dataUser['nombre'],
                 'apellidoPaterno' => $dataUser['apellidoPaterno'],
                 'apellidoMaterno' => $dataUser['apellidoMaterno'],
-                'rol_usuario' => $dataUser['rol_usuario']
+                'rol_usuario' => $dataUser['rol_usuario'],
+				 'id_usuario' => $dataUser['id']
             ];
             $this->handleSuccessfulAuthentication($userData);
         }

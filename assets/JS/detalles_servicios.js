@@ -13,8 +13,7 @@ fetch("actions/get_detalles_servicios.php")
         <th class="text-nowrap">Cliente</th>
         <th class="text-nowrap">Servicio</th>
         <th class="text-nowrap">Fecha</th>
-
-        <th>Detalles</th>`;
+        <th>Detalles</th> </thead>`;
 
          tabla += `<tbody>`; 
         for (let x of data.dataServices) {
@@ -24,8 +23,10 @@ fetch("actions/get_detalles_servicios.php")
           <td class="text-nowrap">${x.razon_social_cliente}</td>
           <td class="text-nowrap">${x.nombre_servicio}</td>
           <td class="text-nowrap">${x.fecha}</td>
-          <img src="assets/images/ver.png" alt="ver" class="tabla-image-accion" onclick="cargarDetalles(event, '${x.detalles}')" style="cursor: pointer;">         </td
-         </tr>`;
+          <td>
+          <img src="assets/images/ver.png" alt="ver" class="tabla-image-accion" onclick="cargarDetalles(event, '${x.detalles}')" style="cursor: pointer;"> 
+        </td>
+          </tr>`;
         }
         tabla += `</tbody>`;
         document.getElementById("tablaServicio").innerHTML = tabla;

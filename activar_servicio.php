@@ -74,7 +74,7 @@ require_once 'layout/header_admin.php';
     </div>
     </div>
 </div>
-
+</div>
   
 <!-- Script de Bootstrap 5 -->
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
