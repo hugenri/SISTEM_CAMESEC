@@ -1,5 +1,12 @@
+// Llama a la función notificarCotizaciones cuando el DOM esté completamente cargado
+
+document.addEventListener("DOMContentLoaded", function () {
+    getNumeroCotizaciones(); // Llama a la función cuando la página esté cargada
+    setInterval(getNumeroCotizaciones, 120000);
+           });
+
 function getNumeroCotizaciones() {
-    fetch('actions/notificar_numero_Cotizaciones.php')
+    fetch('actions/notificar_numero_cotizaciones.php')
         .then(response => response.json())
         .then(data => {
             // la respuesta exitosa
@@ -21,5 +28,3 @@ function getNumeroCotizaciones() {
             console.error('Error en la solicitud...:', error);
         });
 }
-// Llama a la función notificarCotizaciones cuando el DOM esté completamente cargado
-document.addEventListener('DOMContentLoaded', getNumeroCotizaciones);

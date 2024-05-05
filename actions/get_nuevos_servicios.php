@@ -20,7 +20,7 @@ $idEmpleado = $session->getSessionVariable('id_usuario');
 
 $response = array();
 
-$action =  $_POST['action'];
+$action = $_POST['action'];
 
 if(isset($action) && !empty($action)){
   if($action == "mostarNuevosServicios"){
@@ -28,7 +28,7 @@ $parametros = array(
     ':idEmpleado' => $idEmpleado
 );
 
-$sql = "SELECT
+$sql = "SELECT DISTINCT
 c.razonSocial AS nombre_empresa,
 CONCAT(c.nombre, ' ', c.apellidoPaterno, ' ', c.apellidoMaterno) AS nombre_completo,
 c.email AS email_cliente,
@@ -79,7 +79,7 @@ if($idServicio == ""){ //para verificar que los datos enviados por POST tenga un
       ':idServicio' => $idServicio
   );
   
-$sql = "SELECT p.nombre AS nombre_producto,
+$sql = "SELECT DISTINCT p.nombre AS nombre_producto,
 pc.cantidad AS cantidad_producto, CONCAT(c.nombre, ' ',
 c.apellidoPaterno, ' ', c.apellidoMaterno) AS nombre_completo,
  c.razonSocial AS nombre_empresa, c.email AS email_cliente,

@@ -146,8 +146,8 @@ public static function validateEmail($email, $message) {
     $hasLowerCase = preg_match('/[a-z]/', $password);
     $hasUpperCase = preg_match('/[A-Z]/', $password);
     $hasDigit = preg_match('/\d/', $password);
-    $hasSpecialChar = preg_match('/[^\w\s]/', $password);
-
+    $hasSpecialChar = preg_match('/[^\w\s]|[\p{P}]/u', $password);
+    
     if ($validLength2 && $validLength && $hasLowerCase && $hasUpperCase && $hasDigit && $hasSpecialChar) {
 
        // $validacion = true;

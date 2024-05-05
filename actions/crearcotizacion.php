@@ -221,6 +221,7 @@ function calcularTotales($items, $costoInstalacion, $descuento) {
   $subtotal = 0;
   $iva = 0;
   $total = 0;
+  $total_descuento = 0;
 
   // Verificar si hay elementos en el carrito
   if (!empty($items)) {
@@ -235,18 +236,26 @@ function calcularTotales($items, $costoInstalacion, $descuento) {
 
   // Calcular el total con descuento si se aplica
   $descuento = ($descuento > 0 && $descuento <= 100) ? $descuento : 0;
+
+  
   if ($subtotal > 0) {
-      $total = $subtotal - ($subtotal * ($descuento / 100));
+
+    if($descuento != 0){
+      $total_descuento = ($subtotal/ 100) * $descuento;
+    }
+      $total = $subtotal - $total_descuento;
   } else {
+    $total_descuento = ($total/ 100) * $descuento;
+
       // Si no hay elementos en el carrito, el total será igual al costo de instalación
-      $total = $costoInstalacion;
+      $total = $costoInstalacion - $total_descuento;
   }
 
   // Calcular el IVA si hay un subtotal mayor que cero
   if ($subtotal > 0) {
-      $iva = $subtotal * 0.16;
+      $iva = ($subtotal - $descuento)* 0.16;
   }
-
+  $iva = ($total - $descuento)* 0.16;
   // Sumar el IVA al total
   $total += $iva;
 

@@ -118,7 +118,7 @@ if (!ReCaptchaVerifier::verify($reCaptchaToken, $reCaptchaAction)) {
       if($validacion == true){//Si devuelve true, significa que el reCAPTCHA es válido y se puede continuar con el procesamiento del formulario
         $claveGenerada = new Clave();
        $password = $claveGenerada->generarClave();
-        $hashPassword = password_hash($password, PASSWORD_DEFAULT);
+        $hashPassword =  password_hash($password, PASSWORD_DEFAULT);
         $result = $consulta->createClient($razonSocial, $nombre, $apellidoP, $apellidoM, $calle, $numero, $colonia, 
          $municipio, $estado, $cp, $email, $telefono, $hashPassword, $rfc);
 

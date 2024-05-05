@@ -146,10 +146,10 @@
           let subtotal = sub_totalProductos + costoInstalacion;
           
           // Calcular el descuento en cantidad
-          const descuento = (porcentajeDescuento / 100) * subtotal;
+          const descuento = (subtotal / 100) * porcentajeDescuento;
       
           // Calcular el IVA
-          const iva = subtotal * 0.16;
+          const iva = (subtotal - descuento) * 0.16;
           
           // Calcular el total incluyendo el descuento
           const totalIva = (subtotal - descuento)+ iva;
