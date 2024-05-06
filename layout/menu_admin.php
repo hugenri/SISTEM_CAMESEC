@@ -71,38 +71,14 @@
     </div>
   </div> 
 
+  
   <div class="custom-dropdown">
-    <button class="dropbtn  fonnt-bolt">Ajustes 
+  <button class="dropbtn  fonnt-bolt">Conceptos de facturación 
     </button>
 
     <div class="dropdown-content">
-
-      <a href="#">Link 1</a>
-
-      <a href="#">Link 2</a>
-
-      <a href="#">Link 3</a>
-
-    </div>
-
-  </div> 
-
-  <div class="custom-dropdown">
-
-    <button class="dropbtn  fonnt-bolt">Conceptos de facturación 
-
-    
-
-    </button>
-
-    <div class="dropdown-content">
-
-      <a href="#">Link 1</a>
-
-      <a href="#">Link 2</a>
-
-      <a href="#">Link 3</a>
-
+      <a href="ver_facturas.php">Lista de facturas</a>
+      <a href="nuevas_facturas.php">Nuevas Facturas</a>
     </div>
 
   </div> 

@@ -33,7 +33,7 @@ $idOrdenCompra =  DataSanitizer::sanitize_input($_POST['idOrdenCompra']);
 $sql = "SELECT pc.id, p.nombre AS nombre_producto, p.descripcion AS descripcion_producto, p.precio AS precio_unitario, pc.cantidad AS cantidad_comprar,
 pr.razonSocial AS nombre_proveedor, pr.email AS email_proveedor, pr.telefono AS telefono_proveedor,
 c.razonSocial AS nombre_cliente, c.email AS email_cliente, c.telefono AS telefono_cliente,
-sc.servicio AS servicio_ofrecido
+sc.servicio AS servicio_ofrecido, co.idCotizacion
 FROM orden_compras oc
 INNER JOIN cotizaciones co ON oc.idCotizacion = co.idCotizacion
 INNER JOIN productos_cotizacion pc ON co.idCotizacion = pc.idCotizacion

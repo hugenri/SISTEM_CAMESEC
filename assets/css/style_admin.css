@@ -111,3 +111,7 @@ body {
 .card-customServicios .card-title {
   color: #007bff; /* Color del título personalizado */
 }
+
+.bg-custom {
+  background-color: rgb(177, 230, 176);
+}

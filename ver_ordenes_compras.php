@@ -238,11 +238,11 @@ require_once 'layout/menu_admin.php';
         <div class="col-lg-6">
         <div class="row justify-content-between mt-4">
         <div class="col-5">
-               <button type="button" id="cancelarBtn" onclick="cambiarEstado(event, 'cancelada', this.dataset.id)" 
+               <button type="button" id="cancelarBtn" onclick="cambiarEstado(event, 'cancelada', this.dataset.id, this.dataset.idCotizacion)" 
 		       class="btn btn-danger w-100 rounded-5">Cancelada</button>
                 </div>
                 <div class="col-5">
-			    <button type="button" id="finalizarBtn" onclick="cambiarEstado(event, 'finalizada', this.dataset.id)"
+			    <button type="button" id="finalizarBtn" onclick="cambiarEstado(event, 'finalizada', this.dataset.id, this.dataset.idCotizacion)"
 			   class="btn btn-success w-100 rounded-5">Finalizada</button>
                </div>
                 </div>
