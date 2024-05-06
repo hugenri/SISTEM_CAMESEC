@@ -14,6 +14,8 @@ function getCounts(){
           document.getElementById('numServicios').textContent = data.numServicios;
           document.getElementById('numCotizaciones').textContent = data.numCotizaciones;
           document.getElementById('numOrdenesCompra').textContent = data.numOrdenesCompra;
+          document.getElementById('numFacturas').textContent = data.numFacturas;
+          console.log(data);
 
 
         }

@@ -16,6 +16,7 @@ include_once '../model/ServicioModel.php';
 include_once '../model/RequisicionModel.php';
 include_once '../model/CotizacionModel.php';
 include_once '../model/CompraModel.php';
+include_once '../clases/DataBase.php';
 
 
 $clientes = new ClienteModel();
@@ -39,7 +40,14 @@ try {
  $numero_cotizaciones = $cotizaciones->getNumerCotizaciones();
  $numero_ordenesCompra = $ordenesCompra->getNumerOrdenesCompra();
 
-
+ $sql = "SELECT COUNT(*) as numRegistros
+ FROM facturas";
+ $parametros = array(
+    //se requiere vacio
+);
+   // Ejecutar la consulta
+   $numero_facturas = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');     
+    $numFacturas = $numero_facturas['numRegistros'];
 
     $response = [
         'numUsuarios' => $numero_usuarios,
@@ -48,7 +56,9 @@ try {
         'numProductos' => $numero_productos,
         'numServicios' => $numero_servicios,
         'numCotizaciones'  => $numero_cotizaciones,
-        'numOrdenesCompra'  => $numero_ordenesCompra
+        'numOrdenesCompra'  => $numero_ordenesCompra,
+        'numFacturas'  => $numFacturas
+
     ];
 
     echo json_encode($response);

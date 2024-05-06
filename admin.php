@@ -136,7 +136,17 @@ require_once 'layout/menu_admin1.php';
                     </div>
                 </div>
             </div>
-            
+            <div class="col-lg-2 col-md-6">
+                <div class="card custom-card text-center mb-2 align-items-center justify-content-center">
+                    <img src="assets/images/facturas.png" class="card-img-top mt-1" alt="Imagen de cliente">
+                    <div class="card-body">
+                        <h5 class="card-title">Facturas</h5>
+                         <span id="numFacturas"></span></p>
+                        <a href="facturas.php" class="btn">Ver más</a>
+                    </div>
+                </div>
+            </div>
+
 			</div>
 
 </div> <!-- fin del contenido-->
