@@ -1,4 +1,3 @@
-
 <?php
 
 include_once '../clases/Session.php';
@@ -30,12 +29,12 @@ WHERE  estatus = 'pendiente';";
   $numero_nuevas_facturas = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');
     
   $sql = "SELECT COUNT(*) as numRegistros
-  FROM Facturas";
+  FROM facturas";
     // Ejecutar la consulta
     $numero_facturas = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');     
     $response = [
-        'numFactuas' => $numero_facturas,
-        'numNuevosFacturas' => $numero_nuevas_facturas,
+        'numFacturas' => $numero_facturas,
+        'numNuevasFacturas' => $numero_nuevas_facturas,
         
     ];
 
