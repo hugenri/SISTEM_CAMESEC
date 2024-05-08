@@ -15,15 +15,15 @@ $this->conexion = null;
 
  // Función para crear registro de cotizacion
 public function createCotizacion($fecha, $observaciones, $idSolicitud, $descripcion,
-$subtotal, $total, $iva, $descuento, $costo_instalacion, $servicio) {
+$subtotal, $total, $iva, $descuento, $costo_instalacion) {
 try {
 $this->conexion = ConexionBD::getconexion(); // Se crea la conexión a la base de datos
 
 // Se establece la sentencia de la consulta SQL
 $sql = "INSERT INTO cotizaciones (fecha, observaciones, idSolicitudCotizacion, descripcion, 
-subtotal, total, iva, descuento, costo_instalacion, servicio) 
+subtotal, total, iva, descuento, costo_instalacion) 
 VALUES (:fecha, :observaciones, :idsolicitud, :descripcion, 
-:subtotal, :total, :iva, :descuento, :costo_instalacion, :servicio)";
+:subtotal, :total, :iva, :descuento, :costo_instalacion)";
 
 // Se prepara la sentencia de la consulta SQL
 $query = $this->conexion->prepare($sql);
@@ -38,7 +38,6 @@ $query->bindParam(':total', $total);
 $query->bindParam(':iva', $iva);
 $query->bindParam(':descuento', $descuento);
 $query->bindParam(':costo_instalacion', $costo_instalacion);
-$query->bindParam(':servicio', $servicio);
 
 // Se ejecuta la consulta en la base de datos
 $result = $query->execute();

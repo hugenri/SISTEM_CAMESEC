@@ -31,7 +31,6 @@ $response = null;
   $observaciones = DataSanitizer::sanitize_input($_POST['observaciones']);
   $idCliente = DataSanitizer::sanitize_input($_POST['idCliente']);
   $descripcion = DataSanitizer::sanitize_input($_POST['descripcion']);
-  $servicio = DataSanitizer::sanitize_input($_POST['nombreServicio']);
   $costoInstalacion = DataSanitizer::sanitize_input($_POST['costoInstalacion']);
   $descuento = DataSanitizer::sanitize_input($_POST['descuento']);
 
@@ -68,7 +67,7 @@ $response = null;
 
   }
   
-    $datos_string_letras = [$descripcion, $observaciones, $servicio];
+    $datos_string_letras = [$descripcion, $observaciones];
       $messageLetters = "Ingrese solo letras en el dato";
      $response = DataValidator::validateLettersOnlyArray($datos_string_letras, $messageLetters);
      if ($response !== true) {
@@ -120,7 +119,7 @@ $response = null;
       $total = $totales['total'];
       // Llamar a createCotizacion y obtener el ID de la cotización
       $id_cotizacion = $consulta->createCotizacion($fecha, $observaciones, $id_solicitud_cotizacion, $descripcion,
-                                                   $subtotal, $total, $iva, $descuento, $costoInstalacion, $servicio);
+                                                   $subtotal, $total, $iva, $descuento, $costoInstalacion);
       // Verificar si la cotización se creó correctamente
       if ($id_cotizacion !== false) {
         
