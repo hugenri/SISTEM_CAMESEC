@@ -60,71 +60,44 @@ require_once 'layout/menu_admin.php';
 </div>
 
 <!-- popup -->
-<div id="popup" class="divPopup">
-
+<div id="modalPopup" class="divPopup">
+<div class="container-fluid">
     <div class="row justify-content-center">
-        <div class="col-lg-10 col-md-10">
+        <div class="col-lg-11 col-md-11">
         <div class="card">
         <div class="card-header d-flex justify-content-between align-items-center">
-        <h4 class="text-center mb-0">Editar Cotización</h4>
+        <h4 class="text-center mb-0">Cotizar Servicio</h4>
         <button id="closeButton" class="close-button"
-        onclick='document.getElementById("popup").style.display = "none";'>
+        onclick="cerrarPopup()">
         <img src="assets/images/cerrar.png" alt="Cerrar">
         </button>
         </div>
         <div class="card-body">
-        <form id="formUpdateCotizacion">
-        <!-- Campo oculto para el ID -->
-        <input type="hidden" id="id" name="id">
-        <div class="mb-3">
-        <h6>Datos del servicio</h6>
-        </div>
-        <div class="row mb-3">
-        <div class="col-md-4">
-            <label for="fecha" class="form-label">Fecha</label>
-            <input type="date" class="form-control" id="fecha" name="fecha" required>
+        <form id="form">
+    <input type="hidden" id="id" name="idSolicitudCotizacion">
+    <input type="hidden" id="idCliente" name="idCliente">
+    <input type="hidden" id="nombreServicio" name="nombreServicio">
+    <div class="row mb-3">
+        <div class="col-lg-9 col-md-9">
+    <div class="row mb-3">
+        <div class="col-lg-6 col-md-6 mb-2">
+        <p id="nombreCliente"></p>
         </div>
         
-        <div class="col-md-4">
-            <label for="idCliente" class="form-label">ID Cliente</label>
-            <input type="text" class="form-control" id="idCliente" name="idCliente" pattern="[1-9]\d{0,10}" required>
-            <div class="invalid-feedback">Ingrese solo números enteros positivos de 1 a 11 dígitos.</div>
-        </div>    
-        <div class="col-md-4">
-            <label for="cantidad" class="form-label">Cantidad</label>
-            <input type="text" class="form-control" id="cantidad" name="cantidad" pattern="\d+(\.\d{1,2})?" title="Ingrese un número entero positivo o un decimal con hasta dos decimales." required>
-            <div class="invalid-feedback">Ingrese un número entero positivo o un decimal con hasta dos decimales.</div>
-        </div>
-        </div>
-        <div class="row mb-3">
-        <div class="col-md-4">
-            <label for="precioUnitario" class="form-label">Precio Unitario</label>
-            <input type="text" class="form-control" id="precioUnitario" name="precioUnitario" pattern="\d+(\.\d{1,2})?" title="Ingrese un número entero positivo o un decimal con hasta dos decimales." required>
-            <div class="invalid-feedback">Ingrese un número entero positivo o un decimal con hasta dos decimales.</div>
-        </div>
-        <div class="col-md-4">
-            <label for="importeTotal" class="form-label">Importe Total</label>
-            <input type="text" class="form-control" id="importeTotal" name="importeTotal" pattern="\d+(\.\d{1,2})?" title="Ingrese un número entero positivo o un decimal con hasta dos decimales." required>
-            <div class="invalid-feedback">Ingrese un número entero positivo o un decimal con hasta dos decimales.</div>
-        </div>
-    
-        <div class="col-md-4">
-            <label for="idProducto" class="form-label">ID Producto</label>
-            <input type="text" class="form-control" id="idProducto" name="idProducto" pattern="[1-9]\d{0,10}" required>
-            <div class="invalid-feedback">Ingrese solo números enteros positivos de 1 a 11 dígitos.</div>
-        </div>
-        </div>
-        <div class="row mb-3">
-        <div class="col-md-4">
-            <label for="idServicio" class="form-label">ID Servicio</label>
-            <input type="text" class="form-control" id="idServicio" name="idServicio" pattern="[1-9]\d{0,10}" required>
-            <div class="invalid-feedback">Ingrese solo números enteros positivos de 1 a 11 dígitos.</div>
+        <div class="col-lg-6 col-md-6">
+            <label for="fecha" class="form-label">Fecha:</label>
+            <input type="date" id="fecha" name="fecha" class="form-control" required>
+        </div>   
+    </div>
+    <div class="row mb-3">
+        <div class=" col-lg-6 col-md-6 mb-2">
+            <label for="costoInstalacion" class="form-label">Costo de Instalación:</label>
+            <input type="number" id="costoInstalacion" name="costoInstalacion" placeholder="$" class="form-control" step="1" min="1" required>            <div class="invalid-feedback">Por favor ingresa un costo de instalación válido.</div>
         </div>
 
-        <div class="col-md-4">
-            <label for="idCatalogoCotizaciones" class="form-label">ID Catálogo Cotizaciones</label>
-            <input type="text" class="form-control" id="idCatalogoCotizaciones" name="idCatalogoCotizaciones" pattern="[1-9]\d{0,10}" required>
-            <div class="invalid-feedback">Ingrese solo números enteros positivos de 1 a 11 dígitos.</div>
+        <div class="col-lg-6  col-md-6">
+            <label for="descuento" class="form-label">Descuento:</label>
+            <input type="number" id="descuento" name="descuento" placeholder="% porcentaje" class="form-control" step="1" min="1" max="100">            <div class="invalid-feedback">Por favor ingresa un valor de descuento válido.</div>
         </div>
         </div>
         <div class="row mb-3">
@@ -139,19 +112,87 @@ require_once 'layout/menu_admin.php';
             <div class="invalid-feedback">Las observaciones deben tener entre 8 y 100 letras y solo pueden contener letras y espacios.</div>
         </div>
     </div>
-     <button type="submit" onclick="actualizar(event)" class="custom-button btn btn-primary w-40">Editar</button>
-    </form>
+
+
+
+    <div class="mb-3">
+        <h6>Agregar productos</h6>
     </div>
-    </div>
+   
+      <div class="row" id="cart-items">
+      <div class="col-lg-12 col-md-12">
+      <div class="modal-body" id="ItemsContent">
+     <!-- Contenido del modal se agregará dinámicamente aquí -->
+     </div>
+     </div>
+</div>
+            <!-- Agregar Nueva Fila de Producto -->
+<!-- Botón para abrir el modal -->
+<button type="button" class="btn btn-primary mt-2 mb-2" id="btnAbrirModal">Agregar producto</button>
+
         </div>
+        
+
+        <!-- Columna para los totales -->
+<div class="col-lg-3 col-md-3 col-sm-12 ml-5" style="border: 1px solid black; padding: 10px;">
+    <!-- Totales -->
+    <div class="mt-4">
+    <h4>Cantidades de la cotización</h4>
+       <p id="costo-instalacion">Instalación: $<span id="costoInstalacion" class="invoice-instalacion">0.00</span></p>
+        <p id="porcentaje-descuento">Descuento: %<span class="invoice-porcentajeDescuento">0</span></p>
+        <p id="Productos">Productos $<span class="invoice-prroductos">0.00</span></p>
+        <h4>Totales</h4>
+        <p id="subTotal">Subtotal: $<span class="invoice-sub-total">0.00</span></p>
+        <p id="totaldescuento">Descuento: $<span class="invoice-discount">0.00</span></p>
+        <p id="iva">IVA: $<span class="invoice-vat">0.00</span></p>
+        <p id="total-iva">Total: $<span class="invoice-total">0.00</span></p>
+    </div>
+    <!-- Línea divisoria -->
+    <hr style="margin-top: 10px; margin-bottom: 10px;">
+    <!-- Botón Crear Factura -->
+    <button type="button" class="btn btn-primary mt-3" id="create-invoice" onclick="crearCotizacion(event)">Crear cotización</button>
+</div>
+ </div>
+</form>
+
+    </div>
+    </div>
+   </div>
+    </div>
+    </div>
+    
     </div>
 </div> <!-- fin del contenido-->
-<!-- Script personalizado para validación en tiempo real -->
-<script>
-  var formulario = document.getElementById('formUpdateCotizacion');
-</script>
+
+<div class="modal fade" id="ModalProducto" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agregar Producto</h5>
+                
+            </div>
+            <div class="modal-body">
+                <div class="form-row">
+                <select id="selectProductos" name="invoice_product" class="form-control invoice_product" required>
+                            <!-- Opciones-->
+                           </select>
+                    <div class="form-group col-md-12">
+                        <label for="cantidad">Cantidad:</label>
+                        <input type="number" id="cantidad" name="cantidad" class="form-control" placeholder="" min="1">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" id="btCargarProducto">Aceptar</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="cerrarModal('ModalProducto')">Cerrar</button>
+            <!-- Agrega aquí el botón de guardar o cualquier otro -->
+        </div>
+        </div>
+    </div>
+</div>
 <script  src="assets/JS/form_validation.js"></script>
 <script  src="assets/JS/ver_cotizaciones.js"></script>
+<script  src="assets/JS/actualizar_cotizacion.js"></script>
 <script  src="assets/JS/filtrar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

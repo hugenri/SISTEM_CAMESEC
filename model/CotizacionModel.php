@@ -70,7 +70,7 @@ public function getCotizaciones(){
          $sql = "SELECT c.*, cl.razonSocial AS razonSocialCliente
          FROM cotizaciones c
          INNER JOIN solicitudes_cotizacion sc ON c.idSolicitudCotizacion = sc.id
-         INNER JOIN cliente cl ON sc.id_cliente = cl.idCliente;;";
+         INNER JOIN cliente cl ON sc.id_cliente = cl.idCliente;";
       
       
           $query = $this->conexion->prepare($sql);
