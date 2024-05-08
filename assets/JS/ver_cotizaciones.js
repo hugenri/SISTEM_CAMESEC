@@ -58,44 +58,7 @@ function getCotizaciones() {
 
 
 
-function actualizar(evento) {//metodo para actualizar el registro
-  evento.preventDefault();
-  Swal.fire({
-    title: '¿Desea eliminar los datos de la cotización?',
-    text: 'Esta acción no se puede deshacer',
-    icon: 'warning',
-    showCancelButton: true,
-    confirmButtonColor: '#3085d6',
-    cancelButtonColor: '#d33',
-    confirmButtonText: 'Sí, eliminar'
-  }).then((result) => {
-    if (result.isConfirmed) {
-  const formulario = document.getElementById("formUpdateCotizacion");
-  const datos = new FormData(formulario);
 
-  fetch('actions/actualizarcotizacion.php', {
-      method: 'POST',
-      body: datos
-  })
-    .then(response => response.json())
-    .then(data => {
-      if (data.success == true) {
-        alert(data.message);
-        formulario.classList.remove('was-validated');
-        formulario.reset(); //se limpia el formulario
-        document.getElementById("popup").style.display = "none";//estilo para ocultar el popup
-        getCotizaciones(); //se recarga la tabla 
-      }else {
-        Swal.fire('Error', data.message, 'error');
-      }
-  })
-  .catch(error => {
-      console.error('Error:', error);
-  });
-}
-});
-return ;
-}
 
 function eliminar(id){
 

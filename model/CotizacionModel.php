@@ -67,7 +67,7 @@ public function getCotizaciones(){
         //se crea la conexion a la base de datos
         $this->conexion = ConexionBD::getconexion();
           ////se  prepara la sentencia de la  consulta sql para su ejecución y se devuelve un objeto de la consulta
-         $sql = "SELECT c.*, cl.razonSocial AS razonSocialCliente
+         $sql = "SELECT c.*, cl.razonSocial AS razonSocialCliente, sc.servicio
          FROM cotizaciones c
          INNER JOIN solicitudes_cotizacion sc ON c.idSolicitudCotizacion = sc.id
          INNER JOIN cliente cl ON sc.id_cliente = cl.idCliente;";
@@ -292,4 +292,103 @@ function insertOrderItems($idCotizacion, $items) {
         $this->conexion = null;
     }
 }
+
+function actualizarProductos($idCotizacion, $items) {
+    $sql = "INSERT INTO productos_cotizacion (idCotizacion, id_producto, cantidad) VALUES ";
+   
+    $values = array();
+    try {
+        $this->conexion = ConexionBD::getconexion();
+      // Eliminar registros existentes para el idCotizacion dado
+      $sql_delete = "DELETE FROM productos_cotizacion WHERE idCotizacion = ?";
+      $query_delete = $this->conexion->prepare($sql_delete);
+      $query_delete->execute([$idCotizacion]);
+
+        foreach ($items as $item) {
+            $sql .= "(?, ?, ?),";
+            $values[] = $idCotizacion;
+            $values[] = $item['id']; // Accede al id del producto
+            $values[] = $item['qty']; // Accede a la cantidad del producto
+        }
+   
+        // Elimina la coma extra al final de la cadena SQL
+        $sql = rtrim($sql, ',');
+   
+        // Preparar la declaración
+        $query = $this->conexion->prepare($sql);
+   
+        // Ejecutar la declaración para cada conjunto de valores
+        $query->execute($values);
+        
+        // No necesitas obtener el ID de la venta insertada, ya que estás insertando en una tabla de relación muchos a muchos
+   
+        return true; // Retorna verdadero si la inserción fue exitosa
+    } catch (PDOException $ex) {
+         // Cancela la transacción en caso de error
+         $this->conexion->rollBack();
+         // Registra el error
+        echo "Error: " . $ex->getMessage();
+        return false;
+    } finally {
+        $this->conexion = null;
+    }
+}
+/*
+function actualizarProductos($idCotizacion, $items){
+    try {
+        $this->conexion = ConexionBD::getconexion();
+
+        $sql = "UPDATE productos_cotizacion SET cantidad = ? WHERE idCotizacion = ? AND id_producto = ?";
+        $query = $this->conexion->prepare($sql);
+
+        foreach ($items as $item) {
+            $query->execute([$item['qty'], $idCotizacion, $item['id']]);
+        }
+
+        return true;
+    } catch (PDOException $ex) {
+        echo "Error: " . $ex->getMessage();
+        return false;
+    } finally {
+        $this->conexion = null;
+    }
+}
+
+
+function actualizarProductos($idCotizacion, $items){
+    
+      try{
+        $this->conexion = ConexionBD::getconexion();
+
+      // Llamar a insertOrderItems con el ID de la cotización
+      $sql = "UPDATE productos_cotizacion SET id_producto = ?,  cantidad = ? WHERE idCotizacion = ?;";
+  
+      $values = array();        
+          foreach ($items as $item) {
+              $sql .= "(?, ?, ?),";
+              $values[] = $idCotizacion;
+              $values[] = $item['id']; // Accede al id del producto
+              $values[] = $item['qty']; // Accede a la cantidad del producto
+          }
+     
+          // Elimina la coma extra al final de la cadena SQL
+          $sql = rtrim($sql, ',');
+       // Preparar la declaración
+       $query = $this->conexion->prepare($sql);
+   
+       // Ejecutar la declaración para cada conjunto de valores
+      $resultado =  $query->execute($values);
+       
+       // No necesitas obtener el ID de la venta insertada, ya que estás insertando en una tabla de relación muchos a muchos
+  
+       return $resultado; // Retorna verdadero si la inserción fue exitosa
+   } catch (PDOException $ex) {
+       echo "Error: " . $ex->getMessage();
+       return false;
+   } finally {
+       $this->conexion = null;
+   }
+
+}
+*/
 }

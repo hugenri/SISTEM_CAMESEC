@@ -26,7 +26,7 @@ function mostrarCotizacion(idCotizacion) {
                 
             document.getElementById('costoInstalacion').innerHTML = 'Costo de instalacion: $'+data.dataCotizacion[0].costo_instalacion;
             document.getElementById('subtotal').innerHTML = 'Subtotal: $'+ data.dataCotizacion[0].subtotal;
-            document.getElementById('descuento').innerHTML = 'Descuento: $'+ data.dataCotizacion[0].descuento;
+            document.getElementById('descuento').innerHTML = 'Descuento: '+ data.dataCotizacion[0].descuento + '%';
             document.getElementById('iva').innerHTML = 'IVA: $' + data.dataCotizacion[0].iva;
             document.getElementById('total').innerHTML = 'Total: $' + data.dataCotizacion[0].total;
           

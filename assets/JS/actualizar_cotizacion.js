@@ -1,4 +1,68 @@
-//assets\JS\get_nuevas_facturas.js
+function actualizarCotizacion(evento) {
+    evento.preventDefault();
+  
+    // Confirmación con SweetAlert
+    Swal.fire({
+      title: '¿Desea actualizar los datos de la cotización?',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Sí, actualizar'
+    }).then((result) => {
+      if (result.isConfirmed) {
+          
+        // Obtener los valores del formulario
+        const formulario = document.getElementById("formCotizacion");
+        const datosFormulario = new FormData(formulario);
+        // Obtener los valores de los elementos HTML
+   
+        const totalProductos = document.querySelector(".invoice-prroductos").textContent;
+        const subtotal = document.querySelector(".invoice-sub-total").textContent;
+        const totalDescuento = document.querySelector(".invoice-discount").textContent;
+        const iva = document.querySelector(".invoice-vat").textContent;
+        const total = document.querySelector(".invoice-total").textContent;
+  
+        // Agregar los valores extraídos del HTML al FormData
+       
+        datosFormulario.append('totalProductos', totalProductos);
+        datosFormulario.append('subtotal', subtotal);
+        datosFormulario.append('totalDescuento', totalDescuento);
+        datosFormulario.append('iva', iva);
+        datosFormulario.append('total', total);
+
+        // Realizar la solicitud HTTP POST con fetch
+        fetch('actions/actualizar_cotizacion.php', {
+          method: 'POST',
+          body: datosFormulario
+        })
+          .then(response => response.json())
+          .then(data => {
+            if (data.success == true) {
+            
+                Swal.fire({
+                    title: 'Éxito',
+                    text: data.message,
+                    icon: 'success'
+                });
+              // Restablecer el formulario y recargar la tabla
+              formulario.classList.remove('was-validated');
+              formulario.reset();
+              getCotizaciones();
+              document.getElementById("modalPopup").style.display = "none";
+
+            } else {
+              Swal.fire('Error', data.message, 'error');
+            }
+            
+          })
+          .catch(error => {
+            console.error('Error:', error);
+          });
+      }
+    });
+  }
 
 function mostrarDatosCotizacion(idCotizacion) {
 
@@ -7,7 +71,7 @@ function mostrarDatosCotizacion(idCotizacion) {
     formData.append("idCotizacion", idCotizacion);
 
     // Obtener las cotizaciones
-    fetch('actions/actualizar_cotizacion.php',{
+    fetch('actions/obtener_datos_cotizacion.php',{
         method: 'POST', // Especifica que la solicitud sea POST
         body: formData  // Usar el objeto FormData como cuerpo de la solicitud
     })
@@ -30,8 +94,9 @@ function mostrarDatosCotizacion(idCotizacion) {
            document.getElementById('descuento').value =  cotizacion.descuento;
            document.getElementById('descripcion').value = cotizacion.descripcion;
            document.getElementById('observaciones').value = cotizacion.observaciones;
-          // document.querySelector('.invoice-instalacion').textContent = cotizacion.costo_instalacion;
-           //document.querySelector('.invoice-instalacion').textContent = cotizacion.costo_instalacion;
+          document.getElementById('idCotizacion').value = cotizacion.idCotizacion;
+        document.getElementById('idSolicitudCotizacion').value = cotizacion.idSolicitudCotizacion;
+        document.getElementById('idCliente').value = cotizacion.id_cliente;
            calcularTotal();
            //agregarProductosContenedor(data.datosCotizacion, 'ItemsContent');
 
@@ -99,7 +164,7 @@ function cargarDatosProducto(){
     // Construir un objeto FormData para enviar los datos
      var formData = new FormData();
      formData.append('action', 'cargarDatosProductos');
-   fetch("actions/actualizar_cotizacion.php", {
+   fetch("actions/obtener_datos_cotizacion.php", {
      method: 'POST', // Especifica que la solicitud sea POst
      body: formData  // Usar el objeto FormData como cuerpo de la solicitud
     })

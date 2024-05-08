@@ -58,7 +58,7 @@ if(isset($action) && !empty($action)){
      } 
         
        $sql = "SELECT c.*, cl.nombre, cl.apellidoPaterno, cl.apellidoMaterno, cl.razonSocial,
-       p.nombre AS nombre_producto, p.precio, pc.cantidad
+       p.nombre AS nombre_producto, p.precio, pc.cantidad, sc.servicio
        FROM cotizaciones c
        INNER JOIN solicitudes_cotizacion sc ON c.idSolicitudCotizacion = sc.id
        INNER JOIN cliente cl ON sc.id_cliente = cl.idCliente
