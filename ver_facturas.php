@@ -145,10 +145,10 @@ require_once 'layout/header_admin.php';
         <div class="col-md-12">
         <div class="row justify-content-between mt-4 mb-3">
                 <div class="col-5">
-                <button onclick="actualizarEstatusFactura('terminada')" class="btn btn-primary btn-sm w-100 rounded-5">Factura Terminada</button>
+                <button id="botonTerminada" onclick="actualizarEstatusFactura(event)" class="btn btn-primary btn-sm w-100 rounded-5 d-none">Factura Terminada</button>
                 </div>
                 <div class="col-5">
-                    <botton  onclick="actualizarEstatusFactura('cacelada')" class="btn btn-primary btn-sm w-100 rounded-5">Factura Cancelada</button>
+                <button id="botonCancelada" onclick="actualizarEstatusFactura(event)" class="btn btn-primary btn-sm w-100 rounded-5 d-none">Factura Cancelada</button>
                 </div>
             </div>
         </div>

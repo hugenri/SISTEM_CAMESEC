@@ -128,7 +128,8 @@ function abrirModal(idFactura){
                 document.getElementById('total').innerText = factura.total;
     
                 document.getElementById("idFactura").value = factura.idFactura;
-    
+                
+                
             
                 data.datosFactura.forEach(factura => {
                     const fila = `
@@ -144,7 +145,10 @@ function abrirModal(idFactura){
 
                 });
                 document.getElementById('totalProductos').innerText = total_productos;
-
+            
+                actualizarEstadoBotones(factura.estatus_factura, factura.idFactura);
+               
+                
             } else {
                 console.log(data.message);
             }
@@ -153,3 +157,79 @@ function abrirModal(idFactura){
             console.error(error);
         });
     }
+
+
+    function actualizarEstadoBotones(estatus_factura, idFactura) {
+        const botonTerminada = document.getElementById("botonTerminada");
+        const botonCancelada = document.getElementById("botonCancelada");
+    
+        if (estatus_factura === "terminada") {
+            botonCancelada.classList.remove("d-none"); // Ocultar el botón Cancelada
+            botonCancelada.dataset.idFactura = idFactura;
+            botonCancelada.dataset.estatusFactura = 'cancelada';
+            botonTerminada.classList.add("d-none"); // Ocultar el botón Cancelada
+
+
+        } else if (estatus_factura === "cancelada") {
+            botonTerminada.classList.remove("d-none"); // Ocultar el botón Terminada
+            botonTerminada.dataset.idFactura = idFactura;
+            botonTerminada.dataset.estatusFactura = 'terminada';
+            botonCancelada.classList.add("d-none"); // Ocultar el botón Cancelada
+
+            
+        }
+    }
+    
+    function actualizarEstatusFactura(event) {
+    
+        const button = event.currentTarget;
+        const idFactura = button.dataset.idFactura;
+        const estatusFactura = button.dataset.estatusFactura;
+
+    
+        let formData = new FormData();
+        formData.append("idFactura", idFactura);
+        formData.append("estatusFactura", estatusFactura);
+        
+        Swal.fire({
+            title: '¿Desea registar el estatus de la factura como '+ estatusFactura + '?',
+            text: 'Esta acción no se puede deshacer',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, registrar'
+          }).then((result) => {
+            if (result.isConfirmed) {
+        fetch('actions/actualizarEstatusFactura.php',{
+            method: 'POST', // Especifica que la solicitud sea POST
+            body: formData  // Usar el objeto FormData como cuerpo de la solicitud
+        }) .then(response => {
+            if (!response.ok) {
+                return response.json().then(errorData => {
+                    throw new Error('Error en la solicitud. Código de estado: ' + response.status + ', Tipo de error: ' + errorData.error + ', Mensaje: ' + errorData.message);
+                });
+            }
+            return response.json(); // Suponiendo que la respuesta es JSON
+        })
+            .then(data => {
+                if (data.success) {
+                    Swal.fire({
+                        title: 'Éxito',
+                        text: data.message,
+                        icon: 'success'
+                    });   
+                      document.getElementById("modalPopup").style.display = "none";//estilo para ocultar el popup
+                   
+                } else {
+                    Swal.fire('Error', data.message, 'error');
+        
+                  }
+              })
+              .catch(error => {
+                  console.error('Error:', error);
+              });
+            }
+        });
+            return ;
+        }

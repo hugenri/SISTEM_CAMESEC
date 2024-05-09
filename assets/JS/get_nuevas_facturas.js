@@ -169,7 +169,6 @@ function actualizarEstatusFactura(estatusFactura) {
     })
         .then(data => {
             if (data.success) {
-                console.log(data);
                 Swal.fire({
                     title: 'Éxito',
                     text: data.message,

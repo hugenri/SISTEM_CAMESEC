@@ -16,7 +16,7 @@ $respuesta_json = new ResponseJson();
 $response = array();
 
         
-$sql = "SELECT cot.*, c.razonSocial
+$sql = "SELECT cot.*, c.razonSocial, sc.servicio
 FROM cotizaciones cot
 JOIN solicitudes_cotizacion sc ON cot.idSolicitudCotizacion = sc.id
 JOIN cliente c ON sc.id_cliente = c.idCliente
