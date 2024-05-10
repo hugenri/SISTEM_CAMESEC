@@ -62,7 +62,7 @@ if(isset($action) && !empty($action)){
     }
    
 
-}elseif($action == "createOrdeneCompra"){
+}elseif($action == "createOrdenCompra"){
 
 $fecha = DataSanitizer::sanitize_input($_POST['fecha']);
 $observaciones = DataSanitizer::sanitize_input($_POST['observaciones']);

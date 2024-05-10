@@ -10,6 +10,7 @@ if ($session->getSessionVariable('rol_usuario') != 'admin') {
 
 
 
+
 include_once '../model/SolicitudCotizacionModel.php';
 include_once '../model/ProductoModel.php';
 require_once '../clases/Response_json.php';
@@ -38,7 +39,9 @@ if(isset($action) && !empty($action)){
         cliente c ON sc.id_cliente = c.idCliente
     WHERE
         sc.estado = 'en proceso';";
+
     $datos = $consulta->getSolicitudesCotizacion($sql);
+
     if(!empty($datos)){
         $response = array('success' => true, 'dataSolicitud'  => $datos);
 
@@ -103,6 +106,13 @@ if(isset($action) && !empty($action)){
         $respuesta_json->handle_response_json(false, 'Faltan datos');
 
     }
+    
+    $messageNumbers = "Ingrese solo numero sin decimal en el dato";
+   $response = DataValidator::validateNumber($id, $messageNumbers);
+   if ($response !== true) {
+    $respuesta_json->response_json($response);
+
+  }
     $sql = "DELETE FROM solicitudes_cotizacion
     WHERE id = :id;";
     
@@ -121,6 +131,50 @@ if($consulta){
     $respuesta_json->handle_response_json(false, 'El registro no se pudo eliminar');
 }
 
+}elseif ($action == "getDatosSolicitudCotizacion") {
+
+
+    $idSolicitudCotiacion =  DataSanitizer::sanitize_input($_POST['idSolicitud']);
+
+    if($idSolicitudCotiacion == ""){
+        $respuesta_json->handle_response_json(false, 'Faltan datos');
+
+    }
+    
+    $messageNumbers = "Ingrese solo numero sin decimal en el dato";
+   $response = DataValidator::validateNumber($idSolicitudCotiacion, $messageNumbers);
+   if ($response !== true) {
+    $respuesta_json->response_json($response);
+
+  }
+    $sql = "SELECT 
+    sc.*,
+    cli.razonSocial AS cliente_razon_social , CONCAT(cli.nombre, ' ', cli.apellidoPaterno) AS nombreCliente,
+    cli.telefono, cli.idCliente
+FROM
+    solicitudes_cotizacion sc
+LEFT JOIN
+    cliente cli ON sc.id_cliente = cli.idCliente
+WHERE
+    sc.id = :idSolicitudCotizacion;";
+    
+
+$parametros = array(
+'idSolicitudCotizacion' => $idSolicitudCotiacion
+);
+
+// Ejecutar la consulta
+$datos = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');
+
+if(!empty($datos)){
+    $response = array('success' => true, 'dataSolicitud'  => $datos);
+
+    $respuesta_json->response_json($response);
+
+}else{
+    $respuesta_json->handle_response_json(false, 'No hay registros!');
+
+}
 }
 
 } else {

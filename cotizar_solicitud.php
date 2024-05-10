@@ -38,7 +38,9 @@ require_once 'layout/menu_admin.php';
         <div class="col-lg-9 col-md-9">
     <div class="row mb-3">
         <div class="col-lg-6 col-md-6 mb-2">
-        <p id="nombreCliente"></p>
+        <p class="mb-0" id="empresa"></p>
+        <p class="mb-0" id="nombreContacto"></p>
+        <p class="mb-0" id="telefonoCliente"></p>
         </div>
         
         <div class="col-lg-6 col-md-6">

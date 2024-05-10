@@ -17,7 +17,8 @@ $respuesta_json = new ResponseJson();
 $validacion = true;
 $response = array();
 
-$sql = "SELECT sc.*, c.razonSocial 
+$sql = "SELECT sc.*, c.razonSocial, c.telefono,
+        CONCAT(c.nombre, ' ', c.apellidoPaterno) AS nombreCliente
         FROM solicitudes_cotizacion sc 
         INNER JOIN cliente c ON sc.id_cliente = c.idCliente 
         WHERE sc.estado = 'en proceso';";

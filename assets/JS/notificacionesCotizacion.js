@@ -29,7 +29,8 @@ function mostrarNotificaciones(data) {
 
   data.forEach((datos, index) => {
       let listItem = document.createElement('li');
-      listItem.innerHTML = `<a class="dropdown-item" href="cotizar_solicitud.php?idCliente=${datos.id_cliente}&idSolicitud=${datos.id}&razonSocial=${datos.razonSocial}&servicio=${datos.servicio}"">
+      listItem.innerHTML = `<a class="dropdown-item" href="cotizar_solicitud.php?idCliente=${datos.id_cliente}&idSolicitud=${datos.id}
+      &razonSocial=${datos.razonSocial}&servicio=${datos.servicio}&telefono=${datos.telefono}&nombre=${datos.nombreCliente}"">
       <p>Cliente: ${datos.razonSocial}</p>
       <p>Servicio: ${datos.servicio}</p>
       <p>Fecha: ${datos.fecha_solicitud}</p></a>`;

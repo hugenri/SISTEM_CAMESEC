@@ -41,6 +41,9 @@ public function startSession()
             case 'empleado':
                 return 'tecnico';
                 break;
+                case 'compras':
+                    return 'compras';
+                    break;
             default:
                 return '';
         }

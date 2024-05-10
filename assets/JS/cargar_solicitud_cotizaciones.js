@@ -49,7 +49,7 @@ formData.append('action', 'mostarSolicitudes');
                       <td class="text-nowrap">${dato.fecha_solicitud}</td>
                       <td class="text-nowrap">${dato.estado}</td>
                       <td><button class="bEliminar custom-button btn btn-danger btn-sm" data-id="${dato.id}" onclick="eliminar('${dato.id}')">Eliminar</button></td>
-                      <td><button class="bCotizar btn custom-button btn-primary btn-sm" data-id="${dato.id}"  onclick="cargarForm('${dato.id_cliente}')">Cotizar</button></td>
+                      <td><button class="bCotizar btn custom-button btn-primary btn-sm" data-id="${dato.id}"  onclick="getDatosFormulario('${dato.id}')">Cotizar</button></td>
                   </tr>`;
               }
               tabla += `</tbody>`;
@@ -65,7 +65,45 @@ formData.append('action', 'mostarSolicitudes');
       });
 }
 
+function getDatosFormulario(idSolicitud) {
+   
+let formData = new FormData();
+formData.append('action', 'getDatosSolicitudCotizacion');
+formData.append('idSolicitud', idSolicitud);
+
+
+  fetch("actions/solicitudes_cotizacion.php", {
+    method: 'POST', // Especifica que la solicitud sea POst
+    body: formData  // Usar el objeto FormData como cuerpo de la solicitud
+   }).then(response => response.json())
+      .then(data => { 
+          if (data.success == true) {
+           
+    let cliente_razon_social = data.dataSolicitud.cliente_razon_social;
+    let nombreCliente = data.dataSolicitud.nombreCliente;
+    let telefono = data.dataSolicitud.telefono;
+    let idCliente = data.dataSolicitud.idCliente;
+
+
+    // Asignar los valores a los elementos HTML
+    document.getElementById("id").value = idSolicitud;
+    document.getElementById("idCliente").value = idCliente;
+    document.getElementById("nombreContacto").textContent = "Contacto: " + nombreCliente;
+    document.getElementById("telefonoCliente").textContent = "Telefono: " + telefono;
+    document.getElementById("empresa").textContent = "Empresa: " + cliente_razon_social;
+    document.getElementById("popup").style.display = "block";
+
+          } 
+          else {
+          console.log(data.message);
+        }
+      })
+      .catch(error => {
+          console.error('Error:', error);
+      });
+}
 /************************ */
+/*
  // Función para cargar formulario
  function cargarForm(idCliente) {
     limpiarDatos();
@@ -83,15 +121,12 @@ formData.append('action', 'mostarSolicitudes');
 
             // Asignar valores a los campos del formulario
             document.getElementById("nombreServicio").value = celdas[2].textContent;
-            document.getElementById("id").value = id;
-           document.getElementById("idCliente").value = idCliente;
-            
-            // Asignar el valor al elemento <p>
-            document.getElementById("nombreCliente").textContent = "Cliente: " + razonSocial;
+           
             // Mostrar el formulario
         });
     });
 }
+*/
  /**************************************** */
  /********************* */
 //cargar los productos al select

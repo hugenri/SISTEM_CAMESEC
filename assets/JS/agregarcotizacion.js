@@ -7,6 +7,7 @@ function crearCotizacion(evento) {
 
   const formulario = document.getElementById("form");
   const datos = new FormData(formulario);
+
   Swal.fire({
     title: '¿Desea registar los datos de la cotizacion?',
     text: 'Esta acción no se puede deshacer',
@@ -20,15 +21,7 @@ function crearCotizacion(evento) {
   fetch('actions/crearcotizacion.php', {
       method: 'POST',
       body: datos
-  }).
-  then(response => {
-    if (!response.ok) {
-        return response.json().then(errorData => {
-            throw new Error('Error en la solicitud. Código de estado: ' + response.status + ', Tipo de error: ' + errorData.error + ', Mensaje: ' + errorData.message);
-        });
-    }
-    return response.json(); // Suponiendo que la respuesta es JSON
-})
+  }) .then(response => response.json())
   .then(data => {
       if (data.success == true) {
         Swal.fire({

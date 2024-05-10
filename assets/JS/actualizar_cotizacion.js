@@ -88,7 +88,9 @@ function mostrarDatosCotizacion(idCotizacion) {
           //  const datosProducto = document.getElementById('datosProducto');
             //datosProducto.innerHTML = ''; // Limpiar el contenido anterior
             const cotizacion = data.datosCotizacion[0]; // Suponiendo que solo hay un servicio en la respuesta
-           document.getElementById('nombreCliente').innerText = "Cliente: " +cotizacion.nombreCliente;
+           document.getElementById('nombreContacto').innerText = "Contacto: " +cotizacion.nombreCliente;
+           document.getElementById('telefonoCliente').innerText = "Teléfono : " +cotizacion.telefono;
+           document.getElementById('empresa').innerText = "Emptresa: " +cotizacion.empresa;
            document.getElementById('fecha').value = cotizacion.fecha;
            document.getElementById('costoInstalacion').value = cotizacion.costo_instalacion;
            document.getElementById('descuento').value =  cotizacion.descuento;

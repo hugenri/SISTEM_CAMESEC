@@ -17,7 +17,7 @@ function get_orden_compra(id){
   .then(response => response.json())
   .then(data => {
     // Insertar los datos del cliente
-    document.getElementById('cliente').textContent = "Cliente: "+ data.datosOrdenCompra[0].nombre_cliente;
+    document.getElementById('cliente').textContent = data.datosOrdenCompra[0].nombre_cliente;
     document.getElementById('email_cliente').textContent = data.datosOrdenCompra[0].email_cliente;
     document.getElementById('telefono_cliente').textContent = data.datosOrdenCompra[0].telefono_cliente;
     // Insertar el servicio ofrecido

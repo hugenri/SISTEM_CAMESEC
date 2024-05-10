@@ -40,7 +40,8 @@ if(isset($action) && !empty($action)){
          $respuesta_json->response_json($response);
      }
     $sql = "SELECT co.*, p.nombre AS nombreProducto, p.imagen, p.precio, pc.*,
-    cli.razonSocial AS empresa, CONCAT(cli.nombre, ' ', cli.apellidoPaterno, ' ', cli.apellidoMaterno) AS nombreCliente,
+    cli.razonSocial AS empresa, CONCAT(cli.nombre, ' ', cli.apellidoPaterno) AS nombreCliente,
+    cli.telefono,
     sc.servicio, sc.id_cliente
     FROM cotizaciones co
     INNER JOIN productos_cotizacion pc ON co.idCotizacion = pc.idCotizacion

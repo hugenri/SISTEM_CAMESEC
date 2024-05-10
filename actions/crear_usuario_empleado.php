@@ -25,7 +25,7 @@ $passwordC = DataSanitizer::sanitize_input($_POST['passwordC']);
 $nombre = DataSanitizer::sanitize_input($_POST['nombre']);
 $apellidoP = DataSanitizer::sanitize_input($_POST['apellidoPaterno']);
 $apellidoM = DataSanitizer::sanitize_input($_POST['apellidoMaterno']);
-$rol_usuario = "empleado";
+$rol_usuario = DataSanitizer::sanitize_input($_POST['rolUsuario']);
 
 $data = [$nombre, $apellidoP, $apellidoM, $email, $password, $passwordC];
 

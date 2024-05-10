@@ -88,7 +88,16 @@ require_once 'layout/menu_admin.php';
   <div class="invalid-feedback">Por favor, ingresa un correo electrónico válido</div>
 </div>
 </div>
-
+<div class="col-md-6 mb-2">
+    <div class="form-floating">
+        <select class="form-select rounded-5" id="rolUsuario" name="rolUsuario" required>
+            <option value="">Selecciona el rol</option>
+            <option value="empleado">Empleado</option>
+            <option value="compras">Compras</option>
+        </select>
+        <div class="invalid-feedback">Por favor, selecciona un el rol de usuario</div>
+    </div>
+</div>
 </div>
 
 <div class="row mb-2">

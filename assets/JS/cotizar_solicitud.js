@@ -17,12 +17,16 @@
     let idSolicitud = getParameterByName('idSolicitud');
     let razonSocial = getParameterByName('razonSocial');
     let servicio = getParameterByName('servicio');
+    let telefono = getParameterByName('telefono');
+    let nombreContacto= getParameterByName('nombre');
     // Asignar los valores a los campos ocultos
     document.getElementById('idCliente').value = idCliente;
     document.getElementById('id').value = idSolicitud;
     document.getElementById('nombreServicio').value = servicio;
+    document.getElementById('nombreContacto').textContent = "Contacto: " + nombreContacto;
+    document.getElementById('telefonoCliente').textContent = "Telefono: " + telefono;
  // Asignar el valor al elemento <p>
- document.getElementById('nombreCliente').textContent = "Cliente: " + razonSocial;
+ document.getElementById('empresa').textContent = "Empresa: " + razonSocial;
     });
 
     
