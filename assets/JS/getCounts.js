@@ -15,7 +15,6 @@ function getCounts(){
           document.getElementById('numCotizaciones').textContent = data.numCotizaciones;
           document.getElementById('numOrdenesCompra').textContent = data.numOrdenesCompra;
           document.getElementById('numFacturas').textContent = data.numFacturas;
-          console.log(data);
 
 
         }

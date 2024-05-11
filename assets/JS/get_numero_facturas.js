@@ -14,6 +14,7 @@ function getCounts(){
         if (data.success) {
             document.getElementById('numFacturas').textContent = data.response.numFacturas.numRegistros;
             document.getElementById('numNuevasFacturas').textContent = data.response.numNuevasFacturas.numRegistros;
+   
             
         }else{
             console.log('sin datos');

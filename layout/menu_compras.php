@@ -1,7 +1,7 @@
 <nav>
 
 <div class="custom-topnav" id="myTopnav">
-  <a href="Compras.php" class="active icon-a" style="display: flex; align-items: center;">
+  <a href="compras.php" class="active icon-a" style="display: flex; align-items: center;">
     <img src="assets/images/home.png" alt="Home" style="width: 25px; height: 25px;">
   </a>
   <div class="custom-dropdown">
@@ -22,7 +22,17 @@
       
     </div>
   </div> 
+  <div class="custom-dropdown">
+    <button class="dropbtn">Proveedores
+      <i></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="proveedores.php">Ver lista de proveedores</a>
+      
+    </div>
+  </div> 
 
+  
   
 
   <div class="user-menu custom-dropdown">

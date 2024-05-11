@@ -15,7 +15,7 @@ require_once '../clases/Response_json.php';
 $respuesta_json = new ResponseJson();
 $response = null;
 
-$action = $_POST['action'];
+$action =  $_POST['action'];
 
 if(isset($action) && !empty($action)){
  if($action == "mostarNuevasOrdenes"){
@@ -172,6 +172,81 @@ if(isset($action) && !empty($action)){
   } else {
       $respuesta_json->handle_response_json(false, 'No hay registro!');
   }
+}elseif($action == "mostarProveedores"){
+
+  $sql = "SELECT *
+  FROM proveedor;";
+  
+         
+  $parametros = array(
+      
+  );
+  
+  // Ejecutar la consulta
+  $datos = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true);
+  
+  if(!empty($datos)){
+      $response = array('success' => true, 'datosProveedores'  => $datos);
+      $respuesta_json->response_json($response);
+  } else {
+      $respuesta_json->handle_response_json(false, 'No hay registro!');
+  }
+}elseif($action == "getProveedor"){
+  $idProveedor = DataSanitizer::sanitize_input($_POST['idProveedor']);
+
+  $messageLength = "ingrese solo numeros";
+    $response = DataValidator:: validateNumber($idProveedor, $messageLength);
+    if ($response !== true) {
+        $respuesta_json->response_json($response);
+   }
+
+  $sql = "SELECT *
+  FROM proveedor WHERE idProveedor = :idProveedor;";
+  
+         
+  $parametros = array(
+      'idProveedor' => $idProveedor
+  );
+  
+  // Ejecutar la consulta
+  $datos = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');
+  
+  if(!empty($datos)){
+      $response = array('success' => true, 'datosProveedores'  => $datos);
+      $respuesta_json->response_json($response);
+  } else {
+      $respuesta_json->handle_response_json(false, 'No hay registro!');
+  }
+}elseif($action == "getNumeroRegistros"){
+ 
+  $parametros = array(
+  
+);
+
+  $sql = "SELECT COUNT(*) as numRegistros
+  FROM Proveedor;";
+    // Ejecutar la consulta
+    $numero_proveedores = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');
+      
+    $sql = "SELECT COUNT(*) as numRegistros
+    FROM orden_compras";
+      // Ejecutar la consulta
+      $numeroOrdenCompras = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');     
+      
+      $sql = "SELECT COUNT(*) as numRegistros
+      FROM orden_compras WHERE estado = 'en proceso'";
+        // Ejecutar la consulta
+        $numeroNeuvasOrdenCompras = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');     
+      $response = [
+          'numProveedores' => $numero_proveedores,
+          'numOdenesOrdenesCompras' => $numeroOrdenCompras,
+          'numNuevasOrdenes' => $numeroNeuvasOrdenCompras
+
+          
+      ];
+  
+      $response = array('success' => true, 'response' => $response); // Encerrar la cotización en un array
+      $respuesta_json->response_json($response);
 }
        //####################
 } else {

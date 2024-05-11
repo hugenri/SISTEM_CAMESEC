@@ -34,7 +34,7 @@ require_once 'layout/menu_empleado.php';
             <img src="assets/images/nuevasCompras.png" class="mt-2 mb-2" alt="Imagen2">
             <div class="card-body">
                 <h5 class="card-title">Nuevos ordenes de compras</h5>
-                <span id="numNuevasOrdenes"></span></p>
+                <p><span id="numNuevasOrdenes"></span></p>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@ require_once 'layout/menu_empleado.php';
             <img src="assets/images/compras2.png" class="mt-2 mb-2" alt="Imagen2">
             <div class="card-body">
                 <h5 class="card-title">Ordenes de compras</h5>
-                <span id="numOrdenes"></span></p>
+               <p> <span id="numOrdenes"></span></p>
             </div>
         </div>
 </div>
@@ -55,7 +55,7 @@ require_once 'layout/menu_empleado.php';
             <img src="assets/images/listaProveedores2.png" class="mt-2 mb-2" alt="Imagen2">
             <div class="card-body">
                 <h5 class="card-title">Proveedores</h5>
-                <span id="numProveedores"></span></p>
+                <p> <span id="numProveedores"></span></p>
             </div>
         </div>
     </div>
@@ -63,7 +63,7 @@ require_once 'layout/menu_empleado.php';
 </div>
 </div> <!-- fin del contenido-->
 
-<script src="assets/JS/get_numero_servicios.js"></script>
+<script src="assets/JS/getNumeroRegistros.js"></script>
 
 
 <script>

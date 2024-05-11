@@ -29,7 +29,7 @@ require_once 'layout/header_admin.php';
             <img src="assets/images/nuevasFacturas.png" class="mt-1" alt="Imagen2">
             <div class="card-body">
                 <h5 class="card-title">Nuevos Facturas</h5>
-                <span id="numFacturas"></span></p>
+                <span id="numNuevasFacturas"></span></p>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@ require_once 'layout/header_admin.php';
             <img src="assets/images/facturas.png" class="mt-1" alt="Imagen2">
             <div class="card-body">
                 <h5 class="card-title">Facturas</h5>
-                <span id="numNuevasFacturas"></span></p>
+                <span id="numFacturas"></span></p>
             </div>
         </div>
     </div>
