@@ -29,7 +29,7 @@ require_once 'layout/menu_empleado.php';
 <div class="row mb-4">
 
 <div class="col-lg-4 col-md-1 mb-2">
-        <div class="card  custom-card text-center mb-2 align-items-center justify-content-center"
+        <div class="card  compras-custom-card text-center mb-2 align-items-center justify-content-center"
             onclick="window.location.href='nuevas_ordenes_compras.php';" style="cursor: pointer;">
             <img src="assets/images/nuevasCompras.png" class="mt-2 mb-2" alt="Imagen2">
             <div class="card-body">
@@ -40,7 +40,7 @@ require_once 'layout/menu_empleado.php';
     </div>
 
     <div class="col-lg-4 col-md-1 mb-2">
-        <div class="card  custom-card text-center mb-2 align-items-center justify-content-center"
+        <div class="card  compras-custom-card  text-center mb-2 align-items-center justify-content-center"
             onclick="window.location.href='ordenes_compras.php';" style="cursor: pointer;">
             <img src="assets/images/compras2.png" class="mt-2 mb-2" alt="Imagen2">
             <div class="card-body">
@@ -50,7 +50,7 @@ require_once 'layout/menu_empleado.php';
         </div>
 </div>
 <div class="col-lg-4 col-md-1">
-        <div class="card  custom-card text-center mb-2 align-items-center justify-content-center"
+        <div class="card  compras-custom-card  text-center mb-2 align-items-center justify-content-center"
             onclick="window.location.href='proveedores.php';" style="cursor: pointer;">
             <img src="assets/images/listaProveedores2.png" class="mt-2 mb-2" alt="Imagen2">
             <div class="card-body">

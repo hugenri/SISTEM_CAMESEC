@@ -25,19 +25,20 @@ require_once 'layout/header_admin.php';
       <!-- Aquí se mostrarán las tarjetas de las solicitudes -->
     </div>
   </div>
-
-    </div> <!-- fin del contenido-->
-
-  <!-- Modal para llenar los detalles del servicio -->
-<div class="modal fade" id="modalServicio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg"> <!-- Cambié modal-dialog a modal-lg para hacer el modal más ancho -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Servicio a relizar</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="formServicio">
+<!---- #####-->
+  <div id="modalPopup" class="divPopup">
+<div class="container-fluit">
+<div class="row justify-content-center">
+<div class="col-lg-10 col-md-10">
+<div class="card">
+<div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="text-center mb-0">Datos de la factura</h4>
+        <img src="assets/images/cerrar.png" alt="Cerrar" onclick="cerrarPopup(event)">
+    </div>
+       
+    <div class="card-body">
+	
+	<form id="formServicio">
                     <input type="hidden" id="idOrdenCompra" name="idOrdenCompra" value="">
                     <div class="row mb-3">
                         <div class="col-lg-6 col-md-6">
@@ -51,6 +52,7 @@ require_once 'layout/header_admin.php';
                         <div class="col-lg-6 col-md-6">
                             <label for="fecha" class="form-label">Fecha</label>
                             <input type="date" class="form-control" id="fecha" name="fecha"  required>
+                            <div class="invalid-feedback">La fecha es obligatoria.</div>
                         </div>
                     </div>
                     
@@ -64,20 +66,28 @@ require_once 'layout/header_admin.php';
               
             <div class="row justify-content-between mb-3">
         <div class="col-5 mt-1 mb-2">
-                <button type="button" class="btn btn-secondary w-100 rounded-5" data-bs-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-danger w-100 rounded-5" onclick="cerrarPopup(event)">Cerrar</button>
                 </div>
                 <div class="col-5">
                 <button type="button" onclick="agregarServicio(event)" class="btn btn-primary w-100 rounded-5">Guardar Cambios</button>
                 </div>
               </div>
               </form>
-    </div>
-    </div>
-</div>
-</div>
+    
+ </div> 
+ 
+ </div> 
+ </div>     
+ </div> 
+ </div>     
+ </div> 
+
+
+
+</div> <!-- fin del contenido-->
+
   
 <!-- Script de Bootstrap 5 -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script  src="assets/JS/agregar_servicio.js"></script>

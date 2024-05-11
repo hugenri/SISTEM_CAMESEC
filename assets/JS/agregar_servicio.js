@@ -17,15 +17,7 @@ function agregarServicio(evento) {
   fetch('actions/agregarservicio.php', {
       method: 'POST',
       body: datos
-  })
-  .then(response => {
-    if (!response.ok) {
-        return response.json().then(errorData => {
-            throw new Error('Error en la solicitud. Código de estado: ' + response.status + ', Tipo de error: ' + errorData.error + ', Mensaje: ' + errorData.message);
-        });
-    }
-    return response.json(); // Suponiendo que la respuesta es JSON
-})
+  }).then(response => response.json())
   .then(data => {
       if (data.success == true) {
         Swal.fire({
@@ -35,9 +27,7 @@ function agregarServicio(evento) {
       });
           formulario.reset(); // Se limpia el formulario
           formulario.classList.remove('was-validated');
-          const modal = document.getElementById('modalServicio');
-          const modalBS = bootstrap.Modal.getInstance(modal);
-          modalBS.hide(); //Cierra el modal
+          document.getElementById("modalPopup").style.display = "none";//estilo para cerrar el popup
           get_servicios();
       }else {
         // cuando data.success es false
@@ -52,3 +42,10 @@ function agregarServicio(evento) {
 });
   return ;
 }
+  
+  function cerrarPopup(event){
+    event.preventDefault(); // Evita el comportamiento predeterminado del evento 
+
+      document.getElementById("modalPopup").style.display = "none";//estilo para cerrar el popup
+  
+  }

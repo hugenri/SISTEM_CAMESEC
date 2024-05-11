@@ -23,7 +23,8 @@ fetch("actions/nuevos_servicios.php") // Reemplaza "ruta_a_tu_archivo_php.php" c
              <p class="card-text">Teléfono: ${dato.telefono_cliente}</p>
              <div class="row justify-content-between mt-4 mb-3">
                 <div class="col-12">
-             <button type="button" class="btn btn-primary w-100 rounded-5" data-bs-toggle="modal" data-bs-target="#modalServicio" data-orden-id="${dato.idOrdenCompra}">Activar Servicio</button>
+             <button type="button" class="btn btn-primary
+              w-100 rounded-5" onclick="abrirModal(event, ${dato.idOrdenCompra})">Activar Servicio</button>
              </div>
              </div>
              </div>
@@ -38,17 +39,17 @@ fetch("actions/nuevos_servicios.php") // Reemplaza "ruta_a_tu_archivo_php.php" c
  }).catch(error => console.error("Error al obtener los datos:", error));
 }
 
+function abrirModal(event, idOrdenCompra){
+  event.preventDefault(); // Evita el comportamiento predeterminado del evento 
 
-
-// Espera a que el modal se muestre completamente
-document.getElementById('modalServicio').addEventListener('shown.bs.modal', function() {
-get_empleados();
-// Obtiene el ID de la orden de compra del botón que abrió el modal
-const ordenId = event.relatedTarget.dataset.ordenId;
-
+  
 // Asigna el valor del ID de la orden de compra al campo oculto
-document.getElementById('idOrdenCompra').value = ordenId;
-});
+document.getElementById('idOrdenCompra').value = idOrdenCompra;
+  // Mostrar el formulario
+  document.getElementById("modalPopup").style.display = "block";//estilo para mostrar el popup
+get_empleados();
+  }
+
 
 function get_empleados(){
 

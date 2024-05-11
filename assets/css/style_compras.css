@@ -41,11 +41,11 @@ body {
 margin-bottom: 2px;
 }
 
-.custom-card {
-    width: 100%; /* Ajusta el ancho de la tarjeta al 100% del contenedor */
-    height: 50vh; /* Establece la altura al 50% del alto de la ventana */
-    background-color: #b1d1f5; /* Cambia el color de fondo a tu preferencia */
-    /* Otros estilos opcionales */
-}
-
-
+ .compras-custom-card  img {
+        max-width: 100%; /* Establece el ancho máximo de la imagen al 100% del contenedor */
+        max-height: 100%; /* Establece la altura máxima de la imagen al 100% del contenedor */
+    }
+.compras-custom-card {
+        
+		  background-color: #b1d1f5;
+    }
