@@ -29,7 +29,7 @@ function getOrdenesCompras() {
                   <th class="text-nowrap">Observaciones</th>
                   <th class="text-nowrap">Descripción</th>
                   <th class="text-nowrap">Estado</th>
-                  <th  colspan="3">Acciones</th>
+                  <th  colspan="2">Acciones</th>
 
 
               </tr></thead>`;
@@ -42,6 +42,7 @@ function getOrdenesCompras() {
                       <td>${x.descripcion}</td>
                       <td class="text-nowrap  data-estado="${['x.idOrdenCompra']}">${x.estado}</td>
                       <td><button class="btn btn-primary rounded-3 btn-sm" onclick="abrirModal(${x.idOrdenCompra})">Ver</button></td>
+                      <td><button class="btn btn-primary rounded-3 btn-sm" onclick="exportarPDF(${x.idOrdenCompra})">PDF</button></td>
 
                   </tr>`;
               }
@@ -156,3 +157,28 @@ function cambiarEstado(evento, estado, idOrdenCompra, idCotizacion){
   });
   return ;
   }
+
+
+  function exportarPDF(idOrdenCompra) {
+    let formData = new FormData();
+    formData.append("idOrdenCompra", idOrdenCompra);
+
+    // Obtener las cotizaciones
+    fetch('actions/comprasServicioPdf.php',{
+        method: 'POST', // Especifica que la solicitud sea POST
+        body: formData  // Usar el objeto FormData como cuerpo de la solicitud
+   
+    })
+    .then(response => response.blob())
+    .then(blob => {
+        // Crear una URL para el blob del PDF
+        const url = window.URL.createObjectURL(new Blob([blob]));
+
+        // Abrir el PDF en una nueva pestaña o ventana del navegador
+        window.open(url, '_blank');
+
+        // Liberar la URL creada
+        window.URL.revokeObjectURL(url);
+    })
+    .catch(error => console.error('Error:', error));
+}

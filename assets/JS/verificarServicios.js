@@ -7,7 +7,7 @@ function mostrarServicios() {
     noData.innerHTML = "";
     let tabla = document.getElementById("tabla") // Limpiamos la tabla
     let formData = new FormData();
-    formData.append("action", "mostar_servicios");
+    formData.append("action", "mostrar_servicios");
 
     // Obtener las cotizaciones
     fetch('actions/mostrar_servicios.php',{

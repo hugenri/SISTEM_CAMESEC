@@ -57,19 +57,21 @@ require_once 'layout/header_admin.php';
         </div>
     </div>
 </div>
-      
-    </div> <!-- fin del contenido-->
-    
-<!-- Modal -->
-<div class="modal fade" id="formularioModal" tabindex="-1" aria-labelledby="modallabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modallbel">Formulario Orden de Compra</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-            <div class="row justify-content-center mt-4">
+
+<!-- modelPopup -->
+<div id="modalPopup" class="divPopup">
+<div class="container-fluit">
+<div class="row justify-content-center">
+<div class="col-lg-10 col-md-10">
+<div class="card">
+<div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="text-center mb-0">Datos de la factura</h4>
+        <img src="assets/images/cerrar.png" alt="Cerrar" onclick="cerrarPopup()">
+    </div>
+       
+    <div class="card-body">
+   
+    <div class="row justify-content-center mt-4">
         <div class="col-lg-10 col-md-10">
         
          <form id="form">
@@ -105,27 +107,31 @@ require_once 'layout/header_admin.php';
     </div>
     <div class="row justify-content-between mt-4">
                 <div class="col-5">
-                    <input type="submit" class="btn btn-primary w-100 rounded-5" value="Enviar">
+                    <input type="submit" class="btn btn-primary w-100 rounded-5 onclick="crearCompra(event)" value="Enviar">
                 </div>
                 <div class="col-5">
                     <input type="reset" class="btn btn-secondary w-100 rounded-5" value="Borrar">
                 </div>
             </div>
 </form>
-                    </div>
-                </div>
-            </div>
-       
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-            </div>
-        </div>
-    </div>
-</div>
+  </div>
+  </div>
 
+  </div>
+  </div>
+  </div>
+ </div> 
+ </div>     
+ </div> 
+
+
+
+
+
+</div> <!-- fin del contenido-->
+ 
 
 <!-- Script de Bootstrap 5 -->
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 
     <script language="javascript" src="assets/JS/crearOrdencompra.js"></script>

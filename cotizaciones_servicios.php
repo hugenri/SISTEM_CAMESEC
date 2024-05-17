@@ -128,6 +128,8 @@ require_once 'layout/menu_user.php';
    
 </div> <!-- fin del contenido-->
 <script  src="assets/JS/cotizaciones_servicios.js"></script>
+<script  src="assets/JS/formatoCantidad.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 

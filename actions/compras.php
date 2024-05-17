@@ -152,7 +152,24 @@ if(isset($action) && !empty($action)){
     if($estado == "finalizada"){
       date_default_timezone_set('America/Mexico_City');
       $fecha = date('Y-m-d');
-   
+   //crear factura 
+
+   $sql = "SELECT * FROM facturas WHERE idCotizacion = :idCotizacion;";
+ 
+        
+ $parametros = array(
+     'idCotizacion'=> $idCotizacion
+ );
+ 
+ // Ejecutar la consulta
+ $consulta_existe = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true);
+ 
+ if(!empty($consulta_existe)){
+  $respuesta_json->handle_response_json(false, 'Yatiene un registro!');
+
+ }
+
+   /////////////////////
     $sql = "INSERT INTO facturas (idCotizacion, fecha)
     VALUES (:idCotizacion, :fecha);";
   

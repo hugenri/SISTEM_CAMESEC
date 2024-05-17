@@ -41,7 +41,7 @@ $idEmpleado = $session->getSessionVariable('id_usuario');
 $action = $_POST['action'];
 
 if(isset($action) && !empty($action)){
-if($action == "mostar_servicios"){
+if($action == "mostrar_servicios"){
 $sql = "SELECT
 c.razonSocial, 
 sc.servicio AS servicio_ofrecido, s.idServicio, s.detalles,
@@ -53,7 +53,7 @@ INNER JOIN productos_cotizacion pc ON co.idCotizacion = pc.idCotizacion
 INNER JOIN producto p ON pc.id_producto = p.id
 INNER JOIN solicitudes_cotizacion sc ON co.idSolicitudCotizacion = sc.id
 INNER JOIN cliente c ON sc.id_cliente = c.idCliente
-WHERE s.estado = 'en curso' AND s.idEmpleado = :idEmpleado;";
+WHERE  s.idEmpleado = :idEmpleado;";
     
 $parametros = array(
     ':idEmpleado' => $idEmpleado

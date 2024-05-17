@@ -30,7 +30,6 @@ function crearCompra(evento) {
   .then(response => response.json())
   .then(data => {
       if (data.success == true) {
-        cerrarFormulario();
         Swal.fire({
           title: 'Éxito',
           text: data.message,
@@ -39,6 +38,7 @@ function crearCompra(evento) {
   
           formulario.reset(); // Se limpia el formulario
           formulario.classList.remove('was-validated');
+          cerrarPopup();
           getCotizaciones();
          
       }else {
@@ -110,18 +110,12 @@ function abrirFormulario(idCotizacion){
   
  // Hacer el input solo de lectura
  document.getElementById('idCotizacion').readOnly = true;
+ document.getElementById("modalPopup").style.display = "block";//estilo para mostrar el popup
 
-  let formularioModal = new bootstrap.Modal(document.getElementById('formularioModal')); // Inicializar el modal
-      formularioModal.show();
 }
 
-function cerrarFormulario(){
-  let formularioModal = new bootstrap.Modal(document.getElementById('formularioModal')); // Inicializar el modal
-  formularioModal.hide(); // Cerramos el modal después de seleccionar
-}
-
-
-// Agregar controlador de eventos al botón "Cerrar"
-document.querySelector('.btn-secondary').addEventListener('click', function() {
-  cerrarFormulario();
-});
+  
+function cerrarPopup(){
+      document.getElementById("modalPopup").style.display = "none";//estilo para cerrar el popup
+  
+  }

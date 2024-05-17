@@ -2,7 +2,7 @@
 
 <div class="custom-topnav" id="myTopnav">
   <a href="admin.php" class="active icon-a" style="display: flex; align-items: center;">
-    <img src="assets/images/home.png" alt="Home" style="width: 16px; height: 16px;">
+    <img src="assets/images/home.png" alt="Home" style="width: 23px; height: 23px;">
   </a>
   <div class="custom-dropdown">
     <button class="dropbtn  fonnt-bolt">Usuarios
@@ -96,27 +96,8 @@
 
   </div> 
 
-  <div class="custom-dropdown">
-
-    <button class="dropbtn  fonnt-bolt">Reportes
-
-      
-
-    </button>
-
-    <div class="dropdown-content">
-
-      <a href="#">Link 1</a>
-
-      <a href="#">Link 2</a>
-
-      <a href="#">Link 3</a>
-
-    </div>
-
-  </div> 
-
-  <div class="custom-dropdown">
+  
+  <div class="custom-dropdown user-menu">
       <button class="dropbtn">
         <img src="assets/images/usuario.png" alt="Usuario Imagen" style="width: 24px; height: 24px; border-radius: 50%;">
         <?=$session->getSessionVariable('nombre') ?>

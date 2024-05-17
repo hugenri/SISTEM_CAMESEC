@@ -94,12 +94,14 @@ function abirPopup(idSC, estatus){
              document.getElementById('observaciones').innerHTML = 'Observaciones: '+ data.dataCotizacion[0].observaciones;
              document.getElementById('descripcion').innerHTML ='Descripción: '+ data.dataCotizacion[0].descripcion;
                  
-             document.getElementById('costoInstalacion').innerHTML = 'Costo de instalacion: $'+data.dataCotizacion[0].costo_instalacion;
-             document.getElementById('subtotal').innerHTML = 'Subtotal: $'+ data.dataCotizacion[0].subtotal;
-             document.getElementById('descuento').innerHTML = 'Descuento: $'+ data.dataCotizacion[0].descuento;
-             document.getElementById('iva').innerHTML = 'IVA: $' + data.dataCotizacion[0].iva;
-             document.getElementById('total').innerHTML = 'Total: $' + data.dataCotizacion[0].total;
-           
+             document.getElementById('costoInstalacion').innerHTML = 'Costo de instalacion: $'+  formatearNumero(data.dataCotizacion[0].costo_instalacion);
+             document.getElementById('subtotal').innerHTML = 'Subtotal: $'+ formatearNumero(data.dataCotizacion[0].subtotal);
+             document.getElementById('descuento').innerHTML = 'Descuento: '+ data.dataCotizacion[0].descuento + '%';
+             document.getElementById('iva').innerHTML = 'IVA: $' + formatearNumero(data.dataCotizacion[0].iva);
+             document.getElementById('total').innerHTML = 'Total: $' + formatearNumero(data.dataCotizacion[0].total);
+
+
+
              if (data.dataCotizacion[0].producto != '') {
                  document.getElementById("ItemsContent").innerHTML = ""; // Limpiamos el contenido anterior
          
@@ -224,3 +226,4 @@ function abirPopup(idSC, estatus){
         console.error("Los elementos 'btnAceptar' o 'btnRechazar' no existen en el DOM.");
     }
 }
+
