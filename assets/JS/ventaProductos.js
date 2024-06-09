@@ -179,7 +179,11 @@ function handleClick(productId) {
     .then(data => {
           // Manejar la respuesta del servidor
         if (data.status === 'success') {
-            alert(data.message);
+            Swal.fire({
+                title: 'Éxito',
+                text: data.message,
+                icon: 'success'
+            });
            
            // Actualizar el número de productos en el carrito
             var cartItemCountElement = document.getElementById('cartItemCount');

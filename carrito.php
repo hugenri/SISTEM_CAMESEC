@@ -17,7 +17,6 @@ require_once 'layout/header_user.php';
 
 <body class="d-flex flex-column min-vh-100">
 <?php
-$titulo_pagina = "Home";
 require_once 'layout/menu_user.php';
 ?>
 
@@ -71,6 +70,8 @@ require_once 'layout/menu_user.php';
     </div>
 </div>
 
+
+
 <!-- Nuevo modal para el carrito -->
 <div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -82,13 +83,13 @@ require_once 'layout/menu_user.php';
             <div class="modal-body">
                 <div class="container">
                     <div class="row" id="cart-items">
-                    <div class="modal-body" id="cartModalContent">
-                <!-- Contenido del modal se agregará dinámicamente aquí -->
-                   </div>
+                        <div class="modal-body" id="cartModalContent">
+                            <!-- Contenido del modal se agregará dinámicamente aquí -->
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col">
-                            <h4>Resumen de la compra</h5>
+                            <h4>Resumen de la compra</h4> <!-- Cerraste mal la etiqueta, debe ser h4 -->
                             <h5>Total: <span id="total"></span></h5>
                             <h5>IVA: <span id="iva"></span></h5>
                             <hr class="my-4">
@@ -98,7 +99,6 @@ require_once 'layout/menu_user.php';
                     </div>
                 </div>
             </div>
-            
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger btn-sm rounded-pill" data-bs-dismiss="modal">Cerrar</button>
                 <button type="button" class="btn btn-danger btn-sm rounded-pill" id="clearCartBtn">Vaciar Carrito</button>
@@ -110,7 +110,7 @@ require_once 'layout/menu_user.php';
 
 
 
-
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script  src="assets/JS/ventaProductos.js"></script>
 <script  src="assets/JS/ventaProductos2.js"></script>

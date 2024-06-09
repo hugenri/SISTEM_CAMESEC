@@ -127,13 +127,24 @@ function removeItemFromCart(event) {
    }).then(response => response.json())
     .then(data => {
             if (data.status === 'success') {
-                alert(data.message);
+                Swal.fire({
+                    title: 'Éxito',
+                    text: data.message,
+                    icon: 'success'
+                });
                 // Si la eliminación del producto fue exitosa, vuelve a mostrar los productos actualizados del carrito
                 document.getElementById('total').textContent = '';
                 document.getElementById('iva').textContent = '';
                 document.getElementById('total-iva').textContent = '';
                 displayCartItems();
                 getCounts();
+                // Cerrar modal por ID
+        
+        const cartmodal = document.getElementById('cartModal');
+  const modal = new bootstrap.Modal(cartmodal);
+
+  //Cerrar el modal después
+    modal.hide();
             } else {
                 console.error('Error al eliminar los productos del carrito:', data.message);
             }
@@ -153,24 +164,21 @@ function removeItemFromCart(event) {
    fetch('actions/venta.php', {
        method: 'POST',
        body: formData,  // Usar el objeto FormData como cuerpo de la solicitud
-   }).//then(response => response.json())
-   then(response => {
-    if (!response.ok) {
-        return response.json().then(errorData => {
-            throw new Error('Error en la solicitud. Código de estado: ' + response.status + ', Tipo de error: ' + errorData.error + ', Mensaje: ' + errorData.message);
-        });
-    }
-    return response.json(); // Suponiendo que la respuesta es JSON
-})
+   }).then(response => response.json())
     .then(data => {
-        if (data.status === 'success') {
-
-            alert(data.message);
-            /*
-            displayCartItems();
-            */
+    
+        if (data.success == true) {
+            Swal.fire({
+                title: 'Éxito',
+                text: data.message,
+                icon: 'success'
+            });
             getCounts();
-            
+           // Retrasar la redirección después de 2 segundos (2000 milisegundos)
+        setTimeout(function() {
+            // Redirigir a una página dentro del mismo servidor usando href
+            window.location.href = 'pago.php?idVenta=' + data.idVenta;
+                }, 3000); // 2000 milisegundos = 2 segundos
         } else {
             console.error(data.message);
         }

@@ -11,6 +11,12 @@ if ($session->getSessionVariable('rol_usuario') != 'cliente') {
 include '../clases/Cart.php';
 include '../model/VentaModel.php';
 
+require_once '../clases/Response_json.php';
+include_once '../clases/DataBase.php';
+include_once '../clases/dataSanitizer.php';
+include_once '../clases/DataValidator.php';
+
+$respuesta_json = new ResponseJson();
 $response = array();
 $action = $_POST['action'];
 
@@ -178,23 +184,22 @@ if(isset($action) && !empty($action)){
         $cart->clear_cart();
 
         // Envía una respuesta de éxito
-        $response['status'] = 'success';
-        $response['message'] = 'Las ventas se registraron correctamente.';
+        $response = array('success' => true, 'message'=> 'Su compra se registró con éxiton', 'idVenta'  => $idVenta);
+        $respuesta_json->response_json($response);
+
      }else {
         // Si ocurrió un error al registrar la venta de un producto, envía una respuesta de error
-        $response['status'] = 'error';
-        $response['message'] = 'Error al registrar la venta del producto.';
+        
+        $respuesta_json->handle_response_json(false, 'Ocurrió un error al registrar su compra');
+
       }
    } else {
     // Si el carrito está vacío, envía una respuesta de error
-    $response['status'] = 'error';
-    $response['message'] = 'El carrito está vacío.';
+    
+    $respuesta_json->handle_response_json(false, 'El carrito está vacío.');
+
    }
 
-   // Enviar la respuesta como JSON
-   header('Content-Type: application/json');
-   echo json_encode($response);
-   exit();
   }
 
 }

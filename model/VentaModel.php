@@ -114,6 +114,74 @@ public function registrarVenta($idProducto, $idCliente, $fechaVenta, $cantidad, 
 }
 
 function insertOrderItems($userId, $fecha, $cartItems) {
+  try {
+    // Establecer la conexión a la base de datos
+    $this->conexion = ConexionBD::getconexion();
+
+    // Iniciar una transacción
+    $this->conexion->beginTransaction();
+
+    // Insertar en la tabla ventas
+    $sqlVentas = "INSERT INTO ventas(id_cliente, fecha_venta, total) VALUES (?, ?, ?)";
+    $queryVentas = $this->conexion->prepare($sqlVentas);
+
+    // Calcular el monto total de la venta
+    $total = 0;
+    foreach ($cartItems as $item) {
+      $total += $item['subtotal']; // Sumar el subtotal de cada artículo del carrito
+    }
+
+    // Ejecutar la consulta para la tabla ventas
+    $queryVentas->execute([$userId, $fecha, $total]);
+
+    // Obtener el último id_venta insertado
+    $idVenta = $this->conexion->lastInsertId();
+
+    // Insertar en la tabla ventas_productos
+    $sqlVentasProductos = "INSERT INTO ventas_productos(id_venta, id_producto, cantidad) VALUES ";
+    $values = [];
+
+    foreach ($cartItems as $item) {
+      $sqlVentasProductos .= "(?, ?, ?),";
+      $values[] = $idVenta;
+      $values[] = $item['id'];
+      $values[] = $item['qty'];
+    }
+
+    // Eliminar la coma final
+    $sqlVentasProductos = rtrim($sqlVentasProductos, ',');
+
+    // Preparar la consulta para la tabla ventas_productos
+    $queryVentasProductos = $this->conexion->prepare($sqlVentasProductos);
+
+    // Ejecutar la consulta para la tabla ventas_productos
+    $queryVentasProductos->execute($values);
+
+    
+    // Insertar en la tabla pagos_productos solo con id_venta
+    $sqlPagos = "INSERT INTO pagos_venta (id_venta) VALUES (?)";
+    $queryPagos = $this->conexion->prepare($sqlPagos);
+
+    // Ejecutar la consulta para la tabla pagos_productos
+    $queryPagos->execute([$idVenta]);
+
+    // Confirmar la transacción
+    $this->conexion->commit();
+
+    return $idVenta;
+  } catch (PDOException $ex) {
+    // Revertir la transacción en caso de error
+    $this->conexion->rollBack();
+    echo "Error: " . $ex->getMessage();
+    return false;
+  } finally {
+    // Cerrar la conexión a la base de datos
+    $this->conexion = null;
+  }
+}
+
+/*
+function insertOrderItems($userId, $fecha, $cartItems) {
  // $sql = "INSERT INTO orden_articulos (order_id, product_id, quantity) VALUES ";
 $sql = "INSERT INTO ventas_productos(id_producto, id_cliente, fecha_venta, cantidad, total) VALUES ";
 
@@ -150,6 +218,6 @@ $sql = "INSERT INTO ventas_productos(id_producto, id_cliente, fecha_venta, canti
       $this->conexion = null;
     }
 }
-
+*/
 
 }
