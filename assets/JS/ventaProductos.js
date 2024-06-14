@@ -91,74 +91,71 @@ function getProductos(){
 
         const productModal = new bootstrap.Modal(document.getElementById('productModal'));
         productModal.show();
-    }
-
-
-
-function showProductDetails(id) {
-
-    // Obtener la cantidad del producto del input
-    const quantityInput = document.getElementById('productQuantity');
-    const quantity = parseInt(quantityInput.value);
-
-    // Obtener los valores de los elementos de texto
-    const nombre = document.getElementById('nombre').textContent;
-    const precioText = document.getElementById('precio').textContent;
-    const imagen = document.getElementById('imagen').src; // Obtener el valor del atributo src
-    const descripcion = document.getElementById('descripcion').textContent; 
-    // Extraer el precio del texto usando una expresión regular
-    // Extraer el precio del texto usando una expresión regular
-const matchResult = precioText.match(/\d+\.\d+/);
-const precio = matchResult ? parseFloat(matchResult[0]) : 0;
-
-    
-    // Si hay más datos que necesitas obtener, hazlo de manera similar
-
-    // Calcula el subtotal
-    const subtotal = precio * quantity;
-    // Calcula el IVA (por ejemplo, 10%)
-    const iva = subtotal * 0.1;
-    // Calcula el total sumando el subtotal y el IVA
-    const total = subtotal + iva;
-
-    // Actualiza el contenido del modal con los detalles del producto y la cantidad
-    const content = document.getElementById('compraContent');
-    content.innerHTML = `
-        <div class="container">
+    }function showProductDetails(id) {
+        // Obtener la cantidad del producto del input
+        const quantityInput = document.getElementById('productQuantity');
+        const quantity = parseInt(quantityInput.value);
+        
+        // Obtener los valores de los elementos de texto
+        const nombre = document.getElementById('nombre').textContent;
+        const precio = parseFloat(document.getElementById('precio').textContent.replace(/[^0-9.-]+/g, ""));
+        const imagen = document.getElementById('imagen').src; // Obtener el valor del atributo src
+        const descripcion = document.getElementById('descripcion').textContent;
+        
+        // Calcula el subtotal
+        const subtotal = precio * quantity;
+        // Calcula el IVA (por ejemplo, 10%)
+        const iva = subtotal * 0.1;
+        // Calcula el total sumando el subtotal y el IVA
+        const total = subtotal + iva;
+        
+        // Actualiza el contenido del modal con los detalles del producto y la cantidad
+        const content = document.getElementById('modalContent');
+        content.innerHTML = `
             <div class="row">
-                <div class="col-lg-8 col-md-4">
-                    <img src="${imagen}" class="card-img-top align-self-center mb-2" alt="${imagen}" style="margin: 10px; width: 170px; height: 170px; object-fit: cover;">                
-                  <!--  <p>${descripcion}</p> -->
-                  <h5 class="mt-2">${nombre}</h5>
-                  <p>Precio: $${precio.toFixed(2)}</p>
-                <p>Cantidad: ${quantity}</p>
+                <div class="col-3">
+                    <img src="${imagen}" alt="${nombre}" class="img-fluid">
                 </div>
-                <div class="col-lg-4 col-md-4 border rounded p-4">
-                <h5>Resumen de la compra</h5>
-                <p>Subtotal: $${subtotal.toFixed(2)}</p>
-                <p>IVA: $${iva.toFixed(2)}</p>
-                <!-- Línea divisoria  -->
-                <hr class="my-4">
-                <p>Total: $${total.toFixed(2)}</p>
-                <p>Envio: Domicilio</p>
-                <!-- Línea divisoria -->
-                <hr class="my-4">
-                <button onclick="comprarProducto(${id}, ${quantity}, ${total.toFixed(2)})" class="btn btn-primary btn-sm btn-block rounded-pill">Continuar con la compra</button> <!-- Agregar clases de Bootstrap para estilo de botón -->
-                <button onclick="closeContainer('compraContainer', 'CartContainer')" class="btn btn-secondary btn-sm btn-block rounded-pill">Cancelar</button> <!-- Agregar clases de Bootstrap para estilo de botón -->
+                <div class="col-6">
+                    <p>${nombre}</p>
+                    <p>${descripcion}</p>
+                    <p>Cantidad: ${quantity}</p>
+                    <p>Precio unitario: $${precio.toFixed(2)}</p>
+                </div>
             </div>
-        </div>
-    `;
-    closeContainer('CartContainer', 'compraContainer')
-     // Cerrar el modal
-     const modalElement = document.getElementById('productModal');
-     const modal = bootstrap.Modal.getInstance(modalElement);
-      modal.hide();
-
-    // Eliminar el fondo oscuro
-    document.querySelector('.modal-backdrop').remove();
-}
-
-
+            <hr>
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <h4>Resumen de la compra</h4>
+                    <p>Subtotal: $${subtotal.toFixed(2)}</p>
+                    <p>IVA: $${iva.toFixed(2)}</p>
+                    <hr class="my-4">
+                    <h5>Total con IVA: $${total.toFixed(2)}</h5>
+                    <h6>Envio: Domicilio</h6>
+                    <hr class="my-4">
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-danger btn-sm rounded-pill" id="closePopupFooterBtn" onclick="cerrarModal(event, 'modal-compra')">Cancelar</button>
+                        <button type="button" onclick="comprarProducto(${id}, ${quantity}, ${total.toFixed(2)})" class="btn btn-primary btn-sm rounded-pill" id="checkoutBtn">Realizar Compra</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        closeContainer('CartContainer', 'compraContainer');
+        
+        // Cerrar el modal
+        const modalElement = document.getElementById('productModal');
+        const modal = bootstrap.Modal.getInstance(modalElement);
+        modal.hide();
+        
+        // Eliminar el fondo oscuro
+        document.querySelector('.modal-backdrop').remove();
+    
+        // Abrir el modal de compra
+        abrirModal("modal-compra");
+    }
+    
+    
 //funcion para agregar el producto al carrito de compras
 function handleClick(productId) {
     var quantity = document.getElementById('productQuantity').value;

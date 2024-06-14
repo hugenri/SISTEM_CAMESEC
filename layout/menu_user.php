@@ -23,7 +23,15 @@
     </div>
   </div> 
 
-  
+  <div class="custom-dropdown">
+    <button class="dropbtn">Compras 
+      <i></i>
+    </button>
+    <div class="dropdown-content">
+      <a href="mis_compras.php">Mis Compras</a>
+      
+    </div>
+  </div> 
 
   <div class="custom-dropdown">
     <button class="dropbtn">Cotizaciones 

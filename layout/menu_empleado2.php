@@ -5,11 +5,13 @@
     <img src="assets/images/home.png" alt="Home" style="width: 25px; height: 25px;">
   </a>
   <div class="custom-dropdown">
-    <button class="dropbtn">Nuevos servicios 
+    <button class="dropbtn">Entregas de productos
       <i></i>
     </button>
     <div class="dropdown-content">
-      <a href="nuevos_servicios.php">Ver nuevos servicios</a>
+      <a href="entregaProductos.php">Ver nuevas entregas de productos</a>
+      <a href="entregas.php">Ver  entregas de productos</a>
+
      
     </div>
   </div> 
@@ -19,6 +21,8 @@
     </button>
     <div class="dropdown-content">
       <a href="servicios.php">Ver servicios</a>
+      <a href="nuevos_servicios.php">Ver nuevos servicios</a>
+
       
     </div>
   </div> 

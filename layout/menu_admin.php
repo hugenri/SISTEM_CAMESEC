@@ -91,11 +91,18 @@
     <a href="ver_solicitudes_cotizaciones.php">Solicitudes de cotizacion</a>
       <a href="vercotizaciones.php">Ver lista cotizaciones</a>
       <a href="detalles_cotizaciones.php">Ver detalles de las cotizaciones</a>
-
     </div>
-
   </div> 
+  <div class="custom-dropdown">
 
+    <button class="dropbtn  fonnt-bolt"> Ventas de productos
+    </button>
+    <div class="dropdown-content">
+    <a href="ver_ventas.php">Ver ventas</a>
+      <a href="activarEntregaProductos.php">Activar entrega de productos</a>
+    </div>
+  </div> 
+  
   
   <div class="custom-dropdown user-menu">
       <button class="dropbtn">

@@ -49,3 +49,9 @@ margin-bottom: 2px;
         
 		  background-color: #b1d1f5;
     }
+/* Puedes añadir esto en tu archivo CSS */
+.product-image {
+    width: 30px; /* Ajusta el ancho  necesidades */
+    height: 30px; /* Ajusta la altura  necesidades */
+    object-fit: cover; /* Esto asegura que la imagen se ajuste sin distorsionarse */
+}

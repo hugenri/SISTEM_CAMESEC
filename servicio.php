@@ -53,7 +53,7 @@ require_once 'layout/menu_public.php';
       </div>
       <div class="col-lg-6 col-md-6 mb-3">
       <div>
-      <h5> Centro de Monitoreo</h5>
+      <h5>Centro de Monitoreo</h5>
       </div>
       <div class="text-justify">
       <p>

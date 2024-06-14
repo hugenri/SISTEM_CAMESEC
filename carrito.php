@@ -29,9 +29,10 @@ require_once 'layout/menu_user.php';
         <div class="d-flex w-100">
             <input id="searchInput" class="form-control offset-md-2 me-6 w-50" type="search" name="searchInput" placeholder="Buscar producto" aria-label="Search">
             <button class="btn btn-outline-success" onclick="getProductos()"><i class="fas fa-search"></i></button>
-            <a href="#" data-bs-toggle="modal" onclick="displayCartItems()" class="text-decoration-none ms-auto me-4">
-                <i class="fas fa-shopping-cart fs-3"></i><span id="cartItemCount" class="badge bg-danger"></span>
-            </a>
+            <a href="#" id="cartLink" onclick="displayCartItems()" class="text-decoration-none ms-auto me-4">
+    <i class="fas fa-shopping-cart fs-3"></i><span id="cartItemCount" class="badge bg-danger"></span>
+</a>
+
         </div>
     </div>
 </div>
@@ -43,17 +44,81 @@ require_once 'layout/menu_user.php';
         </div>
     </div>
 	  </div>
-<div id="compraContainer" class="container mt-5" style="display:none;">
-  <div class="row">
-  <div class="col-lg-12 col-md-12">
-    <div id="compraContent">
-      <p>contenido del contenedor</p>
-    </div>
-  </div>
-    </div>
-   </div>
 
-  
+ 
+<div id="modal-compra" class="divPopup">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <div class="col-lg-11 col-md-11">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h4 class="text-center mb-0">Datos de la compra</h4>
+                        <img src="assets/images/cerrar.png" onclick="cerrarModal(event, 'modal-compra')" alt="Cerrar">
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-6 col-md-6">
+                                <h4>Resumen de su compra</h4>
+                                <hr class="my-4">
+                                <div class="divPopupBody" id="modalContent">
+                                    <!-- Aquí van los contenidos dinámicos -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>     
+
+<div id="modalPopup" class="divPopup">
+<div class="container-fluid">
+    <div class="row justify-content-center">
+        <div class="col-lg-11 col-md-11">
+        <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+        <h4 class="text-center mb-0">Datos de la compra</h4>
+        
+        <img src="assets/images/cerrar.png" onclick="cerrarModal(event, 'modalPopup')" alt="Cerrar">
+        </div>
+        <div class="card-body">
+        <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-6">
+        <h4>Productos en el carrito</h4>
+        <hr class="my-4">
+       
+        <div class="divPopupBody" id="cartModalContent">
+            <!-- Contenido del modal se agregará dinámicamente aquí -->
+        </div>
+        
+    </div>
+        <div class="col-lg-6 col-md-6">    
+            <h4>Resumen de la compra</h4>
+            <h5>Total: <span id="total"></span></h5>
+            <h5>IVA: <span id="iva"></span></h5>
+            <hr class="my-4">
+            <h5>Total con IVA: <span id="total-iva"></span></h5>
+            <h6>Envio: Domicilio</h6>
+            <hr class="my-4">
+            <div class="d-grid gap-2">
+            <button type="button" class="btn btn-info btn-sm rounded-pill" id="closePopupFooterBtn" onclick="cerrarModal(event, 'modalPopup')">Continuar comprando</button>
+            <button type="button" class="btn btn-danger btn-sm rounded-pill" id="clearCartBtn">Vaciar Carrito</button>
+            <button type="button" class="btn btn-primary btn-sm rounded-pill" id="checkoutBtn">Realizar Compra</button>
+        </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+
+
 </div> <!-- fin div -->
 <!-- Modal para mostrar los detalles del producto -->
 <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">

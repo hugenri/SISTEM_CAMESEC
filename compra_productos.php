@@ -26,7 +26,7 @@ require_once 'layout/menu_compras.php';
 
 <div class="row justify-content-center align-items-center mt-2 mb-3">
         <div class="col-lg-12 col-md-6 col-sm-12 text-center">
-            <h3 id="titulo" class="mb-3">Lista de ordenes de compras de los servicios</h3>
+            <h3 id="titulo" class="mb-3">Lista de nuevas  compras</h3>
         </div>
     </div>
 
@@ -126,7 +126,7 @@ require_once 'layout/menu_compras.php';
           <td id="email_proveedor"></td>
           <td id="telefono_proveedor"></td>
         </tr>
-     
+        <!-- Puedes agregar más filas para cada producto -->
       </tbody>
     </table>
   </div>
@@ -140,7 +140,7 @@ require_once 'layout/menu_compras.php';
         
         <div class="col-lg-6">
        
-			    <button type="button" id="finalizarBtn" onclick="cambiarEstado(event, 'finalizada', this.dataset.idOrdenCompra, this.dataset.idCotizacion)"
+			    <button type="button" id="finalizarBtn" onclick="cambiarEstado(event, this.dataset.idVenta)"
 			   class="btn btn-primary w-100 rounded-5">Finalizada</button>
                 </div>
        </div>
@@ -155,9 +155,7 @@ require_once 'layout/menu_compras.php';
 
 </div> <!-- fin del contenido-->
 
-
-
-<script src="assets/JS/ordenes_compras.js"></script>
+<script src="assets/JS/compra_productos.js"></script>
 <script  src="assets/JS/filtrar.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 

@@ -9,8 +9,9 @@
       <i></i>
     </button>
     <div class="dropdown-content">
-      <a href="nuevas_ordenes_compras.php">Ver ordenes de conpra</a>
-     
+    <a href="nuevas_ordenes_compras.php">Ver ordenes de compra servicios</a>
+    <a href="compra_productos.php">Ver ordenes de conpras de ventas</a>
+  
     </div>
   </div> 
   <div class="custom-dropdown">
@@ -18,7 +19,9 @@
       <i></i>
     </button>
     <div class="dropdown-content">
-      <a href="ordenes_compras.php">Ver Ordenes de compra</a>
+      <a href="ordenes_compras.php">Ver Ordenes de compra servicios</a>
+      <a href="ordenes_campras_ventas.php">Ver Ordenes de compra ventas</a>
+
       
     </div>
   </div> 

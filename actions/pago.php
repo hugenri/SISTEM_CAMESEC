@@ -77,6 +77,63 @@ WHERE
         $respuesta_json->handle_response_json(false, 'No hay registro!');
     }
    
+  }elseif ($action == "procesarPago") {
+    $idVenta = DataSanitizer::sanitize_input($_POST['idVenta']);
+    $opcionPago =  DataSanitizer::sanitize_input($_POST['opcionPago']);
+
+    $data = [$idVenta, $opcionPago];
+
+    //si se envia formulario sin datos se marca un error
+    if(DataValidator::validateVariables($data) === false){
+
+      $respuesta_json->handle_response_json(false, 'Faltan datos');
+
+    }
+      
+        $messageLetters = "Ingrese solo numeros";
+        $response = DataValidator::validateNumber($idVenta, $messageLetters);
+        if ($response !== true) {
+            $respuesta_json->response_json($response);
+       }
+       $messageLetters = "Ingrese solo letras";
+       $response = DataValidator::validateLettersOnly($opcionPago, $messageLetters);
+       if ($response !== true) {
+           $respuesta_json->response_json($response);
+      }
+ 
+       $parametros = array(
+        ':idVenta' => $idVenta,
+        ':fechaPago' => date('Y-m-d'), // Fecha actual en formato YYYY-MM-DD
+        ':metodoPago' => $opcionPago,
+        ':pago' => 'si' // el pago fue realizado
+    );
+
+
+    $sql = "UPDATE pagos_venta 
+            SET fecha_pago = :fechaPago, metodo_pago = :metodoPago, pago = :pago 
+            WHERE id_venta = :idVenta";
+        
+    // Ejecutar la consulta
+    $coulta = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, false);
+    
+    if($coulta){
+        // Ingresar registro en la tabla entregas
+        $parametrosEntrega = array(
+            ':idVenta' => $idVenta,
+            ':detalle' => 'Entrega pendiente'
+        );
+
+        $sqlEntrega = "INSERT INTO entregas (id_venta, detalle) 
+                       VALUES (:idVenta, :detalle)";
+
+        $consultaEntrega = ConsultaBaseDatos::ejecutarConsulta($sqlEntrega, $parametrosEntrega, false);
+
+        $respuesta_json->handle_response_json(true, 'Gracias por  su pago!');
+
+    } else {
+        $respuesta_json->handle_response_json(false, 'No se pudo registar su pago!');
+    }
+
   }
        //####################
 } else {
