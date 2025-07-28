@@ -4,7 +4,7 @@
       
       <!-- Columna de derechos de autor -->
       <div class="col-lg-4 col-md-4 col-sm-12">
-        <p>@ Copyright 2023 Golem J. Fer Salazar</p>
+        <p>@ Copyright Hugenri</p>
       </div>
       
     </div>

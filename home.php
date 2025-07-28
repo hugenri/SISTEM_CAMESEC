@@ -24,6 +24,13 @@ require_once 'layout/menu_user1.php';
 
 <div id= "div-contenido" class="container-fluid flex-grow-1"> <!-- el contenido  en este div -->
 
+<div class="row mt-3">
+    <div class="col-lg-12 col-md-12 mt-1">
+        <a href="mis_compras.php" class="btn btn-primary">
+            <i class="fas fa-shopping-cart"></i>Ver mis Compras realizadas
+        </a>
+    </div>
+</div>
 
 
 <div class="row mt-2" id="cotizaciones-container" style="display: none;"> <!-- Contenedor oculto por defecto -->
@@ -44,6 +51,7 @@ require_once 'layout/menu_user1.php';
 </div>
 
     <!-- ########################## -->
+   
     <div class="row mt-3">
         <!-- Card para compra de productos -->
         <div class="col-lg-6 col-md-6 mt-3">

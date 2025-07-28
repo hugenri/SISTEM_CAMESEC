@@ -27,7 +27,7 @@ require_once 'layout/menu_admin1.php';
 <div class="row mb-3 mt-3">
     <div class="col-12 d-flex justify-content-between align-items-center">
         <div class="text-center">
-            <h3>Dashboard</h3>           
+                  
         </div>
         <div>
 </div>
@@ -143,6 +143,17 @@ require_once 'layout/menu_admin1.php';
                         <h5 class="card-title">Facturas</h5>
                          <span id="numFacturas"></span></p>
                         <a href="facturas.php" class="btn">Ver más</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-2 col-md-6">
+                <div class="card custom-card text-center mb-2 align-items-center justify-content-center">
+                    <img src="assets/images/sales.png" class="card-img-top mt-1" alt="Imagen de cliente">
+                    <div class="card-body">
+                        <h5 class="card-title">Ventas</h5>
+                         <span id="numVentas"></span></p>
+                        <a href="ver_ventas.php" class="btn">Ver más</a>
                     </div>
                 </div>
             </div>

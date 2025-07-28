@@ -49,6 +49,15 @@ try {
    $numero_facturas = ConsultaBaseDatos::ejecutarConsulta($sql, $parametros, true, 'no');     
     $numFacturas = $numero_facturas['numRegistros'];
 
+    $sql_ventas = "SELECT COUNT(*) as numRegistros
+    FROM ventas";
+    $parametros = array(
+       //se requiere vacio
+   );
+      // Ejecutar la consulta
+      $numero_ventas = ConsultaBaseDatos::ejecutarConsulta($sql_ventas, $parametros, true, 'no');     
+       $numVentas = $numero_ventas['numRegistros'];
+   
     $response = [
         'numUsuarios' => $numero_usuarios,
         'numClientes' => $numero_clientes,
@@ -57,7 +66,9 @@ try {
         'numServicios' => $numero_servicios,
         'numCotizaciones'  => $numero_cotizaciones,
         'numOrdenesCompra'  => $numero_ordenesCompra,
-        'numFacturas'  => $numFacturas
+        'numFacturas'  => $numFacturas,
+        'numVentas'  => $numVentas
+
 
     ];
 
